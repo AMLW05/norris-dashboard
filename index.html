@@ -458,6 +458,26 @@
             100% { transform: rotate(360deg); }
         }
 
+        @media print {
+            .modal-header-print, .modal-footer-print {
+                display: none !important;
+            }
+            .modal-content-print {
+                padding: 0 !important;
+                max-height: none !important;
+                overflow: visible !important;
+            }
+            body {
+                background: white !important;
+            }
+            h1, h2, h3 {
+                page-break-after: avoid;
+            }
+            ul, ol {
+                page-break-inside: avoid;
+            }
+        }
+
         @media (max-width: 768px) {
             .course-grid {
                 grid-template-columns: 1fr;
@@ -1062,18 +1082,21 @@
 
             modal.innerHTML = `
                 <div style="background: white; border-radius: 12px; max-width: 900px; width: 100%; max-height: 90vh; display: flex; flex-direction: column; box-shadow: 0 20px 60px rgba(0,0,0,0.5);">
-                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 20px; border-bottom: 2px solid #e1e8ed;">
+                    <div class="modal-header-print" style="display: flex; justify-content: space-between; align-items: center; padding: 20px; border-bottom: 2px solid #e1e8ed;">
                         <h3 style="margin: 0; color: var(--navy);">📄 ${materialPath.split('/').pop().replace('.md', '').replace(/_/g, ' ')}</h3>
-                        <button onclick="this.closest('.modal-container').remove()" style="background: var(--danger); color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold;">✕ Close</button>
+                        <div style="display: flex; gap: 10px;">
+                            <button onclick="window.print()" style="background: var(--success); color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold;">🖨️ Print</button>
+                            <button onclick="this.closest('.modal-container').remove()" style="background: var(--danger); color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold;">✕ Close</button>
+                        </div>
                     </div>
-                    <div style="padding: 30px; overflow-y: auto; flex: 1;">
+                    <div class="modal-content-print" style="padding: 30px; overflow-y: auto; flex: 1;">
                         <div style="text-align: center; padding: 40px; color: #5a6c7d;">
                             <div style="font-size: 3em; margin-bottom: 20px;">📥</div>
                             <p style="font-size: 1.1em; margin-bottom: 15px;">Loading material...</p>
                             <div class="loading-spinner" style="margin: 20px auto; width: 40px; height: 40px; border: 4px solid #e1e8ed; border-top-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite;"></div>
                         </div>
                     </div>
-                    <div style="padding: 20px; border-top: 2px solid #e1e8ed; background: var(--gray-light); border-radius: 0 0 12px 12px;">
+                    <div class="modal-footer-print" style="padding: 20px; border-top: 2px solid #e1e8ed; background: var(--gray-light); border-radius: 0 0 12px 12px;">
                         <a href="https://github.com/AMLW05/norris-dashboard/blob/main/courses/${courseCode}/${materialPath}" target="_blank"
                            style="display: inline-block; background: var(--primary); color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: 600;">
                             📂 View on GitHub
