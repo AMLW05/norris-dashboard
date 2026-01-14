@@ -1,0 +1,805 @@
+{
+  "program": {
+    "name": "Drew Norris AI/IT Program",
+    "institution": "NCCCS",
+    "term": "Spring 2026",
+    "instructor": "Drew Norris",
+    "programOutcomes": [
+      {
+        "id": "PO1",
+        "text": "Master Git/GitHub workflow (The Sacred Flow)",
+        "category": "Process Skills",
+        "bloomsLevel": "Apply"
+      },
+      {
+        "id": "PO2",
+        "text": "Apply AI fundamentals and evaluate AI systems critically",
+        "category": "Technical Skills",
+        "bloomsLevel": "Evaluate"
+      },
+      {
+        "id": "PO3",
+        "text": "Analyze systems and design solutions using structured methodologies",
+        "category": "Analysis & Design",
+        "bloomsLevel": "Analyze"
+      },
+      {
+        "id": "PO4",
+        "text": "Document process and communicate professionally",
+        "category": "Communication",
+        "bloomsLevel": "Create"
+      },
+      {
+        "id": "PO5",
+        "text": "Demonstrate process-first development mindset",
+        "category": "Professional Practice",
+        "bloomsLevel": "Evaluate"
+      }
+    ]
+  },
+  "courses": [
+    {
+      "id": "CSC-113",
+      "code": "CSC-113",
+      "title": "Artificial Intelligence Fundamentals",
+      "credits": 3,
+      "classHours": 2,
+      "labHours": 2,
+      "term": "Fall 2025",
+      "prerequisites": "None",
+      "description": "Introduction to AI concepts with hands-on tool usage. Students build SAGE (Scholar's Adaptive Growth Engine), learn GitHub workflow, prompt engineering, and AI evaluation. Two tracks: Code Builders (programming) and Prompt Masters (no-code).",
+      "status": "complete",
+      "completionPercent": 100,
+      "clos": [
+        {
+          "id": "CSC-113-CLO1",
+          "number": 1,
+          "text": "Apply professional GitHub workflow (Issue → Branch → PR → Merge)",
+          "bloomsLevel": "Apply",
+          "mappedOutcomes": ["PO1", "PO4"]
+        },
+        {
+          "id": "CSC-113-CLO2",
+          "number": 2,
+          "text": "Configure and customize AI assistants using context documents",
+          "bloomsLevel": "Apply",
+          "mappedOutcomes": ["PO2"]
+        },
+        {
+          "id": "CSC-113-CLO3",
+          "number": 3,
+          "text": "Demonstrate effective prompt engineering techniques",
+          "bloomsLevel": "Apply",
+          "mappedOutcomes": ["PO2"]
+        },
+        {
+          "id": "CSC-113-CLO4",
+          "number": 4,
+          "text": "Critically evaluate AI outputs for accuracy and bias",
+          "bloomsLevel": "Evaluate",
+          "mappedOutcomes": ["PO2", "PO5"]
+        },
+        {
+          "id": "CSC-113-CLO5",
+          "number": 5,
+          "text": "Document learning process and AI interactions professionally",
+          "bloomsLevel": "Create",
+          "mappedOutcomes": ["PO4", "PO5"]
+        }
+      ],
+      "modules": [
+        {
+          "number": 1,
+          "title": "SAGE Foundation & GitHub Setup",
+          "theme": "Professional portfolio and workflow fundamentals",
+          "weeks": "1-2",
+          "mlos": [
+            {
+              "number": 1,
+              "text": "Set up GitHub account and create professional portfolio repository",
+              "bloomsLevel": "Apply",
+              "linkedCLO": "CLO1"
+            },
+            {
+              "number": 2,
+              "text": "Complete first GitHub workflow cycle (Issue → Branch → PR → Merge)",
+              "bloomsLevel": "Apply",
+              "linkedCLO": "CLO1"
+            },
+            {
+              "number": 3,
+              "text": "Configure SAGE AI assistant with context documents",
+              "bloomsLevel": "Apply",
+              "linkedCLO": "CLO2"
+            }
+          ],
+          "assessments": [
+            {
+              "title": "M01-A1: Hello GitHub",
+              "points": 25,
+              "type": "Assignment"
+            },
+            {
+              "title": "M01-A2: Meet Kevin & SAGE",
+              "points": 25,
+              "type": "Assignment"
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "title": "AI Exploration & GitHub Mastery",
+          "theme": "AI timeline research and tool comparison",
+          "weeks": "3-4",
+          "mlos": [
+            {
+              "number": 1,
+              "text": "Research and document AI evolution timeline",
+              "bloomsLevel": "Understand",
+              "linkedCLO": "CLO4"
+            },
+            {
+              "number": 2,
+              "text": "Compare multiple AI tools systematically",
+              "bloomsLevel": "Analyze",
+              "linkedCLO": "CLO4"
+            },
+            {
+              "number": 3,
+              "text": "Design intentionally flawed AI agent (Bad Bot)",
+              "bloomsLevel": "Create",
+              "linkedCLO": "CLO2"
+            }
+          ],
+          "assessments": [
+            {
+              "title": "M02-A1: AI Timeline Research",
+              "points": 25,
+              "type": "Assignment"
+            },
+            {
+              "title": "M02-A2: Bad Bot Design",
+              "points": 25,
+              "type": "Assignment"
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "title": "Prompt Engineering Mastery",
+          "theme": "Iterative improvement and prompt techniques",
+          "weeks": "5-6",
+          "mlos": [
+            {
+              "number": 1,
+              "text": "Iterate Bad Bot into effective Good Bot",
+              "bloomsLevel": "Evaluate",
+              "linkedCLO": "CLO3"
+            },
+            {
+              "number": 2,
+              "text": "Apply advanced prompt engineering techniques",
+              "bloomsLevel": "Apply",
+              "linkedCLO": "CLO3"
+            },
+            {
+              "number": 3,
+              "text": "Conduct comparative AI research project",
+              "bloomsLevel": "Analyze",
+              "linkedCLO": "CLO4"
+            }
+          ],
+          "assessments": [
+            {
+              "title": "M03-A1: Good Bot Iteration",
+              "points": 25,
+              "type": "Assignment"
+            },
+            {
+              "title": "M03-A2: Holiday Shopping Research",
+              "points": 25,
+              "type": "Assignment"
+            }
+          ]
+        },
+        {
+          "number": 4,
+          "title": "Project Ideation & Track Selection",
+          "theme": "Brainstorming and specialization path",
+          "weeks": "7-8",
+          "mlos": [
+            {
+              "number": 1,
+              "text": "Generate and evaluate project ideas",
+              "bloomsLevel": "Create",
+              "linkedCLO": "CLO5"
+            },
+            {
+              "number": 2,
+              "text": "Select specialization track (Code Builders or Prompt Masters)",
+              "bloomsLevel": "Evaluate",
+              "linkedCLO": "CLO5"
+            },
+            {
+              "number": 3,
+              "text": "Develop project proposal with AI collaboration plan",
+              "bloomsLevel": "Create",
+              "linkedCLO": "CLO5"
+            }
+          ],
+          "assessments": [
+            {
+              "title": "M04-A1: Project Ideation",
+              "points": 25,
+              "type": "Assignment"
+            },
+            {
+              "title": "M04-A2: Track Specialization",
+              "points": 25,
+              "type": "Assignment"
+            }
+          ]
+        },
+        {
+          "number": 5,
+          "title": "Rapid Prototyping",
+          "theme": "PRD creation and prototype sprint",
+          "weeks": "9-10",
+          "mlos": [
+            {
+              "number": 1,
+              "text": "Write Product Requirements Document (PRD)",
+              "bloomsLevel": "Create",
+              "linkedCLO": "CLO5"
+            },
+            {
+              "number": 2,
+              "text": "Build rapid prototype using AI collaboration",
+              "bloomsLevel": "Apply",
+              "linkedCLO": "CLO2"
+            },
+            {
+              "number": 3,
+              "text": "Document development process and decisions",
+              "bloomsLevel": "Create",
+              "linkedCLO": "CLO5"
+            }
+          ],
+          "assessments": [
+            {
+              "title": "M05-A1: Rapid Prototype Sprint",
+              "points": 50,
+              "type": "Project"
+            },
+            {
+              "title": "M05-A2: Project Planning",
+              "points": 25,
+              "type": "Assignment"
+            }
+          ]
+        },
+        {
+          "number": 6,
+          "title": "Application Building - Sprint 1",
+          "theme": "Development cycle with review",
+          "weeks": "11-12",
+          "mlos": [
+            {
+              "number": 1,
+              "text": "Execute Sprint 1 development cycle",
+              "bloomsLevel": "Apply",
+              "linkedCLO": "CLO2"
+            },
+            {
+              "number": 2,
+              "text": "Conduct sprint review and retrospective",
+              "bloomsLevel": "Evaluate",
+              "linkedCLO": "CLO5"
+            },
+            {
+              "number": 3,
+              "text": "Document challenges and solutions",
+              "bloomsLevel": "Analyze",
+              "linkedCLO": "CLO5"
+            }
+          ],
+          "assessments": [
+            {
+              "title": "M06-A1: Sprint 1 Deliverable",
+              "points": 75,
+              "type": "Project"
+            },
+            {
+              "title": "M06-A2: Sprint 1 Retrospective",
+              "points": 25,
+              "type": "Reflection"
+            }
+          ]
+        },
+        {
+          "number": 7,
+          "title": "Real-World Integration - Sprint 2",
+          "theme": "Portfolio building and refinement",
+          "weeks": "13-14",
+          "mlos": [
+            {
+              "number": 1,
+              "text": "Execute Sprint 2 with advanced features",
+              "bloomsLevel": "Apply",
+              "linkedCLO": "CLO2"
+            },
+            {
+              "number": 2,
+              "text": "Build professional portfolio showcasing work",
+              "bloomsLevel": "Create",
+              "linkedCLO": "CLO5"
+            },
+            {
+              "number": 3,
+              "text": "Refine AI collaboration workflows",
+              "bloomsLevel": "Evaluate",
+              "linkedCLO": "CLO3"
+            }
+          ],
+          "assessments": [
+            {
+              "title": "M07-A1: Sprint 2 Deliverable",
+              "points": 75,
+              "type": "Project"
+            },
+            {
+              "title": "M07-A2: Portfolio Development",
+              "points": 50,
+              "type": "Portfolio"
+            }
+          ]
+        },
+        {
+          "number": 8,
+          "title": "Capstone & Portfolio Defense",
+          "theme": "Final presentation and reflection",
+          "weeks": "15-16",
+          "mlos": [
+            {
+              "number": 1,
+              "text": "Prepare comprehensive portfolio documentation",
+              "bloomsLevel": "Create",
+              "linkedCLO": "CLO5"
+            },
+            {
+              "number": 2,
+              "text": "Present project and defend design decisions",
+              "bloomsLevel": "Evaluate",
+              "linkedCLO": "CLO4"
+            },
+            {
+              "number": 3,
+              "text": "Reflect on learning journey and skill development",
+              "bloomsLevel": "Evaluate",
+              "linkedCLO": "CLO5"
+            }
+          ],
+          "assessments": [
+            {
+              "title": "M08-A1: Final Portfolio",
+              "points": 100,
+              "type": "Portfolio"
+            },
+            {
+              "title": "M08-A2: Final Presentation",
+              "points": 75,
+              "type": "Presentation"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CSC-114",
+      "code": "CSC-114",
+      "title": "Artificial Intelligence I",
+      "credits": 3,
+      "classHours": 2,
+      "labHours": 3,
+      "term": "Spring 2026",
+      "prerequisites": "CSC-113 or instructor permission",
+      "description": "Advanced AI concepts with hands-on implementation. Students explore machine learning fundamentals, model evaluation, AI agents, and ethical AI development. Builds on CSC-113 foundations.",
+      "status": "design",
+      "completionPercent": 25,
+      "clos": [
+        {
+          "id": "CSC-114-CLO1",
+          "number": 1,
+          "text": "Implement machine learning models using established frameworks",
+          "bloomsLevel": "Apply",
+          "mappedOutcomes": ["PO2"]
+        },
+        {
+          "id": "CSC-114-CLO2",
+          "number": 2,
+          "text": "Evaluate AI model performance using appropriate metrics",
+          "bloomsLevel": "Evaluate",
+          "mappedOutcomes": ["PO2", "PO5"]
+        },
+        {
+          "id": "CSC-114-CLO3",
+          "number": 3,
+          "text": "Design and implement AI agents for specific tasks",
+          "bloomsLevel": "Create",
+          "mappedOutcomes": ["PO2", "PO3"]
+        },
+        {
+          "id": "CSC-114-CLO4",
+          "number": 4,
+          "text": "Analyze ethical implications of AI systems",
+          "bloomsLevel": "Analyze",
+          "mappedOutcomes": ["PO5"]
+        },
+        {
+          "id": "CSC-114-CLO5",
+          "number": 5,
+          "text": "Document AI development process and decisions",
+          "bloomsLevel": "Create",
+          "mappedOutcomes": ["PO4", "PO5"]
+        }
+      ],
+      "modules": [
+        {
+          "number": 1,
+          "title": "ML Fundamentals & Setup",
+          "theme": "Machine learning basics and environment",
+          "weeks": "1-2",
+          "mlos": [],
+          "assessments": []
+        },
+        {
+          "number": 2,
+          "title": "Supervised Learning",
+          "theme": "Classification and regression",
+          "weeks": "3-4",
+          "mlos": [],
+          "assessments": []
+        },
+        {
+          "number": 3,
+          "title": "Model Evaluation",
+          "theme": "Metrics, validation, testing",
+          "weeks": "5-6",
+          "mlos": [],
+          "assessments": []
+        },
+        {
+          "number": 4,
+          "title": "AI Agents",
+          "theme": "Agent design and implementation",
+          "weeks": "7-8",
+          "mlos": [],
+          "assessments": []
+        },
+        {
+          "number": 5,
+          "title": "Neural Networks Intro",
+          "theme": "Deep learning basics",
+          "weeks": "9-10",
+          "mlos": [],
+          "assessments": []
+        },
+        {
+          "number": 6,
+          "title": "Computer Vision",
+          "theme": "Image classification and detection",
+          "weeks": "11-12",
+          "mlos": [],
+          "assessments": []
+        },
+        {
+          "number": 7,
+          "title": "NLP & Text Processing",
+          "theme": "Language models and text analysis",
+          "weeks": "13-14",
+          "mlos": [],
+          "assessments": []
+        },
+        {
+          "number": 8,
+          "title": "AI Ethics & Capstone",
+          "theme": "Responsible AI and final project",
+          "weeks": "15-16",
+          "mlos": [],
+          "assessments": []
+        }
+      ]
+    },
+    {
+      "id": "CTS-285",
+      "code": "CTS-285",
+      "title": "Systems Analysis & Design",
+      "credits": 3,
+      "classHours": 2,
+      "labHours": 2,
+      "term": "Fall 2025",
+      "prerequisites": "None",
+      "description": "AlgoCratic Futures - Navigate clearance levels while learning systems analysis, SDLC, and project management. Corporate dystopia satire creates psychological safety for learning. Process over product.",
+      "status": "in-progress",
+      "completionPercent": 70,
+      "clos": [
+        {
+          "id": "CTS-285-CLO1",
+          "number": 1,
+          "text": "Analyze system requirements using structured methodologies",
+          "bloomsLevel": "Analyze",
+          "mappedOutcomes": ["PO3"]
+        },
+        {
+          "id": "CTS-285-CLO2",
+          "number": 2,
+          "text": "Apply SDLC phases to system development projects",
+          "bloomsLevel": "Apply",
+          "mappedOutcomes": ["PO3", "PO5"]
+        },
+        {
+          "id": "CTS-285-CLO3",
+          "number": 3,
+          "text": "Create user stories and acceptance criteria",
+          "bloomsLevel": "Create",
+          "mappedOutcomes": ["PO3", "PO4"]
+        },
+        {
+          "id": "CTS-285-CLO4",
+          "number": 4,
+          "text": "Design system architecture and data models",
+          "bloomsLevel": "Create",
+          "mappedOutcomes": ["PO3"]
+        },
+        {
+          "id": "CTS-285-CLO5",
+          "number": 5,
+          "text": "Document systems using professional standards",
+          "bloomsLevel": "Create",
+          "mappedOutcomes": ["PO4", "PO5"]
+        }
+      ],
+      "modules": [
+        {
+          "number": 1,
+          "title": "INFRARED: Orientation",
+          "theme": "AlgoCratic onboarding and GitHub basics",
+          "weeks": "1-2",
+          "mlos": [],
+          "assessments": []
+        },
+        {
+          "number": 2,
+          "title": "RED: Requirements",
+          "theme": "Gathering and documenting requirements",
+          "weeks": "3-4",
+          "mlos": [],
+          "assessments": []
+        },
+        {
+          "number": 3,
+          "title": "ORANGE: Analysis",
+          "theme": "User stories and system analysis",
+          "weeks": "5-6",
+          "mlos": [],
+          "assessments": []
+        },
+        {
+          "number": 4,
+          "title": "YELLOW: Design",
+          "theme": "Architecture and data modeling",
+          "weeks": "7-8",
+          "mlos": [],
+          "assessments": []
+        },
+        {
+          "number": 5,
+          "title": "GREEN: Implementation Planning",
+          "theme": "Sprint planning and development prep",
+          "weeks": "9-10",
+          "mlos": [],
+          "assessments": []
+        },
+        {
+          "number": 6,
+          "title": "BLUE: Testing & QA",
+          "theme": "Quality assurance and testing strategies",
+          "weeks": "11-12",
+          "mlos": [],
+          "assessments": []
+        },
+        {
+          "number": 7,
+          "title": "VIOLET: Deployment",
+          "theme": "Release management and handoff",
+          "weeks": "13-14",
+          "mlos": [],
+          "assessments": []
+        },
+        {
+          "number": 8,
+          "title": "ULTRAVIOLET: Maintenance & Evolution",
+          "theme": "Support, iteration, and continuous improvement",
+          "weeks": "15-16",
+          "mlos": [],
+          "assessments": []
+        }
+      ]
+    },
+    {
+      "id": "CTS-289",
+      "code": "CTS-289",
+      "title": "System Support Project",
+      "credits": 3,
+      "classHours": 1,
+      "labHours": 4,
+      "term": "Spring 2026",
+      "prerequisites": "CTS-285",
+      "description": "Capstone project course. Module 1: Red Clearance Recertification (Sacred Flow mastery). Collaboration with GRD-242 through Week 8. Process grading, not just product.",
+      "status": "partial",
+      "completionPercent": 35,
+      "clos": [
+        {
+          "id": "CTS-289-CLO1",
+          "number": 1,
+          "text": "Execute complete project lifecycle using professional workflows",
+          "bloomsLevel": "Apply",
+          "mappedOutcomes": ["PO1", "PO5"]
+        },
+        {
+          "id": "CTS-289-CLO2",
+          "number": 2,
+          "text": "Collaborate with cross-functional teams effectively",
+          "bloomsLevel": "Apply",
+          "mappedOutcomes": ["PO4", "PO5"]
+        },
+        {
+          "id": "CTS-289-CLO3",
+          "number": 3,
+          "text": "Design and implement system solutions meeting client requirements",
+          "bloomsLevel": "Create",
+          "mappedOutcomes": ["PO3"]
+        },
+        {
+          "id": "CTS-289-CLO4",
+          "number": 4,
+          "text": "Document process and deliverables professionally",
+          "bloomsLevel": "Create",
+          "mappedOutcomes": ["PO4", "PO5"]
+        }
+      ],
+      "modules": [
+        {
+          "number": 1,
+          "title": "Red Clearance Recertification",
+          "theme": "Sacred Flow workflow bootcamp",
+          "weeks": "1-2",
+          "mlos": [
+            {
+              "number": 1,
+              "text": "Demonstrate mastery of Git workflow (Issue → Branch → PR → Merge)",
+              "bloomsLevel": "Apply",
+              "linkedCLO": "CLO1"
+            },
+            {
+              "number": 2,
+              "text": "Complete workflow cycle with zero blockers",
+              "bloomsLevel": "Apply",
+              "linkedCLO": "CLO1"
+            }
+          ],
+          "assessments": [
+            {
+              "title": "M01: Sacred Flow Certification",
+              "points": 100,
+              "type": "Practical Exam"
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "title": "Project Kickoff & Client Discovery",
+          "theme": "Understanding client needs (GRD-242 partnership begins)",
+          "weeks": "3-4",
+          "mlos": [],
+          "assessments": []
+        },
+        {
+          "number": 3,
+          "title": "Requirements & User Stories",
+          "theme": "Translating client needs to technical specs",
+          "weeks": "5-6",
+          "mlos": [],
+          "assessments": []
+        },
+        {
+          "number": 4,
+          "title": "Sprint Planning & Architecture",
+          "theme": "Project structure and development plan",
+          "weeks": "7-8",
+          "mlos": [],
+          "assessments": []
+        },
+        {
+          "number": 5,
+          "title": "Development Sprint 1",
+          "theme": "First iteration with standup rituals",
+          "weeks": "9-10",
+          "mlos": [],
+          "assessments": []
+        },
+        {
+          "number": 6,
+          "title": "Development Sprint 2",
+          "theme": "Feature completion and testing",
+          "weeks": "11-12",
+          "mlos": [],
+          "assessments": []
+        },
+        {
+          "number": 7,
+          "title": "Polish & Documentation",
+          "theme": "Refinement and handoff preparation",
+          "weeks": "13-14",
+          "mlos": [],
+          "assessments": []
+        },
+        {
+          "number": 8,
+          "title": "Final Delivery & Reflection",
+          "theme": "Presentation, handoff, and retrospective",
+          "weeks": "15-16",
+          "mlos": [],
+          "assessments": []
+        }
+      ]
+    }
+  ],
+  "skillThreads": [
+    {
+      "id": "git-workflow",
+      "name": "Git/GitHub Workflow (Sacred Flow)",
+      "levels": [
+        {"level": "Intro", "courses": [{"course": "CSC-113", "module": 1}, {"course": "CTS-285", "module": 1}]},
+        {"level": "Develop", "courses": [{"course": "CSC-114", "module": 1}, {"course": "CTS-285", "module": 4}]},
+        {"level": "Master", "courses": [{"course": "CTS-289", "module": 1}, {"course": "CTS-289", "module": 8}]}
+      ]
+    },
+    {
+      "id": "scrum-agile",
+      "name": "SCRUM/Agile Project Management",
+      "levels": [
+        {"level": "Intro", "courses": [{"course": "CTS-285", "module": 2}]},
+        {"level": "Develop", "courses": [{"course": "CTS-285", "module": 5}, {"course": "CTS-289", "module": 2}]},
+        {"level": "Master", "courses": [{"course": "CTS-289", "module": 5}, {"course": "CTS-289", "module": 6}]}
+      ]
+    },
+    {
+      "id": "documentation",
+      "name": "Technical Documentation",
+      "levels": [
+        {"level": "Intro", "courses": [{"course": "CSC-113", "module": 1}, {"course": "CSC-114", "module": 1}]},
+        {"level": "Develop", "courses": [{"course": "CTS-285", "module": 4}, {"course": "CTS-285", "module": 6}]},
+        {"level": "Master", "courses": [{"course": "CTS-289", "module": 7}, {"course": "CTS-289", "module": 8}]}
+      ]
+    },
+    {
+      "id": "ai-ethics",
+      "name": "AI Ethics & Responsible Use",
+      "levels": [
+        {"level": "Intro", "courses": [{"course": "CSC-113", "module": 2}]},
+        {"level": "Develop", "courses": [{"course": "CSC-114", "module": 4}, {"course": "CSC-114", "module": 6}]},
+        {"level": "Master", "courses": [{"course": "CSC-114", "module": 8}]}
+      ]
+    },
+    {
+      "id": "process-first",
+      "name": "Process-First Mindset",
+      "levels": [
+        {"level": "Intro", "courses": [{"course": "CSC-113", "module": 1}]},
+        {"level": "Develop", "courses": [{"course": "CTS-285", "module": 3}, {"course": "CTS-289", "module": 2}]},
+        {"level": "Master", "courses": [{"course": "CTS-289", "module": 8}]}
+      ]
+    }
+  ]
+}

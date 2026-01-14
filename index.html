@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Norris Dashboard | Course Certification Hub</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #667eea;
+            --primary-dark: #764ba2;
+            --navy: #1a1a2e;
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --danger: #d63031;
+            --gray-light: #f5f7fa;
+            --text-dark: #2c3e50;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--navy) 0%, #16213e 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .header p { font-size: 1.1em; opacity: 0.95; }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 30px 40px;
+            background: var(--gray-light);
+            border-bottom: 2px solid #e1e8ed;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .stat-number { font-size: 2.5em; font-weight: bold; color: var(--primary); margin-bottom: 5px; }
+        .stat-label { color: var(--text-dark); font-size: 0.9em; font-weight: 600; }
+
+        .nav-tabs {
+            display: flex;
+            background: var(--gray-light);
+            border-bottom: 2px solid #e1e8ed;
+            overflow-x: auto;
+        }
+
+        .nav-tab {
+            padding: 20px 30px;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            font-size: 15px;
+            font-weight: 600;
+            color: #5a6c7d;
+            transition: all 0.3s;
+            white-space: nowrap;
+            border-bottom: 3px solid transparent;
+        }
+
+        .nav-tab:hover { background: rgba(102, 126, 234, 0.1); }
+        .nav-tab.active {
+            background: white;
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .tab-content { display: none; padding: 40px; }
+        .tab-content.active { display: block; }
+
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .course-card {
+            background: white;
+            border: 2px solid #e1e8ed;
+            border-radius: 12px;
+            padding: 25px;
+            transition: all 0.3s;
+        }
+
+        .course-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 4px 16px rgba(102, 126, 234, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .course-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .course-code {
+            background: var(--primary);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .course-title {
+            font-size: 1.4em;
+            color: var(--navy);
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .course-meta {
+            color: #5a6c7d;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+        }
+
+        .course-description {
+            color: var(--text-dark);
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-right: 10px;
+        }
+
+        .status-complete { background: #d4edda; color: #155724; }
+        .status-progress { background: #fff3cd; color: #856404; }
+        .status-design { background: #d1ecf1; color: #0c5460; }
+
+        .course-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin: 15px 0;
+            padding: 15px;
+            background: var(--gray-light);
+            border-radius: 8px;
+        }
+
+        .stat-item {
+            font-size: 0.9em;
+        }
+
+        .stat-item strong {
+            color: var(--navy);
+        }
+
+        .course-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: white;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .module-list {
+            margin-top: 20px;
+        }
+
+        .module-item {
+            background: white;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        .module-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .module-number {
+            background: var(--primary);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+
+        .module-title-wrapper {
+            display: flex;
+            align-items: center;
+            flex: 1;
+        }
+
+        .module-title {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: var(--navy);
+        }
+
+        .module-theme {
+            color: #5a6c7d;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        .module-details {
+            display: none;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e1e8ed;
+        }
+
+        .module-details.active {
+            display: block;
+        }
+
+        .mlo-list {
+            margin: 15px 0;
+        }
+
+        .mlo-item {
+            padding: 10px;
+            margin: 8px 0;
+            background: var(--gray-light);
+            border-left: 4px solid var(--primary);
+            border-radius: 4px;
+        }
+
+        .assessment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .assessment-item {
+            background: white;
+            border: 1px solid #e1e8ed;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 0.9em;
+        }
+
+        .assessment-title {
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 5px;
+        }
+
+        .assessment-points {
+            color: var(--primary);
+            font-size: 0.85em;
+        }
+
+        .filter-bar {
+            background: var(--gray-light);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            border: 2px solid var(--primary);
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--primary);
+            transition: all 0.3s;
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .skill-track {
+            background: white;
+            border: 2px solid #e1e8ed;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .skill-track h3 {
+            color: var(--navy);
+            margin-bottom: 15px;
+        }
+
+        .skill-path {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .skill-node {
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid;
+        }
+
+        .skill-node.intro {
+            background: #e3f2fd;
+            border-left-color: #2196f3;
+        }
+
+        .skill-node.develop {
+            background: #fff3e0;
+            border-left-color: #ff9800;
+        }
+
+        .skill-node.master {
+            background: #f3e5f5;
+            border-left-color: #9c27b0;
+        }
+
+        .courses-at-level {
+            font-size: 0.85em;
+            color: #5a6c7d;
+            margin-top: 8px;
+        }
+
+        .matrix-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .matrix-table th,
+        .matrix-table td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #e1e8ed;
+        }
+
+        .matrix-table th {
+            background: var(--navy);
+            color: white;
+            font-weight: 600;
+        }
+
+        .matrix-table td {
+            background: white;
+        }
+
+        .matrix-cell {
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .matrix-cell.has-mapping {
+            background: var(--primary);
+            color: white;
+            font-weight: bold;
+        }
+
+        .matrix-cell.has-mapping:hover {
+            background: var(--primary-dark);
+            transform: scale(1.05);
+        }
+
+        .comparison-view {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .comparison-course {
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .course-grid {
+                grid-template-columns: 1fr;
+            }
+            .comparison-view {
+                grid-template-columns: 1fr;
+            }
+            .skill-path {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📐 Norris Dashboard</h1>
+            <p>Drew Norris Course Certification Hub | NCCCS Spring 2026</p>
+        </div>
+
+        <div class="stats-grid" id="statsGrid">
+            <div class="stat-card">
+                <div class="stat-number">4</div>
+                <div class="stat-label">Courses</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">32</div>
+                <div class="stat-label">Modules</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">19</div>
+                <div class="stat-label">CLOs</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">58%</div>
+                <div class="stat-label">Complete</div>
+            </div>
+        </div>
+
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showTab('overview')">📊 Overview</button>
+            <button class="nav-tab" onclick="showTab('courses')">📚 Courses</button>
+            <button class="nav-tab" onclick="showTab('matrix')">🔗 Alignment</button>
+            <button class="nav-tab" onclick="showTab('threading')">🔄 Skill Threading</button>
+            <button class="nav-tab" onclick="showTab('comparison')">⚖️ Compare</button>
+        </div>
+
+        <div id="overview" class="tab-content active">
+            <h2 style="color: var(--navy); margin-bottom: 20px;">Program Overview</h2>
+            <div class="course-grid" id="courseGrid"></div>
+        </div>
+
+        <div id="courses" class="tab-content">
+            <h2 style="color: var(--navy); margin-bottom: 20px;">Course Catalog</h2>
+            <div class="filter-bar">
+                <div class="filter-buttons">
+                    <button class="filter-btn active" onclick="filterCourses('all')">Show All</button>
+                    <button class="filter-btn" onclick="filterCourses('CSC-113')">CSC-113 Only</button>
+                    <button class="filter-btn" onclick="filterCourses('CSC-114')">CSC-114 Only</button>
+                    <button class="filter-btn" onclick="filterCourses('CTS-285')">CTS-285 Only</button>
+                    <button class="filter-btn" onclick="filterCourses('CTS-289')">CTS-289 Only</button>
+                </div>
+            </div>
+            <div id="coursesDetailed"></div>
+        </div>
+
+        <div id="matrix" class="tab-content">
+            <h2 style="color: var(--navy); margin-bottom: 20px;">Alignment Matrix</h2>
+            <p style="color: #5a6c7d; margin-bottom: 20px;">Shows which courses address which program outcomes. Click cells to see details.</p>
+            <table class="matrix-table" id="alignmentMatrix"></table>
+        </div>
+
+        <div id="threading" class="tab-content">
+            <h2 style="color: var(--navy); margin-bottom: 20px;">Skill Threading Across Courses</h2>
+            <p style="color: #5a6c7d; margin-bottom: 20px;">How skills progress from introduction to mastery across Drew's program.</p>
+            <div id="skillThreads"></div>
+        </div>
+
+        <div id="comparison" class="tab-content">
+            <h2 style="color: var(--navy); margin-bottom: 20px;">Course Comparison</h2>
+            <div class="filter-bar">
+                <div class="filter-buttons">
+                    <button class="filter-btn" onclick="compareCourses('CSC-113', 'CSC-114')">Compare CSC-113 ↔ CSC-114</button>
+                    <button class="filter-btn" onclick="compareCourses('CTS-285', 'CTS-289')">Compare CTS-285 ↔ CTS-289</button>
+                </div>
+            </div>
+            <div id="comparisonView"></div>
+        </div>
+    </div>
+
+    <script>
+        let programData = {};
+
+        async function loadData() {
+            const response = await fetch('program-data.json');
+            programData = await response.json();
+            initializeDashboard();
+        }
+
+        function initializeDashboard() {
+            renderOverviewCards();
+            renderCoursesDetailed();
+            renderAlignmentMatrix();
+            renderSkillThreads();
+        }
+
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.nav-tab').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        function renderOverviewCards() {
+            const grid = document.getElementById('courseGrid');
+            grid.innerHTML = programData.courses.map(course => {
+                const statusClass = course.status === 'complete' ? 'status-complete' :
+                                  course.status === 'in-progress' ? 'status-progress' : 'status-design';
+                const statusText = course.status === 'complete' ? '✅ Complete' :
+                                 course.status === 'in-progress' ? '🟡 In Progress' : '🔵 Design Phase';
+
+                return `
+                    <div class="course-card">
+                        <div class="course-header">
+                            <div>
+                                <div class="course-code">${course.code}</div>
+                            </div>
+                            <span class="status-badge ${statusClass}">${statusText}</span>
+                        </div>
+                        <div class="course-title">${course.title}</div>
+                        <div class="course-meta">${course.classHours} Class | ${course.labHours} Lab | ${course.credits} Credit | ${course.term}</div>
+                        <div class="course-description">${course.description}</div>
+                        <div class="course-stats">
+                            <div class="stat-item"><strong>Modules:</strong> ${course.modules.length}/8</div>
+                            <div class="stat-item"><strong>CLOs:</strong> ${course.clos.length}</div>
+                            <div class="stat-item"><strong>Status:</strong> ${course.completionPercent}%</div>
+                            <div class="stat-item"><strong>Prerequisites:</strong> ${course.prerequisites}</div>
+                        </div>
+                        <div class="course-actions">
+                            <button class="btn btn-primary" onclick="showTab('courses'); filterCourses('${course.code}')">View Full Course</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderCoursesDetailed() {
+            const container = document.getElementById('coursesDetailed');
+            container.innerHTML = programData.courses.map(course => `
+                <div class="course-card course-detail" data-course="${course.code}" style="margin-bottom: 30px;">
+                    <div class="course-header">
+                        <div>
+                            <div class="course-code">${course.code}</div>
+                        </div>
+                    </div>
+                    <div class="course-title">${course.title}</div>
+                    <div class="course-meta">${course.classHours} Class | ${course.labHours} Lab | ${course.credits} Credit</div>
+                    <div class="course-description">${course.description}</div>
+
+                    <h3 style="margin-top: 20px; color: var(--navy);">Course Learning Outcomes (${course.clos.length})</h3>
+                    ${course.clos.map((clo, i) => `
+                        <div class="mlo-item">
+                            <strong>CLO ${clo.number}:</strong> ${clo.text}
+                            <div style="margin-top: 5px; font-size: 0.85em; color: #5a6c7d;">
+                                <span style="background: #e3f2fd; padding: 2px 8px; border-radius: 4px; margin-right: 5px;">📊 ${clo.bloomsLevel}</span>
+                                <span style="background: #f3e5f5; padding: 2px 8px; border-radius: 4px;">🎯 ${clo.mappedOutcomes.join(', ')}</span>
+                            </div>
+                        </div>
+                    `).join('')}
+
+                    <h3 style="margin-top: 30px; margin-bottom: 15px; color: var(--navy);">8 Modules</h3>
+                    <div class="module-list">
+                        ${course.modules.map(module => `
+                            <div class="module-item">
+                                <div class="module-header" onclick="toggleModule('${course.code}-M${module.number}')">
+                                    <div class="module-title-wrapper">
+                                        <div class="module-number">${module.number}</div>
+                                        <div>
+                                            <div class="module-title">${module.title}</div>
+                                            <div class="module-theme">${module.theme} • Weeks ${module.weeks}</div>
+                                        </div>
+                                    </div>
+                                    <span style="font-size: 1.5em; color: var(--primary);">▼</span>
+                                </div>
+                                <div class="module-details" id="${course.code}-M${module.number}">
+                                    ${module.mlos && module.mlos.length > 0 ? `
+                                        <h4 style="color: var(--navy); margin-bottom: 10px;">Module Learning Objectives (${module.mlos.length})</h4>
+                                        <div class="mlo-list">
+                                            ${module.mlos.map(mlo => `
+                                                <div class="mlo-item">
+                                                    <strong>MLO ${mlo.number}:</strong> ${mlo.text}
+                                                    <div style="margin-top: 5px; font-size: 0.85em; color: #5a6c7d;">
+                                                        <span style="background: #e3f2fd; padding: 2px 8px; border-radius: 4px;">📊 ${mlo.bloomsLevel}</span>
+                                                    </div>
+                                                </div>
+                                            `).join('')}
+                                        </div>
+                                    ` : '<p style="color: #5a6c7d; font-style: italic;">Module objectives to be developed</p>'}
+
+                                    ${module.assessments && module.assessments.length > 0 ? `
+                                        <h4 style="color: var(--navy); margin: 20px 0 10px;">Assessments (${module.assessments.length})</h4>
+                                        <div class="assessment-grid">
+                                            ${module.assessments.map(assessment => `
+                                                <div class="assessment-item">
+                                                    <div class="assessment-title">${assessment.title}</div>
+                                                    <div class="assessment-points">${assessment.points} points • ${assessment.type}</div>
+                                                </div>
+                                            `).join('')}
+                                        </div>
+                                    ` : ''}
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function toggleModule(moduleId) {
+            const details = document.getElementById(moduleId);
+            details.classList.toggle('active');
+        }
+
+        function filterCourses(courseCode) {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            const cards = document.querySelectorAll('.course-detail');
+            cards.forEach(card => {
+                if (courseCode === 'all' || card.dataset.course === courseCode) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        function renderAlignmentMatrix() {
+            const container = document.getElementById('alignmentMatrix');
+            const outcomes = programData.program.programOutcomes;
+
+            let html = '<thead><tr><th>Course</th>';
+            outcomes.forEach(po => {
+                html += `<th>${po.id}<br><small style="font-weight: normal;">${po.text.substring(0, 30)}...</small></th>`;
+            });
+            html += '</tr></thead><tbody>';
+
+            programData.courses.forEach(course => {
+                html += `<tr><td style="text-align: left;"><strong>${course.code}</strong><br><small>${course.title}</small></td>`;
+                outcomes.forEach(po => {
+                    const count = course.clos.filter(clo => clo.mappedOutcomes.includes(po.id)).length;
+                    if (count > 0) {
+                        html += `<td class="matrix-cell has-mapping" onclick="showMapping('${course.code}', '${po.id}')">${count}</td>`;
+                    } else {
+                        html += `<td class="matrix-cell">—</td>`;
+                    }
+                });
+                html += '</tr>';
+            });
+            html += '</tbody>';
+
+            container.innerHTML = html;
+        }
+
+        function showMapping(courseCode, poId) {
+            const course = programData.courses.find(c => c.code === courseCode);
+            const po = programData.program.programOutcomes.find(p => p.id === poId);
+            const clos = course.clos.filter(clo => clo.mappedOutcomes.includes(poId));
+
+            alert(`${course.code} → ${po.id}\n\nCLOs addressing this outcome:\n\n${clos.map(clo => `• CLO ${clo.number}: ${clo.text}`).join('\n\n')}`);
+        }
+
+        function renderSkillThreads() {
+            const container = document.getElementById('skillThreads');
+            container.innerHTML = programData.skillThreads.map(thread => `
+                <div class="skill-track">
+                    <h3>${thread.name}</h3>
+                    <div class="skill-path">
+                        ${thread.levels.map(level => `
+                            <div class="skill-node ${level.level.toLowerCase()}">
+                                <strong>${level.level} Level</strong>
+                                <div class="courses-at-level">
+                                    ${level.courses.map(c => `${c.course} Module ${c.module}`).join(', ')}
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function compareCourses(code1, code2) {
+            const course1 = programData.courses.find(c => c.code === code1);
+            const course2 = programData.courses.find(c => c.code === code2);
+            const container = document.getElementById('comparisonView');
+
+            container.innerHTML = `
+                <div class="comparison-view">
+                    <div class="comparison-course">
+                        <h3>${course1.code}: ${course1.title}</h3>
+                        <p><strong>Credits:</strong> ${course1.credits}</p>
+                        <p><strong>Prerequisites:</strong> ${course1.prerequisites}</p>
+                        <p><strong>CLOs:</strong> ${course1.clos.length}</p>
+                        <p><strong>Modules:</strong> ${course1.modules.length}</p>
+                        <h4 style="margin-top: 15px;">Module Titles:</h4>
+                        <ul style="margin-left: 20px;">
+                            ${course1.modules.map(m => `<li>M${m.number}: ${m.title}</li>`).join('')}
+                        </ul>
+                    </div>
+                    <div class="comparison-course">
+                        <h3>${course2.code}: ${course2.title}</h3>
+                        <p><strong>Credits:</strong> ${course2.credits}</p>
+                        <p><strong>Prerequisites:</strong> ${course2.prerequisites}</p>
+                        <p><strong>CLOs:</strong> ${course2.clos.length}</p>
+                        <p><strong>Modules:</strong> ${course2.modules.length}</p>
+                        <h4 style="margin-top: 15px;">Module Titles:</h4>
+                        <ul style="margin-left: 20px;">
+                            ${course2.modules.map(m => `<li>M${m.number}: ${m.title}</li>`).join('')}
+                        </ul>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Load data on page load
+        document.addEventListener('DOMContentLoaded', loadData);
+    </script>
+</body>
+</html>
