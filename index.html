@@ -448,6 +448,16 @@
             padding: 20px;
         }
 
+        .material-item-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
         @media (max-width: 768px) {
             .course-grid {
                 grid-template-columns: 1fr;
@@ -662,6 +672,270 @@
                             </div>
                         `).join('')}
                     </div>
+
+                    ${course.code === 'CSC-113' ? `
+                        <h3 style="margin-top: 30px; margin-bottom: 15px; color: var(--navy);">📚 Course Materials Library</h3>
+                        <div style="background: #f8f9fa; border-left: 5px solid var(--success); padding: 25px; border-radius: 8px; margin-bottom: 20px;">
+                            <p style="margin-bottom: 20px; color: var(--text-dark); font-size: 1.05em;">
+                                <strong>Status:</strong> ✅ 100% Complete - Certification Ready<br>
+                                <strong>Total Materials:</strong> 32 files, 536+ pages<br>
+                                <strong>Click any section below to view materials</strong>
+                            </p>
+
+                            <!-- Planning Sheets Section -->
+                            <div class="materials-section" style="margin-bottom: 15px;">
+                                <div class="materials-header" onclick="toggleMaterials('csc113-planning')"
+                                     style="background: white; padding: 15px; border-radius: 8px; border: 2px solid #fff3e0; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <h4 style="color: var(--warning); margin: 0; font-size: 1.1em;">📋 Planning Sheets (5 Templates)</h4>
+                                        <p style="margin: 5px 0 0 0; color: #5a6c7d; font-size: 0.9em;">Intro-level PM integration • 36 pages</p>
+                                    </div>
+                                    <span style="font-size: 1.5em; color: var(--warning);">▼</span>
+                                </div>
+                                <div class="materials-content" id="csc113-planning" style="display: none; padding: 20px; background: white; border: 2px solid #fff3e0; border-top: none; border-radius: 0 0 8px 8px;">
+                                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+                                        <button class="material-item-btn" onclick="viewMaterial('CSC-113', 'planning-sheets/Module_01_Issue_Template.md')" style="padding: 15px; text-align: left; background: #fff3e0; border: 1px solid #ffb74d; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
+                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">GitHub Issue Template</div>
+                                            <div style="font-size: 0.85em; color: #5a6c7d;">Module 1 baseline • 4 pages</div>
+                                        </button>
+                                        <button class="material-item-btn" onclick="viewMaterial('CSC-113', 'planning-sheets/Exit_Ticket_Template.md')" style="padding: 15px; text-align: left; background: #fff3e0; border: 1px solid #ffb74d; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
+                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Exit Ticket Template</div>
+                                            <div style="font-size: 0.85em; color: #5a6c7d;">Weekly reflection • 6 pages</div>
+                                        </button>
+                                        <button class="material-item-btn" onclick="viewMaterial('CSC-113', 'planning-sheets/Commit_Message_Guide.md')" style="padding: 15px; text-align: left; background: #fff3e0; border: 1px solid #ffb74d; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
+                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Commit Message Guide</div>
+                                            <div style="font-size: 0.85em; color: #5a6c7d;">Professional standards • 8 pages</div>
+                                        </button>
+                                        <button class="material-item-btn" onclick="viewMaterial('CSC-113', 'planning-sheets/Task_Breakdown_Sheet.md')" style="padding: 15px; text-align: left; background: #fff3e0; border: 1px solid #ffb74d; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
+                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Task Breakdown Sheet</div>
+                                            <div style="font-size: 0.85em; color: #5a6c7d;">30-minute rule • 10 pages</div>
+                                        </button>
+                                        <button class="material-item-btn" onclick="viewMaterial('CSC-113', 'planning-sheets/Weekly_Planning_Template.md')" style="padding: 15px; text-align: left; background: #fff3e0; border: 1px solid #ffb74d; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
+                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Weekly Planning Template</div>
+                                            <div style="font-size: 0.85em; color: #5a6c7d;">2-week module planning • 8 pages</div>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Assignments Section -->
+                            <div class="materials-section" style="margin-bottom: 15px;">
+                                <div class="materials-header" onclick="toggleMaterials('csc113-assignments')"
+                                     style="background: white; padding: 15px; border-radius: 8px; border: 2px solid #e8f5e9; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <h4 style="color: var(--success); margin: 0; font-size: 1.1em;">📝 Assignments (8 Modules)</h4>
+                                        <p style="margin: 5px 0 0 0; color: #5a6c7d; font-size: 0.9em;">Detailed instructions with rubrics • 120+ pages</p>
+                                    </div>
+                                    <span style="font-size: 1.5em; color: var(--success);">▼</span>
+                                </div>
+                                <div class="materials-content" id="csc113-assignments" style="display: none; padding: 20px; background: white; border: 2px solid #e8f5e9; border-top: none; border-radius: 0 0 8px 8px;">
+                                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+                                        <button class="material-item-btn" onclick="viewMaterial('CSC-113', 'assignments/Week_01_Assignment_Hello_GitHub.md')" style="padding: 15px; text-align: left; background: #e8f5e9; border: 1px solid #66bb6a; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
+                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Week 1: Hello GitHub</div>
+                                            <div style="font-size: 0.85em; color: #5a6c7d;">25 points • Portfolio setup</div>
+                                        </button>
+                                        <button class="material-item-btn" onclick="viewMaterial('CSC-113', 'assignments/Week_02_Assignment_Meet_Kevin_and_SAGE.md')" style="padding: 15px; text-align: left; background: #e8f5e9; border: 1px solid #66bb6a; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
+                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Week 2: Meet Kevin & SAGE</div>
+                                            <div style="font-size: 0.85em; color: #5a6c7d;">25 points • AI workspace</div>
+                                        </button>
+                                        <button class="material-item-btn" onclick="viewMaterial('CSC-113', 'assignments/Week_03_Assignment_AI_Timeline_Research.md')" style="padding: 15px; text-align: left; background: #e8f5e9; border: 1px solid #66bb6a; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
+                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Week 3: AI Timeline Research</div>
+                                            <div style="font-size: 0.85em; color: #5a6c7d;">25 points • AI history</div>
+                                        </button>
+                                        <button class="material-item-btn" onclick="viewMaterial('CSC-113', 'assignments/Week_04_Assignment_Bad_Bot.md')" style="padding: 15px; text-align: left; background: #e8f5e9; border: 1px solid #66bb6a; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
+                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Week 4: Bad Bot Design</div>
+                                            <div style="font-size: 0.85em; color: #5a6c7d;">25 points • Failure as exercise</div>
+                                        </button>
+                                        <button class="material-item-btn" onclick="viewMaterial('CSC-113', 'assignments/Week_05_Assignment_Good_Bot.md')" style="padding: 15px; text-align: left; background: #e8f5e9; border: 1px solid #66bb6a; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
+                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Week 5: Good Bot Iteration</div>
+                                            <div style="font-size: 0.85em; color: #5a6c7d;">25 points • Prompt engineering</div>
+                                        </button>
+                                        <button class="material-item-btn" onclick="viewMaterial('CSC-113', 'assignments/Week_06_Assignment_Holiday_Shopping_Research.md')" style="padding: 15px; text-align: left; background: #e8f5e9; border: 1px solid #66bb6a; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
+                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Week 6: Holiday Shopping Research</div>
+                                            <div style="font-size: 0.85em; color: #5a6c7d;">25 points • Real-world application</div>
+                                        </button>
+                                        <button class="material-item-btn" onclick="viewMaterial('CSC-113', 'assignments/Week_07_Assignment_Project_Ideation.md')" style="padding: 15px; text-align: left; background: #e8f5e9; border: 1px solid #66bb6a; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
+                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Week 7: Project Ideation</div>
+                                            <div style="font-size: 0.85em; color: #5a6c7d;">25 points • Capstone planning</div>
+                                        </button>
+                                        <button class="material-item-btn" onclick="viewMaterial('CSC-113', 'assignments/Week_08_Assignment_Track_Specialization.md')" style="padding: 15px; text-align: left; background: #e8f5e9; border: 1px solid #66bb6a; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
+                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Week 8: Track Specialization</div>
+                                            <div style="font-size: 0.85em; color: #5a6c7d;">25 points • Code Builders or Prompt Masters</div>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Knowledge Checks Section -->
+                            <div class="materials-section" style="margin-bottom: 15px;">
+                                <div class="materials-header" onclick="toggleMaterials('csc113-knowledge')"
+                                     style="background: white; padding: 15px; border-radius: 8px; border: 2px solid #f3e5f5; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <h4 style="color: #9c27b0; margin: 0; font-size: 1.1em;">✅ Knowledge Checks (8 Modules)</h4>
+                                        <p style="margin: 5px 0 0 0; color: #5a6c7d; font-size: 0.9em;">Formative assessments • Canvas-ready • 60+ pages</p>
+                                    </div>
+                                    <span style="font-size: 1.5em; color: #9c27b0;">▼</span>
+                                </div>
+                                <div class="materials-content" id="csc113-knowledge" style="display: none; padding: 20px; background: white; border: 2px solid #f3e5f5; border-top: none; border-radius: 0 0 8px 8px;">
+                                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+                                        <button class="material-item-btn" onclick="viewMaterial('CSC-113', 'knowledge-checks/Module_01_Knowledge_Check.md')" style="padding: 15px; text-align: left; background: #f3e5f5; border: 1px solid #ba68c8; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
+                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Module 1: SAGE & GitHub</div>
+                                            <div style="font-size: 0.85em; color: #5a6c7d;">13 questions • Unlimited attempts</div>
+                                        </button>
+                                        <button class="material-item-btn" onclick="viewMaterial('CSC-113', 'knowledge-checks/Module_02_Knowledge_Check.md')" style="padding: 15px; text-align: left; background: #f3e5f5; border: 1px solid #ba68c8; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
+                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Module 2: AI History & Bad Bot</div>
+                                            <div style="font-size: 0.85em; color: #5a6c7d;">13 questions • Unlimited attempts</div>
+                                        </button>
+                                        <button class="material-item-btn" onclick="viewMaterial('CSC-113', 'knowledge-checks/Module_03_Knowledge_Check.md')" style="padding: 15px; text-align: left; background: #f3e5f5; border: 1px solid #ba68c8; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
+                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Module 3: Prompt Engineering</div>
+                                            <div style="font-size: 0.85em; color: #5a6c7d;">13 questions • Unlimited attempts</div>
+                                        </button>
+                                        <button class="material-item-btn" onclick="viewMaterial('CSC-113', 'knowledge-checks/Module_04_Knowledge_Check.md')" style="padding: 15px; text-align: left; background: #f3e5f5; border: 1px solid #ba68c8; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
+                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Module 4: Project Ideation & Tracks</div>
+                                            <div style="font-size: 0.85em; color: #5a6c7d;">13 questions • Unlimited attempts</div>
+                                        </button>
+                                        <button class="material-item-btn" onclick="viewMaterial('CSC-113', 'knowledge-checks/Modules_05-08_Knowledge_Checks.md')" style="padding: 15px; text-align: left; background: #f3e5f5; border: 1px solid #ba68c8; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
+                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Modules 5-8: Project Phase</div>
+                                            <div style="font-size: 0.85em; color: #5a6c7d;">30+ questions • Portfolio & sprints</div>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Activities Section -->
+                            <div class="materials-section" style="margin-bottom: 15px;">
+                                <div class="materials-header" onclick="toggleMaterials('csc113-activities')"
+                                     style="background: white; padding: 15px; border-radius: 8px; border: 2px solid #e3f2fd; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <h4 style="color: var(--primary); margin: 0; font-size: 1.1em;">🎨 Learning Activities (Labs & Workshops)</h4>
+                                        <p style="margin: 5px 0 0 0; color: #5a6c7d; font-size: 0.9em;">Hands-on labs with facilitation guides • 80+ pages</p>
+                                    </div>
+                                    <span style="font-size: 1.5em; color: var(--primary);">▼</span>
+                                </div>
+                                <div class="materials-content" id="csc113-activities" style="display: none; padding: 20px; background: white; border: 2px solid #e3f2fd; border-top: none; border-radius: 0 0 8px 8px;">
+                                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+                                        <button class="material-item-btn" onclick="viewMaterial('CSC-113', 'activities/Module_01_Sacred_Flow_Lab.md')" style="padding: 15px; text-align: left; background: #e3f2fd; border: 1px solid #64b5f6; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
+                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Sacred Flow Lab</div>
+                                            <div style="font-size: 0.85em; color: #5a6c7d;">90 minutes • GitHub workflow</div>
+                                        </button>
+                                        <button class="material-item-btn" onclick="viewMaterial('CSC-113', 'activities/Module_02_AI_Timeline_Workshop.md')" style="padding: 15px; text-align: left; background: #e3f2fd; border: 1px solid #64b5f6; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
+                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">AI Timeline Workshop</div>
+                                            <div style="font-size: 0.85em; color: #5a6c7d;">60 minutes • AI history exploration</div>
+                                        </button>
+                                        <button class="material-item-btn" onclick="viewMaterial('CSC-113', 'activities/Module_03_Prompt_Engineering_Lab.md')" style="padding: 15px; text-align: left; background: #e3f2fd; border: 1px solid #64b5f6; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
+                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Prompt Engineering Lab</div>
+                                            <div style="font-size: 0.85em; color: #5a6c7d;">90 minutes • 10 techniques</div>
+                                        </button>
+                                        <button class="material-item-btn" onclick="viewMaterial('CSC-113', 'activities/Modules_04-08_Activities.md')" style="padding: 15px; text-align: left; background: #e3f2fd; border: 1px solid #64b5f6; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
+                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Project Phase Activities (Modules 4-8)</div>
+                                            <div style="font-size: 0.85em; color: #5a6c7d;">Sprints, demos, retrospectives</div>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Reference Materials Section -->
+                            <div class="materials-section" style="margin-bottom: 15px;">
+                                <div class="materials-header" onclick="toggleMaterials('csc113-reference')"
+                                     style="background: white; padding: 15px; border-radius: 8px; border: 2px solid #e8f5e9; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <h4 style="color: var(--success); margin: 0; font-size: 1.1em;">📖 Reference Materials (Student Resources)</h4>
+                                        <p style="margin: 5px 0 0 0; color: #5a6c7d; font-size: 0.9em;">Glossary, troubleshooting, quick reference • 50+ pages</p>
+                                    </div>
+                                    <span style="font-size: 1.5em; color: var(--success);">▼</span>
+                                </div>
+                                <div class="materials-content" id="csc113-reference" style="display: none; padding: 20px; background: white; border: 2px solid #e8f5e9; border-top: none; border-radius: 0 0 8px 8px;">
+                                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+                                        <button class="material-item-btn" onclick="viewMaterial('CSC-113', 'reference-materials/GLOSSARY.md')" style="padding: 15px; text-align: left; background: #e8f5e9; border: 1px solid #66bb6a; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
+                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Course Glossary</div>
+                                            <div style="font-size: 0.85em; color: #5a6c7d;">A-Z terms • 20+ pages</div>
+                                        </button>
+                                        <button class="material-item-btn" onclick="viewMaterial('CSC-113', 'reference-materials/TROUBLESHOOTING_GUIDE.md')" style="padding: 15px; text-align: left; background: #e8f5e9; border: 1px solid #66bb6a; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
+                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Troubleshooting Guide</div>
+                                            <div style="font-size: 0.85em; color: #5a6c7d;">Solutions for common issues • 25+ pages</div>
+                                        </button>
+                                        <button class="material-item-btn" onclick="viewMaterial('CSC-113', 'reference-materials/QUICK_REFERENCE_CARDS.md')" style="padding: 15px; text-align: left; background: #e8f5e9; border: 1px solid #66bb6a; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
+                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Quick Reference Cards</div>
+                                            <div style="font-size: 0.85em; color: #5a6c7d;">10 printable cards</div>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Instructor Guide Section -->
+                            <div class="materials-section" style="margin-bottom: 15px;">
+                                <div class="materials-header" onclick="toggleMaterials('csc113-instructor')"
+                                     style="background: white; padding: 15px; border-radius: 8px; border: 2px solid #ffebee; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <h4 style="color: var(--danger); margin: 0; font-size: 1.1em;">👨‍🏫 Instructor Guide</h4>
+                                        <p style="margin: 5px 0 0 0; color: #5a6c7d; font-size: 0.9em;">Complete teaching guide • 100+ pages</p>
+                                    </div>
+                                    <span style="font-size: 1.5em; color: var(--danger);">▼</span>
+                                </div>
+                                <div class="materials-content" id="csc113-instructor" style="display: none; padding: 20px; background: white; border: 2px solid #ffebee; border-top: none; border-radius: 0 0 8px 8px;">
+                                    <button class="material-item-btn" onclick="viewMaterial('CSC-113', 'instructor-guide/INSTRUCTOR_GUIDE.md')" style="padding: 15px; text-align: left; background: #ffebee; border: 1px solid #ef5350; border-radius: 6px; cursor: pointer; transition: all 0.3s; width: 100%;">
+                                        <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Complete Instructor Guide</div>
+                                        <div style="font-size: 0.85em; color: #5a6c7d; line-height: 1.6;">
+                                            Teaching philosophy • Module-by-module notes • Grading practices<br>
+                                            Student support strategies • Continuous improvement framework
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Course Overview Docs Section -->
+                            <div class="materials-section" style="margin-bottom: 15px;">
+                                <div class="materials-header" onclick="toggleMaterials('csc113-overview')"
+                                     style="background: white; padding: 15px; border-radius: 8px; border: 2px solid #e3f2fd; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <h4 style="color: var(--primary); margin: 0; font-size: 1.1em;">📋 Course Overview Documents</h4>
+                                        <p style="margin: 5px 0 0 0; color: #5a6c7d; font-size: 0.9em;">Certification package • 55+ pages</p>
+                                    </div>
+                                    <span style="font-size: 1.5em; color: var(--primary);">▼</span>
+                                </div>
+                                <div class="materials-content" id="csc113-overview" style="display: none; padding: 20px; background: white; border: 2px solid #e3f2fd; border-top: none; border-radius: 0 0 8px 8px;">
+                                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+                                        <button class="material-item-btn" onclick="viewMaterial('CSC-113', 'README.md')" style="padding: 15px; text-align: left; background: #e3f2fd; border: 1px solid #64b5f6; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
+                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Course README</div>
+                                            <div style="font-size: 0.85em; color: #5a6c7d;">Overview & structure • 5 pages</div>
+                                        </button>
+                                        <button class="material-item-btn" onclick="viewMaterial('CSC-113', 'COURSEMAP.md')" style="padding: 15px; text-align: left; background: #e3f2fd; border: 1px solid #64b5f6; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
+                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Complete Coursemap</div>
+                                            <div style="font-size: 0.85em; color: #5a6c7d;">Certification document • 50+ pages</div>
+                                        </button>
+                                        <button class="material-item-btn" onclick="viewMaterial('CSC-113', 'MATERIALS_INDEX.md')" style="padding: 15px; text-align: left; background: #e3f2fd; border: 1px solid #64b5f6; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
+                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Materials Index</div>
+                                            <div style="font-size: 0.85em; color: #5a6c7d;">Complete catalog • 30+ pages</div>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Quality Metrics -->
+                            <div style="margin-top: 25px; padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 8px; color: white; text-align: center;">
+                                <h4 style="margin-top: 0; font-size: 1.3em;">🎯 Quality Metrics</h4>
+                                <div style="display: flex; justify-content: space-around; margin-top: 15px; flex-wrap: wrap; gap: 15px;">
+                                    <div>
+                                        <div style="font-size: 2em; font-weight: bold;">✅</div>
+                                        <div>QM 22/22 Standards</div>
+                                    </div>
+                                    <div>
+                                        <div style="font-size: 2em; font-weight: bold;">32</div>
+                                        <div>Total Files</div>
+                                    </div>
+                                    <div>
+                                        <div style="font-size: 2em; font-weight: bold;">536+</div>
+                                        <div>Total Pages</div>
+                                    </div>
+                                    <div>
+                                        <div style="font-size: 2em; font-weight: bold;">100%</div>
+                                        <div>Complete</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    ` : ''}
+
                 </div>
             `).join('');
         }
@@ -770,6 +1044,88 @@
                     </div>
                 </div>
             `;
+        }
+
+        function toggleMaterials(sectionId) {
+            const content = document.getElementById(sectionId);
+            const isHidden = content.style.display === 'none';
+            content.style.display = isHidden ? 'block' : 'none';
+        }
+
+        function viewMaterial(courseCode, materialPath) {
+            const baseUrl = 'https://raw.githubusercontent.com/AMLW05/norris-dashboard/main';
+            const fullPath = `${baseUrl}/courses/${courseCode}/${materialPath}`;
+
+            // Open modal to display material content
+            const modal = document.createElement('div');
+            modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 10000; display: flex; align-items: center; justify-content: center; padding: 20px;';
+
+            modal.innerHTML = `
+                <div style="background: white; border-radius: 12px; max-width: 900px; width: 100%; max-height: 90vh; display: flex; flex-direction: column; box-shadow: 0 20px 60px rgba(0,0,0,0.5);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 20px; border-bottom: 2px solid #e1e8ed;">
+                        <h3 style="margin: 0; color: var(--navy);">📄 ${materialPath.split('/').pop().replace('.md', '').replace(/_/g, ' ')}</h3>
+                        <button onclick="this.closest('.modal-container').remove()" style="background: var(--danger); color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold;">✕ Close</button>
+                    </div>
+                    <div style="padding: 30px; overflow-y: auto; flex: 1;">
+                        <div style="text-align: center; padding: 40px; color: #5a6c7d;">
+                            <div style="font-size: 3em; margin-bottom: 20px;">📥</div>
+                            <p style="font-size: 1.1em; margin-bottom: 15px;">Loading material...</p>
+                            <div class="loading-spinner" style="margin: 20px auto; width: 40px; height: 40px; border: 4px solid #e1e8ed; border-top-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite;"></div>
+                        </div>
+                    </div>
+                    <div style="padding: 20px; border-top: 2px solid #e1e8ed; background: var(--gray-light); border-radius: 0 0 12px 12px;">
+                        <a href="https://github.com/AMLW05/norris-dashboard/blob/main/courses/${courseCode}/${materialPath}" target="_blank"
+                           style="display: inline-block; background: var(--primary); color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: 600;">
+                            📂 View on GitHub
+                        </a>
+                    </div>
+                </div>
+            `;
+            modal.className = 'modal-container';
+            document.body.appendChild(modal);
+
+            // Fetch and display markdown content
+            fetch(fullPath)
+                .then(response => response.text())
+                .then(markdown => {
+                    const contentDiv = modal.querySelector('[style*="overflow-y"]');
+
+                    // Simple markdown-to-HTML conversion (basic formatting)
+                    let html = markdown
+                        .replace(/&/g, '&amp;')
+                        .replace(/</g, '&lt;')
+                        .replace(/>/g, '&gt;')
+                        .replace(/^### (.*$)/gim, '<h3 style="color: var(--navy); margin-top: 25px; margin-bottom: 15px; font-size: 1.3em;">$1</h3>')
+                        .replace(/^## (.*$)/gim, '<h2 style="color: var(--primary); margin-top: 30px; margin-bottom: 15px; font-size: 1.5em; border-bottom: 2px solid var(--primary); padding-bottom: 10px;">$1</h2>')
+                        .replace(/^# (.*$)/gim, '<h1 style="color: var(--navy); margin-bottom: 20px; font-size: 1.8em;">$1</h1>')
+                        .replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>')
+                        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+                        .replace(/\*(.+?)\*/g, '<em>$1</em>')
+                        .replace(/`(.+?)`/g, '<code style="background: #f5f7fa; padding: 2px 6px; border-radius: 3px; font-family: monospace; color: var(--danger);">$1</code>')
+                        .replace(/^- (.*$)/gim, '<li style="margin: 8px 0;">$1</li>')
+                        .replace(/^\d+\. (.*$)/gim, '<li style="margin: 8px 0;">$1</li>')
+                        .replace(/^---$/gim, '<hr style="border: none; border-top: 2px solid #e1e8ed; margin: 30px 0;">')
+                        .replace(/\n\n/g, '</p><p style="margin: 15px 0; line-height: 1.6; color: var(--text-dark);">')
+                        .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" style="color: var(--primary); text-decoration: underline;">$1</a>');
+
+                    // Wrap orphan <li> tags in <ul>
+                    html = html.replace(/(<li[^>]*>.*?<\/li>\s*)+/g, match => `<ul style="margin: 15px 0; padding-left: 30px; line-height: 1.8;">${match}</ul>`);
+
+                    // Wrap in paragraphs
+                    html = `<div style="font-family: 'Segoe UI', sans-serif; font-size: 1em; color: var(--text-dark);"><p style="margin: 15px 0; line-height: 1.6;">${html}</p></div>`;
+
+                    contentDiv.innerHTML = html;
+                })
+                .catch(error => {
+                    const contentDiv = modal.querySelector('[style*="overflow-y"]');
+                    contentDiv.innerHTML = `
+                        <div style="text-align: center; padding: 40px; color: var(--danger);">
+                            <div style="font-size: 3em; margin-bottom: 20px;">⚠️</div>
+                            <p style="font-size: 1.1em; margin-bottom: 15px;">Unable to load material</p>
+                            <p style="color: #5a6c7d;">Please view on GitHub instead.</p>
+                        </div>
+                    `;
+                });
         }
 
         // Load data on page load
