@@ -90,7 +90,7 @@ To update courses:
 
 **Instructional Designer**: Angela Westmoreland
 **Instructor**: Drew Norris
-**Institution**: NCCCS
+**Institution**: FTCC
 
 ---
 
