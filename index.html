@@ -678,18 +678,6 @@
                                     ` : '<p style="color: #5a6c7d; font-style: italic;">Module objectives to be developed</p>'}
 
                                     ${course.code === 'CSC-113' && module.number <= 8 ? renderModuleMaterials(course.code, module.number) : ''}
-
-                                    ${module.assessments && module.assessments.length > 0 ? `
-                                        <h4 style="color: var(--navy); margin: 20px 0 10px;">✅ Assessments</h4>
-                                        <div class="assessment-grid">
-                                            ${module.assessments.map(assessment => `
-                                                <div class="assessment-item">
-                                                    <div class="assessment-title">${assessment.title}</div>
-                                                    <div class="assessment-points">${assessment.points} points • ${assessment.type}</div>
-                                                </div>
-                                            `).join('')}
-                                        </div>
-                                    ` : ''}
                                 </div>
                             </div>
                         `).join('')}
