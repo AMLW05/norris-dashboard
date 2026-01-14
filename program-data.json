@@ -403,9 +403,9 @@
       "labHours": 3,
       "term": "Spring 2026",
       "prerequisites": "CSC-113 or instructor permission",
-      "description": "Advanced AI concepts with hands-on implementation. Students explore machine learning fundamentals, model evaluation, AI agents, and ethical AI development. Builds on CSC-113 foundations.",
-      "status": "design",
-      "completionPercent": 25,
+      "description": "Advanced AI concepts with hands-on implementation. Students explore machine learning fundamentals, model evaluation, AI agents, and ethical AI development. Builds on CSC-113 foundations. Integrates Scrum/PM skills (user stories, estimation, sprints) throughout.",
+      "status": "in-progress",
+      "completionPercent": 50,
       "clos": [
         {
           "id": "CSC-114-CLO1",
