@@ -404,8 +404,8 @@
       "term": "Spring 2026",
       "prerequisites": "CSC-113 or instructor permission",
       "description": "Advanced AI concepts with hands-on implementation. Students explore machine learning fundamentals, model evaluation, AI agents, and ethical AI development. Builds on CSC-113 foundations. Integrates Scrum/PM skills (user stories, estimation, sprints) throughout.",
-      "status": "in-progress",
-      "completionPercent": 50,
+      "status": "complete",
+      "completionPercent": 100,
       "clos": [
         {
           "id": "CSC-114-CLO1",
@@ -447,66 +447,249 @@
         {
           "number": 1,
           "title": "ML Fundamentals & Setup",
-          "theme": "Machine learning basics and environment",
+          "theme": "Foundation for ML development + PM user story writing",
           "weeks": "1-2",
-          "mlos": [],
-          "assessments": []
+          "mlos": [
+            {
+              "number": 1,
+              "text": "Configure Python ML environment and execute first classification model",
+              "bloomsLevel": "Apply",
+              "linkedCLO": "CLO1"
+            },
+            {
+              "number": 2,
+              "text": "Create user stories with acceptance criteria for ML projects",
+              "bloomsLevel": "Create",
+              "linkedCLO": "CLO5"
+            }
+          ],
+          "assessments": [
+            {
+              "title": "Week 1: ML Environment Setup & First Model",
+              "points": 25,
+              "type": "Assignment"
+            },
+            {
+              "title": "Week 2: User Story Backlog for ML Project",
+              "points": 25,
+              "type": "Assignment"
+            }
+          ]
         },
         {
           "number": 2,
           "title": "Supervised Learning",
-          "theme": "Classification and regression",
+          "theme": "Core ML techniques + PM estimation skills",
           "weeks": "3-4",
-          "mlos": [],
-          "assessments": []
+          "mlos": [
+            {
+              "number": 1,
+              "text": "Implement classification and regression models for real-world datasets",
+              "bloomsLevel": "Apply",
+              "linkedCLO": "CLO1"
+            },
+            {
+              "number": 2,
+              "text": "Estimate work using story points and track completion accuracy",
+              "bloomsLevel": "Apply",
+              "linkedCLO": "CLO5"
+            }
+          ],
+          "assessments": [
+            {
+              "title": "Week 3: Classification Project",
+              "points": 25,
+              "type": "Assignment"
+            },
+            {
+              "title": "Week 4: Regression Analysis",
+              "points": 25,
+              "type": "Assignment"
+            }
+          ]
         },
         {
           "number": 3,
           "title": "Model Evaluation",
-          "theme": "Metrics, validation, testing",
+          "theme": "Comprehensive evaluation metrics + First complete sprint",
           "weeks": "5-6",
-          "mlos": [],
-          "assessments": []
+          "mlos": [
+            {
+              "number": 1,
+              "text": "Evaluate ML models using precision, recall, F1-score, and ROC curves",
+              "bloomsLevel": "Evaluate",
+              "linkedCLO": "CLO2"
+            },
+            {
+              "number": 2,
+              "text": "Execute complete sprint cycle with planning, standups, and retrospective",
+              "bloomsLevel": "Apply",
+              "linkedCLO": "CLO5"
+            }
+          ],
+          "assessments": [
+            {
+              "title": "Weeks 5-6: Model Evaluation Sprint",
+              "points": 50,
+              "type": "Sprint"
+            },
+            {
+              "title": "Week 6: Sprint 1 Retrospective",
+              "points": 25,
+              "type": "Reflection"
+            }
+          ]
         },
         {
           "number": 4,
           "title": "AI Agents",
-          "theme": "Agent design and implementation",
+          "theme": "Autonomous agents + Improved sprint practices",
           "weeks": "7-8",
-          "mlos": [],
-          "assessments": []
+          "mlos": [
+            {
+              "number": 1,
+              "text": "Design and implement AI agents for autonomous decision-making tasks",
+              "bloomsLevel": "Create",
+              "linkedCLO": "CLO3"
+            },
+            {
+              "number": 2,
+              "text": "Apply velocity tracking and sprint retrospective insights to improve process",
+              "bloomsLevel": "Apply",
+              "linkedCLO": "CLO5"
+            }
+          ],
+          "assessments": [
+            {
+              "title": "Weeks 7-8: AI Agent Development Sprint",
+              "points": 50,
+              "type": "Sprint"
+            },
+            {
+              "title": "Week 8: Sprint 2 Review & Retrospective",
+              "points": 25,
+              "type": "Reflection"
+            }
+          ]
         },
         {
           "number": 5,
           "title": "Neural Networks Intro",
-          "theme": "Deep learning basics",
+          "theme": "Deep learning introduction + PM becomes habitual",
           "weeks": "9-10",
-          "mlos": [],
-          "assessments": []
+          "mlos": [
+            {
+              "number": 1,
+              "text": "Implement neural networks using TensorFlow/Keras frameworks",
+              "bloomsLevel": "Apply",
+              "linkedCLO": "CLO1"
+            },
+            {
+              "number": 2,
+              "text": "Execute sprint with autonomous PM practices (minimal scaffolding)",
+              "bloomsLevel": "Apply",
+              "linkedCLO": "CLO5"
+            }
+          ],
+          "assessments": [
+            {
+              "title": "Weeks 9-10: Neural Networks Sprint 3",
+              "points": 75,
+              "type": "Sprint"
+            }
+          ]
         },
         {
           "number": 6,
           "title": "Computer Vision",
-          "theme": "Image classification and detection",
+          "theme": "CNNs and image classification + Ethical AI considerations",
           "weeks": "11-12",
-          "mlos": [],
-          "assessments": []
+          "mlos": [
+            {
+              "number": 1,
+              "text": "Implement computer vision models using CNNs for image classification",
+              "bloomsLevel": "Apply",
+              "linkedCLO": "CLO1"
+            },
+            {
+              "number": 2,
+              "text": "Analyze ethical implications of AI systems including bias and fairness",
+              "bloomsLevel": "Analyze",
+              "linkedCLO": "CLO4"
+            }
+          ],
+          "assessments": [
+            {
+              "title": "Weeks 11-12: Computer Vision Sprint 4",
+              "points": 75,
+              "type": "Sprint"
+            }
+          ]
         },
         {
           "number": 7,
           "title": "NLP & Text Processing",
-          "theme": "Language models and text analysis",
+          "theme": "Natural language processing + Performance optimization",
           "weeks": "13-14",
-          "mlos": [],
-          "assessments": []
+          "mlos": [
+            {
+              "number": 1,
+              "text": "Implement NLP models for text classification and sentiment analysis",
+              "bloomsLevel": "Apply",
+              "linkedCLO": "CLO1"
+            },
+            {
+              "number": 2,
+              "text": "Optimize sprint velocity and estimation accuracy through continuous improvement",
+              "bloomsLevel": "Evaluate",
+              "linkedCLO": "CLO5"
+            }
+          ],
+          "assessments": [
+            {
+              "title": "Weeks 13-14: NLP Project Sprint 5",
+              "points": 75,
+              "type": "Sprint"
+            }
+          ]
         },
         {
           "number": 8,
           "title": "AI Ethics & Capstone",
-          "theme": "Responsible AI and final project",
+          "theme": "Integration project + Process portfolio defense",
           "weeks": "15-16",
-          "mlos": [],
-          "assessments": []
+          "mlos": [
+            {
+              "number": 1,
+              "text": "Create comprehensive ML project integrating multiple techniques and full sprint cycle",
+              "bloomsLevel": "Create",
+              "linkedCLO": "CLO1"
+            },
+            {
+              "number": 2,
+              "text": "Evaluate personal PM skill development and create process portfolio demonstrating growth",
+              "bloomsLevel": "Evaluate",
+              "linkedCLO": "CLO5"
+            },
+            {
+              "number": 3,
+              "text": "Justify technical and process decisions through professional presentation",
+              "bloomsLevel": "Evaluate",
+              "linkedCLO": "CLO4"
+            }
+          ],
+          "assessments": [
+            {
+              "title": "Weeks 15-16: Capstone AI Project",
+              "points": 100,
+              "type": "Project"
+            },
+            {
+              "title": "Week 16: Final Presentation",
+              "points": 75,
+              "type": "Presentation"
+            }
+          ]
         }
       ]
     },
@@ -769,8 +952,9 @@
       "id": "scrum-agile",
       "name": "SCRUM/Agile Project Management",
       "levels": [
-        {"level": "Intro", "courses": [{"course": "CTS-285", "module": 2}]},
-        {"level": "Develop", "courses": [{"course": "CTS-285", "module": 5}, {"course": "CTS-289", "module": 2}]},
+        {"level": "Intro", "courses": [{"course": "CSC-113", "module": 5}, {"course": "CSC-113", "module": 6}]},
+        {"level": "Develop", "courses": [{"course": "CSC-114", "module": 1}, {"course": "CSC-114", "module": 3}, {"course": "CTS-285", "module": 5}]},
+        {"level": "Advanced", "courses": [{"course": "CTS-285", "module": 2}, {"course": "CTS-289", "module": 2}]},
         {"level": "Master", "courses": [{"course": "CTS-289", "module": 5}, {"course": "CTS-289", "module": 6}]}
       ]
     },
