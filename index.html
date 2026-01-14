@@ -664,7 +664,7 @@
                                 </div>
                                 <div class="module-details" id="${course.code}-M${module.number}">
                                     ${module.mlos && module.mlos.length > 0 ? `
-                                        <h4 style="color: var(--navy); margin-bottom: 10px;">Module Learning Objectives (${module.mlos.length})</h4>
+                                        <h4 style="color: var(--navy); margin-bottom: 10px;">📋 Module Learning Objectives</h4>
                                         <div class="mlo-list">
                                             ${module.mlos.map(mlo => `
                                                 <div class="mlo-item">
@@ -677,8 +677,10 @@
                                         </div>
                                     ` : '<p style="color: #5a6c7d; font-style: italic;">Module objectives to be developed</p>'}
 
+                                    ${course.code === 'CSC-113' && module.number <= 8 ? renderModuleMaterials(course.code, module.number) : ''}
+
                                     ${module.assessments && module.assessments.length > 0 ? `
-                                        <h4 style="color: var(--navy); margin: 20px 0 10px;">Assessments (${module.assessments.length})</h4>
+                                        <h4 style="color: var(--navy); margin: 20px 0 10px;">✅ Assessments</h4>
                                         <div class="assessment-grid">
                                             ${module.assessments.map(assessment => `
                                                 <div class="assessment-item">
@@ -694,216 +696,15 @@
                     </div>
 
                     ${course.code === 'CSC-113' ? `
-                        <h3 style="margin-top: 30px; margin-bottom: 15px; color: var(--navy);">📚 Course Materials Library</h3>
+                        <h3 style="margin-top: 30px; margin-bottom: 15px; color: var(--navy);">📚 Course Overview Materials</h3>
                         <div style="background: #f8f9fa; border-left: 5px solid var(--success); padding: 25px; border-radius: 8px; margin-bottom: 20px;">
                             <p style="margin-bottom: 20px; color: var(--text-dark); font-size: 1.05em;">
                                 <strong>Status:</strong> ✅ 100% Complete - Certification Ready<br>
                                 <strong>Total Materials:</strong> 32 files, 536+ pages<br>
-                                <strong>Click any section below to view materials</strong>
+                                <strong>Module-specific materials embedded in each module above</strong>
                             </p>
 
-                            <!-- Planning Sheets Section -->
-                            <div class="materials-section" style="margin-bottom: 15px;">
-                                <div class="materials-header" onclick="toggleMaterials('csc113-planning')"
-                                     style="background: white; padding: 15px; border-radius: 8px; border: 2px solid #fff3e0; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
-                                    <div>
-                                        <h4 style="color: var(--warning); margin: 0; font-size: 1.1em;">📋 Planning Sheets (5 Templates)</h4>
-                                        <p style="margin: 5px 0 0 0; color: #5a6c7d; font-size: 0.9em;">Intro-level PM integration • 36 pages</p>
-                                    </div>
-                                    <span style="font-size: 1.5em; color: var(--warning);">▼</span>
-                                </div>
-                                <div class="materials-content" id="csc113-planning" style="display: none; padding: 20px; background: white; border: 2px solid #fff3e0; border-top: none; border-radius: 0 0 8px 8px;">
-                                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
-                                        <button class="material-item-btn" onclick="viewMaterial('CSC-113', 'planning-sheets/Module_01_Issue_Template.md')" style="padding: 15px; text-align: left; background: #fff3e0; border: 1px solid #ffb74d; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
-                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">GitHub Issue Template</div>
-                                            <div style="font-size: 0.85em; color: #5a6c7d;">Module 1 baseline • 4 pages</div>
-                                        </button>
-                                        <button class="material-item-btn" onclick="viewMaterial('CSC-113', 'planning-sheets/Exit_Ticket_Template.md')" style="padding: 15px; text-align: left; background: #fff3e0; border: 1px solid #ffb74d; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
-                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Exit Ticket Template</div>
-                                            <div style="font-size: 0.85em; color: #5a6c7d;">Weekly reflection • 6 pages</div>
-                                        </button>
-                                        <button class="material-item-btn" onclick="viewMaterial('CSC-113', 'planning-sheets/Commit_Message_Guide.md')" style="padding: 15px; text-align: left; background: #fff3e0; border: 1px solid #ffb74d; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
-                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Commit Message Guide</div>
-                                            <div style="font-size: 0.85em; color: #5a6c7d;">Professional standards • 8 pages</div>
-                                        </button>
-                                        <button class="material-item-btn" onclick="viewMaterial('CSC-113', 'planning-sheets/Task_Breakdown_Sheet.md')" style="padding: 15px; text-align: left; background: #fff3e0; border: 1px solid #ffb74d; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
-                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Task Breakdown Sheet</div>
-                                            <div style="font-size: 0.85em; color: #5a6c7d;">30-minute rule • 10 pages</div>
-                                        </button>
-                                        <button class="material-item-btn" onclick="viewMaterial('CSC-113', 'planning-sheets/Weekly_Planning_Template.md')" style="padding: 15px; text-align: left; background: #fff3e0; border: 1px solid #ffb74d; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
-                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Weekly Planning Template</div>
-                                            <div style="font-size: 0.85em; color: #5a6c7d;">2-week module planning • 8 pages</div>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Assignments Section -->
-                            <div class="materials-section" style="margin-bottom: 15px;">
-                                <div class="materials-header" onclick="toggleMaterials('csc113-assignments')"
-                                     style="background: white; padding: 15px; border-radius: 8px; border: 2px solid #e8f5e9; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
-                                    <div>
-                                        <h4 style="color: var(--success); margin: 0; font-size: 1.1em;">📝 Assignments (8 Modules)</h4>
-                                        <p style="margin: 5px 0 0 0; color: #5a6c7d; font-size: 0.9em;">Detailed instructions with rubrics • 120+ pages</p>
-                                    </div>
-                                    <span style="font-size: 1.5em; color: var(--success);">▼</span>
-                                </div>
-                                <div class="materials-content" id="csc113-assignments" style="display: none; padding: 20px; background: white; border: 2px solid #e8f5e9; border-top: none; border-radius: 0 0 8px 8px;">
-                                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
-                                        <button class="material-item-btn" onclick="viewMaterial('CSC-113', 'assignments/Week_01_Assignment_Hello_GitHub.md')" style="padding: 15px; text-align: left; background: #e8f5e9; border: 1px solid #66bb6a; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
-                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Week 1: Hello GitHub</div>
-                                            <div style="font-size: 0.85em; color: #5a6c7d;">25 points • Portfolio setup</div>
-                                        </button>
-                                        <button class="material-item-btn" onclick="viewMaterial('CSC-113', 'assignments/Week_02_Assignment_Meet_Kevin_and_SAGE.md')" style="padding: 15px; text-align: left; background: #e8f5e9; border: 1px solid #66bb6a; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
-                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Week 2: Meet Kevin & SAGE</div>
-                                            <div style="font-size: 0.85em; color: #5a6c7d;">25 points • AI workspace</div>
-                                        </button>
-                                        <button class="material-item-btn" onclick="viewMaterial('CSC-113', 'assignments/Week_03_Assignment_AI_Timeline_Research.md')" style="padding: 15px; text-align: left; background: #e8f5e9; border: 1px solid #66bb6a; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
-                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Week 3: AI Timeline Research</div>
-                                            <div style="font-size: 0.85em; color: #5a6c7d;">25 points • AI history</div>
-                                        </button>
-                                        <button class="material-item-btn" onclick="viewMaterial('CSC-113', 'assignments/Week_04_Assignment_Bad_Bot.md')" style="padding: 15px; text-align: left; background: #e8f5e9; border: 1px solid #66bb6a; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
-                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Week 4: Bad Bot Design</div>
-                                            <div style="font-size: 0.85em; color: #5a6c7d;">25 points • Failure as exercise</div>
-                                        </button>
-                                        <button class="material-item-btn" onclick="viewMaterial('CSC-113', 'assignments/Week_05_Assignment_Good_Bot.md')" style="padding: 15px; text-align: left; background: #e8f5e9; border: 1px solid #66bb6a; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
-                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Week 5: Good Bot Iteration</div>
-                                            <div style="font-size: 0.85em; color: #5a6c7d;">25 points • Prompt engineering</div>
-                                        </button>
-                                        <button class="material-item-btn" onclick="viewMaterial('CSC-113', 'assignments/Week_06_Assignment_Holiday_Shopping_Research.md')" style="padding: 15px; text-align: left; background: #e8f5e9; border: 1px solid #66bb6a; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
-                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Week 6: Holiday Shopping Research</div>
-                                            <div style="font-size: 0.85em; color: #5a6c7d;">25 points • Real-world application</div>
-                                        </button>
-                                        <button class="material-item-btn" onclick="viewMaterial('CSC-113', 'assignments/Week_07_Assignment_Project_Ideation.md')" style="padding: 15px; text-align: left; background: #e8f5e9; border: 1px solid #66bb6a; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
-                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Week 7: Project Ideation</div>
-                                            <div style="font-size: 0.85em; color: #5a6c7d;">25 points • Capstone planning</div>
-                                        </button>
-                                        <button class="material-item-btn" onclick="viewMaterial('CSC-113', 'assignments/Week_08_Assignment_Track_Specialization.md')" style="padding: 15px; text-align: left; background: #e8f5e9; border: 1px solid #66bb6a; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
-                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Week 8: Track Specialization</div>
-                                            <div style="font-size: 0.85em; color: #5a6c7d;">25 points • Code Builders or Prompt Masters</div>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Knowledge Checks Section -->
-                            <div class="materials-section" style="margin-bottom: 15px;">
-                                <div class="materials-header" onclick="toggleMaterials('csc113-knowledge')"
-                                     style="background: white; padding: 15px; border-radius: 8px; border: 2px solid #f3e5f5; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
-                                    <div>
-                                        <h4 style="color: #9c27b0; margin: 0; font-size: 1.1em;">✅ Knowledge Checks (8 Modules)</h4>
-                                        <p style="margin: 5px 0 0 0; color: #5a6c7d; font-size: 0.9em;">Formative assessments • Canvas-ready • 60+ pages</p>
-                                    </div>
-                                    <span style="font-size: 1.5em; color: #9c27b0;">▼</span>
-                                </div>
-                                <div class="materials-content" id="csc113-knowledge" style="display: none; padding: 20px; background: white; border: 2px solid #f3e5f5; border-top: none; border-radius: 0 0 8px 8px;">
-                                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
-                                        <button class="material-item-btn" onclick="viewMaterial('CSC-113', 'knowledge-checks/Module_01_Knowledge_Check.md')" style="padding: 15px; text-align: left; background: #f3e5f5; border: 1px solid #ba68c8; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
-                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Module 1: SAGE & GitHub</div>
-                                            <div style="font-size: 0.85em; color: #5a6c7d;">13 questions • Unlimited attempts</div>
-                                        </button>
-                                        <button class="material-item-btn" onclick="viewMaterial('CSC-113', 'knowledge-checks/Module_02_Knowledge_Check.md')" style="padding: 15px; text-align: left; background: #f3e5f5; border: 1px solid #ba68c8; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
-                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Module 2: AI History & Bad Bot</div>
-                                            <div style="font-size: 0.85em; color: #5a6c7d;">13 questions • Unlimited attempts</div>
-                                        </button>
-                                        <button class="material-item-btn" onclick="viewMaterial('CSC-113', 'knowledge-checks/Module_03_Knowledge_Check.md')" style="padding: 15px; text-align: left; background: #f3e5f5; border: 1px solid #ba68c8; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
-                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Module 3: Prompt Engineering</div>
-                                            <div style="font-size: 0.85em; color: #5a6c7d;">13 questions • Unlimited attempts</div>
-                                        </button>
-                                        <button class="material-item-btn" onclick="viewMaterial('CSC-113', 'knowledge-checks/Module_04_Knowledge_Check.md')" style="padding: 15px; text-align: left; background: #f3e5f5; border: 1px solid #ba68c8; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
-                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Module 4: Project Ideation & Tracks</div>
-                                            <div style="font-size: 0.85em; color: #5a6c7d;">13 questions • Unlimited attempts</div>
-                                        </button>
-                                        <button class="material-item-btn" onclick="viewMaterial('CSC-113', 'knowledge-checks/Modules_05-08_Knowledge_Checks.md')" style="padding: 15px; text-align: left; background: #f3e5f5; border: 1px solid #ba68c8; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
-                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Modules 5-8: Project Phase</div>
-                                            <div style="font-size: 0.85em; color: #5a6c7d;">30+ questions • Portfolio & sprints</div>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Activities Section -->
-                            <div class="materials-section" style="margin-bottom: 15px;">
-                                <div class="materials-header" onclick="toggleMaterials('csc113-activities')"
-                                     style="background: white; padding: 15px; border-radius: 8px; border: 2px solid #e3f2fd; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
-                                    <div>
-                                        <h4 style="color: var(--primary); margin: 0; font-size: 1.1em;">🎨 Learning Activities (Labs & Workshops)</h4>
-                                        <p style="margin: 5px 0 0 0; color: #5a6c7d; font-size: 0.9em;">Hands-on labs with facilitation guides • 80+ pages</p>
-                                    </div>
-                                    <span style="font-size: 1.5em; color: var(--primary);">▼</span>
-                                </div>
-                                <div class="materials-content" id="csc113-activities" style="display: none; padding: 20px; background: white; border: 2px solid #e3f2fd; border-top: none; border-radius: 0 0 8px 8px;">
-                                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
-                                        <button class="material-item-btn" onclick="viewMaterial('CSC-113', 'activities/Module_01_Sacred_Flow_Lab.md')" style="padding: 15px; text-align: left; background: #e3f2fd; border: 1px solid #64b5f6; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
-                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Sacred Flow Lab</div>
-                                            <div style="font-size: 0.85em; color: #5a6c7d;">90 minutes • GitHub workflow</div>
-                                        </button>
-                                        <button class="material-item-btn" onclick="viewMaterial('CSC-113', 'activities/Module_02_AI_Timeline_Workshop.md')" style="padding: 15px; text-align: left; background: #e3f2fd; border: 1px solid #64b5f6; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
-                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">AI Timeline Workshop</div>
-                                            <div style="font-size: 0.85em; color: #5a6c7d;">60 minutes • AI history exploration</div>
-                                        </button>
-                                        <button class="material-item-btn" onclick="viewMaterial('CSC-113', 'activities/Module_03_Prompt_Engineering_Lab.md')" style="padding: 15px; text-align: left; background: #e3f2fd; border: 1px solid #64b5f6; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
-                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Prompt Engineering Lab</div>
-                                            <div style="font-size: 0.85em; color: #5a6c7d;">90 minutes • 10 techniques</div>
-                                        </button>
-                                        <button class="material-item-btn" onclick="viewMaterial('CSC-113', 'activities/Modules_04-08_Activities.md')" style="padding: 15px; text-align: left; background: #e3f2fd; border: 1px solid #64b5f6; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
-                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Project Phase Activities (Modules 4-8)</div>
-                                            <div style="font-size: 0.85em; color: #5a6c7d;">Sprints, demos, retrospectives</div>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Reference Materials Section -->
-                            <div class="materials-section" style="margin-bottom: 15px;">
-                                <div class="materials-header" onclick="toggleMaterials('csc113-reference')"
-                                     style="background: white; padding: 15px; border-radius: 8px; border: 2px solid #e8f5e9; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
-                                    <div>
-                                        <h4 style="color: var(--success); margin: 0; font-size: 1.1em;">📖 Reference Materials (Student Resources)</h4>
-                                        <p style="margin: 5px 0 0 0; color: #5a6c7d; font-size: 0.9em;">Glossary, troubleshooting, quick reference • 50+ pages</p>
-                                    </div>
-                                    <span style="font-size: 1.5em; color: var(--success);">▼</span>
-                                </div>
-                                <div class="materials-content" id="csc113-reference" style="display: none; padding: 20px; background: white; border: 2px solid #e8f5e9; border-top: none; border-radius: 0 0 8px 8px;">
-                                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
-                                        <button class="material-item-btn" onclick="viewMaterial('CSC-113', 'reference-materials/GLOSSARY.md')" style="padding: 15px; text-align: left; background: #e8f5e9; border: 1px solid #66bb6a; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
-                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Course Glossary</div>
-                                            <div style="font-size: 0.85em; color: #5a6c7d;">A-Z terms • 20+ pages</div>
-                                        </button>
-                                        <button class="material-item-btn" onclick="viewMaterial('CSC-113', 'reference-materials/TROUBLESHOOTING_GUIDE.md')" style="padding: 15px; text-align: left; background: #e8f5e9; border: 1px solid #66bb6a; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
-                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Troubleshooting Guide</div>
-                                            <div style="font-size: 0.85em; color: #5a6c7d;">Solutions for common issues • 25+ pages</div>
-                                        </button>
-                                        <button class="material-item-btn" onclick="viewMaterial('CSC-113', 'reference-materials/QUICK_REFERENCE_CARDS.md')" style="padding: 15px; text-align: left; background: #e8f5e9; border: 1px solid #66bb6a; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
-                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Quick Reference Cards</div>
-                                            <div style="font-size: 0.85em; color: #5a6c7d;">10 printable cards</div>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Instructor Guide Section -->
-                            <div class="materials-section" style="margin-bottom: 15px;">
-                                <div class="materials-header" onclick="toggleMaterials('csc113-instructor')"
-                                     style="background: white; padding: 15px; border-radius: 8px; border: 2px solid #ffebee; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
-                                    <div>
-                                        <h4 style="color: var(--danger); margin: 0; font-size: 1.1em;">👨‍🏫 Instructor Guide</h4>
-                                        <p style="margin: 5px 0 0 0; color: #5a6c7d; font-size: 0.9em;">Complete teaching guide • 100+ pages</p>
-                                    </div>
-                                    <span style="font-size: 1.5em; color: var(--danger);">▼</span>
-                                </div>
-                                <div class="materials-content" id="csc113-instructor" style="display: none; padding: 20px; background: white; border: 2px solid #ffebee; border-top: none; border-radius: 0 0 8px 8px;">
-                                    <button class="material-item-btn" onclick="viewMaterial('CSC-113', 'instructor-guide/INSTRUCTOR_GUIDE.md')" style="padding: 15px; text-align: left; background: #ffebee; border: 1px solid #ef5350; border-radius: 6px; cursor: pointer; transition: all 0.3s; width: 100%;">
-                                        <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Complete Instructor Guide</div>
-                                        <div style="font-size: 0.85em; color: #5a6c7d; line-height: 1.6;">
-                                            Teaching philosophy • Module-by-module notes • Grading practices<br>
-                                            Student support strategies • Continuous improvement framework
-                                        </div>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <!-- Course Overview Docs Section -->
+                            <!-- Course Overview Docs Section (always applies) -->
                             <div class="materials-section" style="margin-bottom: 15px;">
                                 <div class="materials-header" onclick="toggleMaterials('csc113-overview')"
                                      style="background: white; padding: 15px; border-radius: 8px; border: 2px solid #e3f2fd; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
@@ -963,6 +764,184 @@
         function toggleModule(moduleId) {
             const details = document.getElementById(moduleId);
             details.classList.toggle('active');
+        }
+
+        function renderModuleMaterials(courseCode, moduleNum) {
+            // Map module numbers to their specific materials
+            const moduleMaterials = {
+                1: {
+                    assignments: [
+                        { file: 'assignments/Week_01_Assignment_Hello_GitHub.md', title: 'Week 1: Hello GitHub', desc: '25 points • Portfolio setup' },
+                        { file: 'assignments/Week_02_Assignment_Meet_Kevin_and_SAGE.md', title: 'Week 2: Meet Kevin & SAGE', desc: '25 points • AI workspace' }
+                    ],
+                    planningSheets: [
+                        { file: 'planning-sheets/Module_01_Issue_Template.md', title: 'GitHub Issue Template', desc: 'Module 1 baseline' },
+                        { file: 'planning-sheets/Exit_Ticket_Template.md', title: 'Exit Ticket Template', desc: 'Weekly reflection' }
+                    ],
+                    knowledgeCheck: { file: 'knowledge-checks/Module_01_Knowledge_Check.md', title: 'Module 1: SAGE & GitHub', desc: '13 questions • Unlimited attempts' },
+                    activity: { file: 'activities/Module_01_Sacred_Flow_Lab.md', title: 'Sacred Flow Lab', desc: '90 minutes • GitHub workflow' }
+                },
+                2: {
+                    assignments: [
+                        { file: 'assignments/Week_03_Assignment_AI_Timeline_Research.md', title: 'Week 3: AI Timeline Research', desc: '25 points • AI history' },
+                        { file: 'assignments/Week_04_Assignment_Bad_Bot.md', title: 'Week 4: Bad Bot Design', desc: '25 points • Failure as exercise' }
+                    ],
+                    planningSheets: [
+                        { file: 'planning-sheets/Exit_Ticket_Template.md', title: 'Exit Ticket Template', desc: 'Weekly reflection' },
+                        { file: 'planning-sheets/Commit_Message_Guide.md', title: 'Commit Message Guide', desc: 'Professional standards' }
+                    ],
+                    knowledgeCheck: { file: 'knowledge-checks/Module_02_Knowledge_Check.md', title: 'Module 2: AI History & Bad Bot', desc: '13 questions • Unlimited attempts' },
+                    activity: { file: 'activities/Module_02_AI_Timeline_Workshop.md', title: 'AI Timeline Workshop', desc: '60 minutes • AI history exploration' }
+                },
+                3: {
+                    assignments: [
+                        { file: 'assignments/Week_05_Assignment_Good_Bot.md', title: 'Week 5: Good Bot Iteration', desc: '25 points • Prompt engineering' },
+                        { file: 'assignments/Week_06_Assignment_Holiday_Shopping_Research.md', title: 'Week 6: Holiday Shopping Research', desc: '25 points • Real-world application' }
+                    ],
+                    planningSheets: [
+                        { file: 'planning-sheets/Exit_Ticket_Template.md', title: 'Exit Ticket Template', desc: 'Weekly reflection' },
+                        { file: 'planning-sheets/Task_Breakdown_Sheet.md', title: 'Task Breakdown Sheet', desc: '30-minute rule' }
+                    ],
+                    knowledgeCheck: { file: 'knowledge-checks/Module_03_Knowledge_Check.md', title: 'Module 3: Prompt Engineering', desc: '13 questions • Unlimited attempts' },
+                    activity: { file: 'activities/Module_03_Prompt_Engineering_Lab.md', title: 'Prompt Engineering Lab', desc: '90 minutes • 10 techniques' }
+                },
+                4: {
+                    assignments: [
+                        { file: 'assignments/Week_07_Assignment_Project_Ideation.md', title: 'Week 7: Project Ideation', desc: '25 points • Capstone planning' },
+                        { file: 'assignments/Week_08_Assignment_Track_Specialization.md', title: 'Week 8: Track Specialization', desc: '25 points • Code Builders or Prompt Masters' }
+                    ],
+                    planningSheets: [
+                        { file: 'planning-sheets/Exit_Ticket_Template.md', title: 'Exit Ticket Template', desc: 'Weekly reflection' },
+                        { file: 'planning-sheets/Weekly_Planning_Template.md', title: 'Weekly Planning Template', desc: '2-week module planning' }
+                    ],
+                    knowledgeCheck: { file: 'knowledge-checks/Module_04_Knowledge_Check.md', title: 'Module 4: Project Ideation & Tracks', desc: '13 questions • Unlimited attempts' },
+                    activity: { file: 'activities/Modules_04-08_Activities.md', title: 'Brainstorming Studio', desc: '60 minutes • Project ideation' }
+                },
+                5: {
+                    assignments: [
+                        { file: 'assignments/Module_05_Rapid_Prototyping.md', title: 'Rapid Prototyping', desc: '75 points • MVP development' }
+                    ],
+                    planningSheets: [
+                        { file: 'planning-sheets/Exit_Ticket_Template.md', title: 'Exit Ticket Template', desc: 'Weekly reflection' },
+                        { file: 'planning-sheets/Weekly_Planning_Template.md', title: 'Weekly Planning Template', desc: 'Sprint planning' }
+                    ],
+                    knowledgeCheck: { file: 'knowledge-checks/Modules_05-08_Knowledge_Checks.md', title: 'Modules 5-8: Project Phase', desc: 'Sprint & portfolio questions' },
+                    activity: { file: 'activities/Modules_04-08_Activities.md', title: 'PRD Workshop', desc: '90 minutes • Requirements definition' }
+                },
+                6: {
+                    assignments: [
+                        { file: 'assignments/Module_06_Sprint_1.md', title: 'Sprint 1 Deliverable', desc: '100 points • Working prototype' }
+                    ],
+                    planningSheets: [
+                        { file: 'planning-sheets/Exit_Ticket_Template.md', title: 'Exit Ticket Template', desc: 'Sprint reflection' },
+                        { file: 'planning-sheets/Weekly_Planning_Template.md', title: 'Sprint Planning', desc: 'Sprint 1 tasks' }
+                    ],
+                    knowledgeCheck: { file: 'knowledge-checks/Modules_05-08_Knowledge_Checks.md', title: 'Sprint 1 Check', desc: 'Sprint progress questions' },
+                    activity: { file: 'activities/Modules_04-08_Activities.md', title: 'Demo Day & Retrospective', desc: '90 minutes • Sprint 1 review' }
+                },
+                7: {
+                    assignments: [
+                        { file: 'assignments/Module_07_Sprint_2.md', title: 'Sprint 2 Deliverable', desc: '125 points • Production-ready features' }
+                    ],
+                    planningSheets: [
+                        { file: 'planning-sheets/Exit_Ticket_Template.md', title: 'Exit Ticket Template', desc: 'Sprint reflection' },
+                        { file: 'planning-sheets/Weekly_Planning_Template.md', title: 'Sprint Planning', desc: 'Sprint 2 tasks' }
+                    ],
+                    knowledgeCheck: { file: 'knowledge-checks/Modules_05-08_Knowledge_Checks.md', title: 'Sprint 2 Check', desc: 'Refinement questions' },
+                    activity: { file: 'activities/Modules_04-08_Activities.md', title: 'Demo Day & Retrospective', desc: '90 minutes • Sprint 2 review' }
+                },
+                8: {
+                    assignments: [
+                        { file: 'assignments/Module_08_Portfolio_Defense.md', title: 'Final Portfolio & Presentation', desc: '175 points • Capstone defense' }
+                    ],
+                    planningSheets: [
+                        { file: 'planning-sheets/Exit_Ticket_Template.md', title: 'Final Reflection', desc: 'Course-level reflection' }
+                    ],
+                    knowledgeCheck: { file: 'knowledge-checks/Modules_05-08_Knowledge_Checks.md', title: 'Final Portfolio Check', desc: 'Presentation readiness' },
+                    activity: { file: 'activities/Modules_04-08_Activities.md', title: 'Final Presentations', desc: '180 minutes • Portfolio defense' }
+                }
+            };
+
+            const materials = moduleMaterials[moduleNum];
+            if (!materials) return '';
+
+            return `
+                <div style="margin-top: 25px; padding: 20px; background: #f8f9fa; border-radius: 8px;">
+                    <h4 style="color: var(--navy); margin-top: 0;">📚 Module ${moduleNum} Materials</h4>
+
+                    <!-- Planning Sheets -->
+                    ${materials.planningSheets ? `
+                        <div style="margin-bottom: 20px;">
+                            <div class="materials-header" onclick="toggleMaterials('${courseCode}-M${moduleNum}-planning')"
+                                 style="background: white; padding: 12px; border-radius: 6px; border: 2px solid #fff3e0; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
+                                <strong style="color: var(--warning);">📋 Planning Sheets (${materials.planningSheets.length})</strong>
+                                <span style="color: var(--warning);">▼</span>
+                            </div>
+                            <div class="materials-content" id="${courseCode}-M${moduleNum}-planning" style="display: none; padding: 15px; background: white; border: 2px solid #fff3e0; border-top: none; border-radius: 0 0 6px 6px;">
+                                ${materials.planningSheets.map(sheet => `
+                                    <button class="material-item-btn" onclick="viewMaterial('${courseCode}', '${sheet.file}')" style="padding: 12px; text-align: left; background: #fff3e0; border: 1px solid #ffb74d; border-radius: 4px; cursor: pointer; width: 100%; margin-bottom: 10px;">
+                                        <div style="font-weight: bold; color: var(--navy);">${sheet.title}</div>
+                                        <div style="font-size: 0.85em; color: #5a6c7d;">${sheet.desc}</div>
+                                    </button>
+                                `).join('')}
+                            </div>
+                        </div>
+                    ` : ''}
+
+                    <!-- Assignments -->
+                    ${materials.assignments ? `
+                        <div style="margin-bottom: 20px;">
+                            <div class="materials-header" onclick="toggleMaterials('${courseCode}-M${moduleNum}-assignments')"
+                                 style="background: white; padding: 12px; border-radius: 6px; border: 2px solid #e8f5e9; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
+                                <strong style="color: var(--success);">📝 Assignments (${materials.assignments.length})</strong>
+                                <span style="color: var(--success);">▼</span>
+                            </div>
+                            <div class="materials-content" id="${courseCode}-M${moduleNum}-assignments" style="display: none; padding: 15px; background: white; border: 2px solid #e8f5e9; border-top: none; border-radius: 0 0 6px 6px;">
+                                ${materials.assignments.map(assignment => `
+                                    <button class="material-item-btn" onclick="viewMaterial('${courseCode}', '${assignment.file}')" style="padding: 12px; text-align: left; background: #e8f5e9; border: 1px solid #66bb6a; border-radius: 4px; cursor: pointer; width: 100%; margin-bottom: 10px;">
+                                        <div style="font-weight: bold; color: var(--navy);">${assignment.title}</div>
+                                        <div style="font-size: 0.85em; color: #5a6c7d;">${assignment.desc}</div>
+                                    </button>
+                                `).join('')}
+                            </div>
+                        </div>
+                    ` : ''}
+
+                    <!-- Knowledge Check -->
+                    ${materials.knowledgeCheck ? `
+                        <div style="margin-bottom: 20px;">
+                            <div class="materials-header" onclick="toggleMaterials('${courseCode}-M${moduleNum}-knowledge')"
+                                 style="background: white; padding: 12px; border-radius: 6px; border: 2px solid #f3e5f5; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
+                                <strong style="color: #9c27b0;">✅ Knowledge Check</strong>
+                                <span style="color: #9c27b0;">▼</span>
+                            </div>
+                            <div class="materials-content" id="${courseCode}-M${moduleNum}-knowledge" style="display: none; padding: 15px; background: white; border: 2px solid #f3e5f5; border-top: none; border-radius: 0 0 6px 6px;">
+                                <button class="material-item-btn" onclick="viewMaterial('${courseCode}', '${materials.knowledgeCheck.file}')" style="padding: 12px; text-align: left; background: #f3e5f5; border: 1px solid #ba68c8; border-radius: 4px; cursor: pointer; width: 100%;">
+                                    <div style="font-weight: bold; color: var(--navy);">${materials.knowledgeCheck.title}</div>
+                                    <div style="font-size: 0.85em; color: #5a6c7d;">${materials.knowledgeCheck.desc}</div>
+                                </button>
+                            </div>
+                        </div>
+                    ` : ''}
+
+                    <!-- Activity -->
+                    ${materials.activity ? `
+                        <div style="margin-bottom: 20px;">
+                            <div class="materials-header" onclick="toggleMaterials('${courseCode}-M${moduleNum}-activity')"
+                                 style="background: white; padding: 12px; border-radius: 6px; border: 2px solid #e3f2fd; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
+                                <strong style="color: var(--primary);">🎨 Learning Activity</strong>
+                                <span style="color: var(--primary);">▼</span>
+                            </div>
+                            <div class="materials-content" id="${courseCode}-M${moduleNum}-activity" style="display: none; padding: 15px; background: white; border: 2px solid #e3f2fd; border-top: none; border-radius: 0 0 6px 6px;">
+                                <button class="material-item-btn" onclick="viewMaterial('${courseCode}', '${materials.activity.file}')" style="padding: 12px; text-align: left; background: #e3f2fd; border: 1px solid #64b5f6; border-radius: 4px; cursor: pointer; width: 100%;">
+                                    <div style="font-weight: bold; color: var(--navy);">${materials.activity.title}</div>
+                                    <div style="font-size: 0.85em; color: #5a6c7d;">${materials.activity.desc}</div>
+                                </button>
+                            </div>
+                        </div>
+                    ` : ''}
+                </div>
+            `;
         }
 
         function filterCourses(courseCode) {
