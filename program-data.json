@@ -96,19 +96,19 @@
           "mlos": [
             {
               "number": 1,
-              "text": "Set up GitHub account and create professional portfolio repository",
+              "text": "Apply version control principles to manage project files using GitHub",
               "bloomsLevel": "Apply",
               "linkedCLO": "CLO1"
             },
             {
               "number": 2,
-              "text": "Complete first GitHub workflow cycle (Issue → Branch → PR → Merge)",
+              "text": "Execute professional development workflow through branching and pull requests",
               "bloomsLevel": "Apply",
               "linkedCLO": "CLO1"
             },
             {
               "number": 3,
-              "text": "Configure SAGE AI assistant with context documents",
+              "text": "Integrate AI assistant tools into personal learning workflows",
               "bloomsLevel": "Apply",
               "linkedCLO": "CLO2"
             }
@@ -134,19 +134,19 @@
           "mlos": [
             {
               "number": 1,
-              "text": "Research and document AI evolution timeline",
-              "bloomsLevel": "Understand",
-              "linkedCLO": "CLO4"
-            },
-            {
-              "number": 2,
-              "text": "Compare multiple AI tools systematically",
+              "text": "Analyze AI evolution to identify key technological milestones",
               "bloomsLevel": "Analyze",
               "linkedCLO": "CLO4"
             },
             {
+              "number": 2,
+              "text": "Evaluate multiple AI tools using defined comparison criteria",
+              "bloomsLevel": "Evaluate",
+              "linkedCLO": "CLO4"
+            },
+            {
               "number": 3,
-              "text": "Design intentionally flawed AI agent (Bad Bot)",
+              "text": "Design AI agent configurations to explore system limitations",
               "bloomsLevel": "Create",
               "linkedCLO": "CLO2"
             }
@@ -172,19 +172,19 @@
           "mlos": [
             {
               "number": 1,
-              "text": "Iterate Bad Bot into effective Good Bot",
+              "text": "Evaluate AI agent performance to identify and implement improvements",
               "bloomsLevel": "Evaluate",
               "linkedCLO": "CLO3"
             },
             {
               "number": 2,
-              "text": "Apply advanced prompt engineering techniques",
+              "text": "Apply prompt engineering techniques to optimize AI responses",
               "bloomsLevel": "Apply",
               "linkedCLO": "CLO3"
             },
             {
               "number": 3,
-              "text": "Conduct comparative AI research project",
+              "text": "Analyze AI tool capabilities across multiple real-world use cases",
               "bloomsLevel": "Analyze",
               "linkedCLO": "CLO4"
             }
@@ -210,19 +210,19 @@
           "mlos": [
             {
               "number": 1,
-              "text": "Generate and evaluate project ideas",
+              "text": "Create project concepts that address authentic problems using AI",
               "bloomsLevel": "Create",
               "linkedCLO": "CLO5"
             },
             {
               "number": 2,
-              "text": "Select specialization track (Code Builders or Prompt Masters)",
+              "text": "Evaluate learning path options to align with career goals",
               "bloomsLevel": "Evaluate",
               "linkedCLO": "CLO5"
             },
             {
               "number": 3,
-              "text": "Develop project proposal with AI collaboration plan",
+              "text": "Design comprehensive project proposals with implementation strategies",
               "bloomsLevel": "Create",
               "linkedCLO": "CLO5"
             }
@@ -248,19 +248,19 @@
           "mlos": [
             {
               "number": 1,
-              "text": "Write Product Requirements Document (PRD)",
+              "text": "Create product requirements documentation using industry-standard formats",
               "bloomsLevel": "Create",
               "linkedCLO": "CLO5"
             },
             {
               "number": 2,
-              "text": "Build rapid prototype using AI collaboration",
+              "text": "Construct functional prototypes through AI-assisted development",
               "bloomsLevel": "Apply",
               "linkedCLO": "CLO2"
             },
             {
               "number": 3,
-              "text": "Document development process and decisions",
+              "text": "Develop technical documentation that explains design decisions and process",
               "bloomsLevel": "Create",
               "linkedCLO": "CLO5"
             }
@@ -286,19 +286,19 @@
           "mlos": [
             {
               "number": 1,
-              "text": "Execute Sprint 1 development cycle",
+              "text": "Implement iterative development cycles using sprint methodology",
               "bloomsLevel": "Apply",
               "linkedCLO": "CLO2"
             },
             {
               "number": 2,
-              "text": "Conduct sprint review and retrospective",
+              "text": "Evaluate project progress to identify improvements for next iteration",
               "bloomsLevel": "Evaluate",
               "linkedCLO": "CLO5"
             },
             {
               "number": 3,
-              "text": "Document challenges and solutions",
+              "text": "Analyze development obstacles to formulate effective solutions",
               "bloomsLevel": "Analyze",
               "linkedCLO": "CLO5"
             }
@@ -324,19 +324,19 @@
           "mlos": [
             {
               "number": 1,
-              "text": "Execute Sprint 2 with advanced features",
+              "text": "Implement advanced features through incremental development",
               "bloomsLevel": "Apply",
               "linkedCLO": "CLO2"
             },
             {
               "number": 2,
-              "text": "Build professional portfolio showcasing work",
+              "text": "Create portfolio artifacts that showcase technical and process skills",
               "bloomsLevel": "Create",
               "linkedCLO": "CLO5"
             },
             {
               "number": 3,
-              "text": "Refine AI collaboration workflows",
+              "text": "Evaluate AI collaboration strategies to optimize workflow effectiveness",
               "bloomsLevel": "Evaluate",
               "linkedCLO": "CLO3"
             }
@@ -362,19 +362,19 @@
           "mlos": [
             {
               "number": 1,
-              "text": "Prepare comprehensive portfolio documentation",
+              "text": "Develop comprehensive portfolio documentation with evidence of learning",
               "bloomsLevel": "Create",
               "linkedCLO": "CLO5"
             },
             {
               "number": 2,
-              "text": "Present project and defend design decisions",
+              "text": "Justify technical and design decisions through formal presentation",
               "bloomsLevel": "Evaluate",
               "linkedCLO": "CLO4"
             },
             {
               "number": 3,
-              "text": "Reflect on learning journey and skill development",
+              "text": "Evaluate personal skill development to identify future learning goals",
               "bloomsLevel": "Evaluate",
               "linkedCLO": "CLO5"
             }
@@ -677,14 +677,14 @@
           "mlos": [
             {
               "number": 1,
-              "text": "Demonstrate mastery of Git workflow (Issue → Branch → PR → Merge)",
+              "text": "Execute professional version control workflows independently",
               "bloomsLevel": "Apply",
               "linkedCLO": "CLO1"
             },
             {
               "number": 2,
-              "text": "Complete workflow cycle with zero blockers",
-              "bloomsLevel": "Apply",
+              "text": "Resolve version control conflicts using appropriate strategies",
+              "bloomsLevel": "Analyze",
               "linkedCLO": "CLO1"
             }
           ],
