@@ -700,112 +700,307 @@
       "credits": 3,
       "classHours": 2,
       "labHours": 2,
-      "term": "Fall 2025",
-      "prerequisites": "None",
-      "description": "AlgoCratic Futures - Navigate clearance levels while learning systems analysis, SDLC, and project management. Corporate dystopia satire creates psychological safety for learning. Process over product.",
-      "status": "in-progress",
-      "completionPercent": 70,
+      "term": "Fall 2026",
+      "prerequisites": "None (CTI courses recommended)",
+      "description": "Apply SDLC methodologies (Waterfall, Agile, Scrum) to information system projects. Students analyze stakeholder requirements, design system architecture using UML/ERDs, implement information systems, and evaluate quality through testing. Role progression: Observer → Product Owner → Scrum Master → Developer → Release Manager → Team Lead. Prepares for CTS-289 capstone collaboration with GRD-242. Grading: 40% Process + 40% Technical + 20% Communication.",
+      "status": "complete",
+      "completionPercent": 100,
       "clos": [
         {
           "id": "CTS-285-CLO1",
           "number": 1,
-          "text": "Analyze system requirements using structured methodologies",
-          "bloomsLevel": "Analyze",
-          "mappedOutcomes": ["PO3"]
-        },
-        {
-          "id": "CTS-285-CLO2",
-          "number": 2,
-          "text": "Apply SDLC phases to system development projects",
+          "text": "Apply SDLC methodologies (Waterfall, Agile, Scrum) to information system projects",
           "bloomsLevel": "Apply",
           "mappedOutcomes": ["PO3", "PO5"]
         },
         {
-          "id": "CTS-285-CLO3",
-          "number": 3,
-          "text": "Create user stories and acceptance criteria",
-          "bloomsLevel": "Create",
+          "id": "CTS-285-CLO2",
+          "number": 2,
+          "text": "Analyze stakeholder requirements and create functional specifications using user stories",
+          "bloomsLevel": "Analyze",
           "mappedOutcomes": ["PO3", "PO4"]
         },
         {
-          "id": "CTS-285-CLO4",
-          "number": 4,
-          "text": "Design system architecture and data models",
+          "id": "CTS-285-CLO3",
+          "number": 3,
+          "text": "Design system architecture using UML diagrams, ERDs, and wireframes",
           "bloomsLevel": "Create",
           "mappedOutcomes": ["PO3"]
         },
         {
+          "id": "CTS-285-CLO4",
+          "number": 4,
+          "text": "Implement and test information systems using modern development tools",
+          "bloomsLevel": "Apply",
+          "mappedOutcomes": ["PO3", "PO5"]
+        },
+        {
           "id": "CTS-285-CLO5",
           "number": 5,
-          "text": "Document systems using professional standards",
+          "text": "Evaluate system quality through risk assessment, testing, and Definition of Done",
+          "bloomsLevel": "Evaluate",
+          "mappedOutcomes": ["PO5"]
+        },
+        {
+          "id": "CTS-285-CLO6",
+          "number": 6,
+          "text": "Communicate technical information effectively to technical and non-technical stakeholders",
           "bloomsLevel": "Create",
-          "mappedOutcomes": ["PO4", "PO5"]
+          "mappedOutcomes": ["PO4"]
         }
       ],
       "modules": [
         {
           "number": 1,
-          "title": "INFRARED: Orientation",
-          "theme": "AlgoCratic onboarding and GitHub basics",
+          "title": "SDLC Foundations",
+          "theme": "Understanding system development methodologies and getting environment set up",
           "weeks": "1-2",
-          "mlos": [],
-          "assessments": []
+          "mlos": [
+            {
+              "number": 1,
+              "text": "Compare SDLC methodologies (Waterfall, Agile, Scrum) and identify appropriate use cases",
+              "bloomsLevel": "Analyze",
+              "linkedCLO": "CLO1"
+            },
+            {
+              "number": 2,
+              "text": "Configure development environment for systems analysis projects",
+              "bloomsLevel": "Apply",
+              "linkedCLO": "CLO4"
+            }
+          ],
+          "assessments": [
+            {
+              "title": "Week 1: Course Setup & SDLC Exploration",
+              "points": 25,
+              "type": "Assignment"
+            },
+            {
+              "title": "Week 2: Waterfall vs Agile Case Study",
+              "points": 25,
+              "type": "Assignment"
+            }
+          ]
         },
         {
           "number": 2,
-          "title": "RED: Requirements",
-          "theme": "Gathering and documenting requirements",
+          "title": "Requirements Engineering",
+          "theme": "Stakeholder analysis and user story creation",
           "weeks": "3-4",
-          "mlos": [],
-          "assessments": []
+          "mlos": [
+            {
+              "number": 1,
+              "text": "Conduct stakeholder analysis to identify system users and their needs",
+              "bloomsLevel": "Analyze",
+              "linkedCLO": "CLO2"
+            },
+            {
+              "number": 2,
+              "text": "Create user stories with acceptance criteria using Given-When-Then format",
+              "bloomsLevel": "Create",
+              "linkedCLO": "CLO2"
+            }
+          ],
+          "assessments": [
+            {
+              "title": "Week 3: Stakeholder Analysis & Personas",
+              "points": 25,
+              "type": "Assignment"
+            },
+            {
+              "title": "Week 4: Product Backlog with User Stories",
+              "points": 50,
+              "type": "Assignment"
+            }
+          ]
         },
         {
           "number": 3,
-          "title": "ORANGE: Analysis",
-          "theme": "User stories and system analysis",
+          "title": "Sprint 1: System Design",
+          "theme": "First complete sprint with UML, ERD, and wireframes",
           "weeks": "5-6",
-          "mlos": [],
-          "assessments": []
+          "mlos": [
+            {
+              "number": 1,
+              "text": "Design system architecture using UML diagrams (use case, class, sequence)",
+              "bloomsLevel": "Create",
+              "linkedCLO": "CLO3"
+            },
+            {
+              "number": 2,
+              "text": "Create normalized ERDs for database design (3NF)",
+              "bloomsLevel": "Create",
+              "linkedCLO": "CLO3"
+            },
+            {
+              "number": 3,
+              "text": "Execute complete sprint cycle including planning, standups, review, retrospective",
+              "bloomsLevel": "Apply",
+              "linkedCLO": "CLO1"
+            }
+          ],
+          "assessments": [
+            {
+              "title": "Week 5: Sprint 1 - System Design Artifacts",
+              "points": 75,
+              "type": "Sprint"
+            },
+            {
+              "title": "Week 6: Sprint 1 Retrospective & Risk Register",
+              "points": 25,
+              "type": "Reflection"
+            }
+          ]
         },
         {
           "number": 4,
-          "title": "YELLOW: Design",
-          "theme": "Architecture and data modeling",
-          "weeks": "7-8",
-          "mlos": [],
-          "assessments": []
+          "title": "Sprint 2: Implementation",
+          "theme": "Building working software with daily standups and facilitation",
+          "weeks": "7-9",
+          "mlos": [
+            {
+              "number": 1,
+              "text": "Implement information system features using Python/Flask framework",
+              "bloomsLevel": "Apply",
+              "linkedCLO": "CLO4"
+            },
+            {
+              "number": 2,
+              "text": "Facilitate sprint ceremonies as Scrum Master role",
+              "bloomsLevel": "Apply",
+              "linkedCLO": "CLO1"
+            },
+            {
+              "number": 3,
+              "text": "Track sprint progress using burndown charts and velocity metrics",
+              "bloomsLevel": "Apply",
+              "linkedCLO": "CLO1"
+            }
+          ],
+          "assessments": [
+            {
+              "title": "Week 7: Sprint 2 - Implementation & Facilitation",
+              "points": 100,
+              "type": "Sprint"
+            },
+            {
+              "title": "Week 9: Sprint 3 - Development & Code Review",
+              "points": 100,
+              "type": "Sprint"
+            }
+          ]
         },
         {
           "number": 5,
-          "title": "GREEN: Implementation Planning",
-          "theme": "Sprint planning and development prep",
-          "weeks": "9-10",
-          "mlos": [],
-          "assessments": []
+          "title": "Quality Assurance",
+          "theme": "Testing strategies, risk management, Definition of Done",
+          "weeks": "10-12",
+          "mlos": [
+            {
+              "number": 1,
+              "text": "Evaluate system quality using testing methodologies and Definition of Done",
+              "bloomsLevel": "Evaluate",
+              "linkedCLO": "CLO5"
+            },
+            {
+              "number": 2,
+              "text": "Implement risk mitigation strategies based on risk assessment",
+              "bloomsLevel": "Apply",
+              "linkedCLO": "CLO5"
+            }
+          ],
+          "assessments": [
+            {
+              "title": "Week 11: Risk Mitigation & QA Testing",
+              "points": 50,
+              "type": "Assignment"
+            },
+            {
+              "title": "Week 12: Definition of Done & Acceptance Testing",
+              "points": 50,
+              "type": "Assignment"
+            }
+          ]
         },
         {
           "number": 6,
-          "title": "BLUE: Testing & QA",
-          "theme": "Quality assurance and testing strategies",
-          "weeks": "11-12",
-          "mlos": [],
-          "assessments": []
+          "title": "Deployment & Documentation",
+          "theme": "Release management and technical handoff",
+          "weeks": "13-14",
+          "mlos": [
+            {
+              "number": 1,
+              "text": "Deploy information system to production environment",
+              "bloomsLevel": "Apply",
+              "linkedCLO": "CLO4"
+            },
+            {
+              "number": 2,
+              "text": "Create technical documentation for system maintenance and user training",
+              "bloomsLevel": "Create",
+              "linkedCLO": "CLO6"
+            }
+          ],
+          "assessments": [
+            {
+              "title": "Week 13: Deployment & User Training Materials",
+              "points": 50,
+              "type": "Assignment"
+            },
+            {
+              "title": "Week 14: Technical Documentation & Handoff",
+              "points": 50,
+              "type": "Assignment"
+            }
+          ]
         },
         {
           "number": 7,
-          "title": "VIOLET: Deployment",
-          "theme": "Release management and handoff",
-          "weeks": "13-14",
-          "mlos": [],
-          "assessments": []
+          "title": "Final Integration",
+          "theme": "Portfolio preparation and presentation rehearsal",
+          "weeks": "15",
+          "mlos": [
+            {
+              "number": 1,
+              "text": "Integrate all deliverables into comprehensive portfolio demonstrating process and product",
+              "bloomsLevel": "Create",
+              "linkedCLO": "CLO6"
+            }
+          ],
+          "assessments": [
+            {
+              "title": "Week 15: Final Integration & Presentation Prep",
+              "points": 50,
+              "type": "Assignment"
+            }
+          ]
         },
         {
           "number": 8,
-          "title": "ULTRAVIOLET: Maintenance & Evolution",
-          "theme": "Support, iteration, and continuous improvement",
-          "weeks": "15-16",
-          "mlos": [],
-          "assessments": []
+          "title": "Capstone Presentation",
+          "theme": "Professional presentation and portfolio defense",
+          "weeks": "16",
+          "mlos": [
+            {
+              "number": 1,
+              "text": "Communicate technical and process decisions to diverse stakeholders",
+              "bloomsLevel": "Evaluate",
+              "linkedCLO": "CLO6"
+            },
+            {
+              "number": 2,
+              "text": "Justify design decisions and evaluate personal growth in systems analysis skills",
+              "bloomsLevel": "Evaluate",
+              "linkedCLO": "CLO5"
+            }
+          ],
+          "assessments": [
+            {
+              "title": "Week 16: Final Presentation & Portfolio",
+              "points": 110,
+              "type": "Presentation"
+            }
+          ]
         }
       ]
     },
