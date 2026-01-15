@@ -670,7 +670,8 @@
                                                 <div class="mlo-item">
                                                     <strong>MLO ${mlo.number}:</strong> ${mlo.text}
                                                     <div style="margin-top: 5px; font-size: 0.85em; color: #5a6c7d;">
-                                                        <span style="background: #e3f2fd; padding: 2px 8px; border-radius: 4px;">📊 ${mlo.bloomsLevel}</span>
+                                                        <span style="background: #e3f2fd; padding: 2px 8px; border-radius: 4px; margin-right: 5px;">📊 ${mlo.bloomsLevel}</span>
+                                                        ${mlo.linkedCLO ? `<span style="background: #f3e5f5; padding: 2px 8px; border-radius: 4px; font-weight: 600; color: #9c27b0;">→ ${mlo.linkedCLO}</span>` : ''}
                                                     </div>
                                                 </div>
                                             `).join('')}
@@ -688,7 +689,7 @@
                         <div style="background: #f8f9fa; border-left: 5px solid var(--success); padding: 25px; border-radius: 8px; margin-bottom: 20px;">
                             <p style="margin-bottom: 20px; color: var(--text-dark); font-size: 1.05em;">
                                 <strong>Status:</strong> ✅ 100% Complete - Certification Ready<br>
-                                <strong>Total Materials:</strong> ${course.code === 'CSC-113' ? '32 files, 536+ pages' : '29 files, 450+ pages'}<br>
+                                <strong>Total Materials:</strong> ${course.code === 'CSC-113' ? '32 files, 536+ pages' : '46 files, 650+ pages'}<br>
                                 <strong>Module-specific materials embedded in each module above</strong>
                             </p>
 
@@ -712,15 +713,49 @@
                                             <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Complete Coursemap</div>
                                             <div style="font-size: 0.85em; color: #5a6c7d;">Certification document • 50+ pages</div>
                                         </button>
-                                        ${course.code === 'CSC-113' ? `
                                         <button class="material-item-btn" onclick="viewMaterial('${course.code}', 'MATERIALS_INDEX.md')" style="padding: 15px; text-align: left; background: #e3f2fd; border: 1px solid #64b5f6; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
                                             <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Materials Index</div>
-                                            <div style="font-size: 0.85em; color: #5a6c7d;">Complete catalog • 30+ pages</div>
+                                            <div style="font-size: 0.85em; color: #5a6c7d;">Complete catalog • ${course.code === 'CSC-113' ? '30+' : '35+'} pages</div>
+                                        </button>
+                                        ${course.code === 'CSC-114' ? `
+                                        <button class="material-item-btn" onclick="viewMaterial('${course.code}', 'instructor-guide/INSTRUCTOR_GUIDE.md')" style="padding: 15px; text-align: left; background: #e3f2fd; border: 1px solid #64b5f6; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
+                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Instructor Guide</div>
+                                            <div style="font-size: 0.85em; color: #5a6c7d;">Teaching playbook • 60+ pages</div>
                                         </button>
                                         ` : ''}
                                     </div>
                                 </div>
                             </div>
+
+                            ${course.code === 'CSC-114' ? `
+                            <!-- Reference Materials Section (CSC-114 only) -->
+                            <div class="materials-section" style="margin-bottom: 15px;">
+                                <div class="materials-header" onclick="toggleMaterials('${course.code.toLowerCase()}-reference')"
+                                     style="background: white; padding: 15px; border-radius: 8px; border: 2px solid #f3e5f5; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <h4 style="color: #9c27b0; margin: 0; font-size: 1.1em;">📖 Reference Materials</h4>
+                                        <p style="margin: 5px 0 0 0; color: #5a6c7d; font-size: 0.9em;">Quick reference guides • 75+ terms, 90+ code snippets</p>
+                                    </div>
+                                    <span style="font-size: 1.5em; color: #9c27b0;">▼</span>
+                                </div>
+                                <div class="materials-content" id="${course.code.toLowerCase()}-reference" style="display: none; padding: 20px; background: white; border: 2px solid #f3e5f5; border-top: none; border-radius: 0 0 8px 8px;">
+                                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+                                        <button class="material-item-btn" onclick="viewMaterial('${course.code}', 'reference-materials/ML_GLOSSARY.md')" style="padding: 15px; text-align: left; background: #f3e5f5; border: 1px solid #ba68c8; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
+                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">ML Glossary</div>
+                                            <div style="font-size: 0.85em; color: #5a6c7d;">75+ terms defined</div>
+                                        </button>
+                                        <button class="material-item-btn" onclick="viewMaterial('${course.code}', 'reference-materials/QUICK_REFERENCE_CARDS.md')" style="padding: 15px; text-align: left; background: #f3e5f5; border: 1px solid #ba68c8; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
+                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Quick Reference Cards</div>
+                                            <div style="font-size: 0.85em; color: #5a6c7d;">90+ code snippets</div>
+                                        </button>
+                                        <button class="material-item-btn" onclick="viewMaterial('${course.code}', 'reference-materials/TROUBLESHOOTING_GUIDE.md')" style="padding: 15px; text-align: left; background: #f3e5f5; border: 1px solid #ba68c8; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
+                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Troubleshooting Guide</div>
+                                            <div style="font-size: 0.85em; color: #5a6c7d;">40+ common issues solved</div>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            ` : ''}
 
                             <!-- Quality Metrics -->
                             <div style="margin-top: 25px; padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 8px; color: white; text-align: center;">
@@ -731,11 +766,11 @@
                                         <div>QM 22/22 Standards</div>
                                     </div>
                                     <div>
-                                        <div style="font-size: 2em; font-weight: bold;">${course.code === 'CSC-113' ? '32' : '29'}</div>
+                                        <div style="font-size: 2em; font-weight: bold;">${course.code === 'CSC-113' ? '32' : '46'}</div>
                                         <div>Total Files</div>
                                     </div>
                                     <div>
-                                        <div style="font-size: 2em; font-weight: bold;">${course.code === 'CSC-113' ? '536+' : '450+'}</div>
+                                        <div style="font-size: 2em; font-weight: bold;">${course.code === 'CSC-113' ? '536+' : '650+'}</div>
                                         <div>Total Pages</div>
                                     </div>
                                     <div>
@@ -857,46 +892,93 @@
                     assignments: [
                         { file: 'assignments/Week_01_Assignment_ML_Environment.md', title: 'Week 1: ML Environment Setup & First Model', desc: '25 points • Python, scikit-learn' },
                         { file: 'assignments/Week_02_Assignment_User_Stories.md', title: 'Week 2: User Stories & PM Basics', desc: '25 points • Sprint planning intro' }
-                    ]
+                    ],
+                    planningSheets: [
+                        { file: 'planning-sheets/Exit_Ticket_Template.md', title: 'Exit Ticket Template', desc: 'Weekly reflection' },
+                        { file: 'planning-sheets/Daily_Standup_Template.md', title: 'Daily Standup Template', desc: 'Daily accountability' }
+                    ],
+                    knowledgeCheck: { file: 'knowledge-checks/Module_01_Knowledge_Check.md', title: 'Module 1: ML Fundamentals & Setup', desc: '13 questions • Unlimited attempts' },
+                    activity: { file: 'activities/Module_01_Sacred_Flow_Lab.md', title: 'Sacred Flow Lab - ML Edition', desc: '90 minutes • Environment setup & first model' }
                 },
                 2: {
                     assignments: [
                         { file: 'assignments/Week_03_Assignment_Classification.md', title: 'Week 3: Classification Models', desc: '25 points • Algorithms comparison' },
                         { file: 'assignments/Week_04_Assignment_Regression.md', title: 'Week 4: Regression & Real-world Applications', desc: '25 points • Predictive models' }
-                    ]
+                    ],
+                    planningSheets: [
+                        { file: 'planning-sheets/Exit_Ticket_Template.md', title: 'Exit Ticket Template', desc: 'Weekly reflection' }
+                    ],
+                    knowledgeCheck: { file: 'knowledge-checks/Module_02_Knowledge_Check.md', title: 'Module 2: Supervised Learning', desc: '14 questions • Unlimited attempts' },
+                    activity: { file: 'activities/Module_02_Algorithm_Comparison_Workshop.md', title: 'Algorithm Comparison Workshop', desc: '60 minutes • Classification deep dive' }
                 },
                 3: {
                     assignments: [
                         { file: 'assignments/Week_05_Assignment_Evaluation_Sprint.md', title: 'Week 5-6: Model Evaluation Sprint', desc: '50 points • Sprint 1: Evaluation metrics + PM' },
                         { file: 'assignments/Week_06_Assignment_Sprint_Retrospective.md', title: 'Week 6: Sprint Retrospective', desc: 'Included • Sprint 1 reflection' }
-                    ]
+                    ],
+                    planningSheets: [
+                        { file: 'planning-sheets/Sprint_Planning_Template.md', title: 'Sprint Planning Template', desc: 'Capacity & commitment' },
+                        { file: 'planning-sheets/Burndown_Chart_Template.md', title: 'Burndown Chart Template', desc: 'Daily progress tracking' },
+                        { file: 'planning-sheets/Sprint_Retrospective_Template.md', title: 'Sprint Retrospective Template', desc: 'Start/Stop/Continue' }
+                    ],
+                    knowledgeCheck: { file: 'knowledge-checks/Module_03_Knowledge_Check.md', title: 'Module 3: Model Evaluation & Sprint 1', desc: '15 questions • Unlimited attempts' },
+                    activity: { file: 'activities/Module_03_Evaluation_Metrics_Lab.md', title: 'Evaluation Metrics Lab', desc: '90 minutes • Precision, recall, ROC curves' }
                 },
                 4: {
                     assignments: [
                         { file: 'assignments/Week_07_Assignment_AI_Agent_Sprint.md', title: 'Week 7-8: AI Agent Sprint', desc: '50 points • Sprint 2: OpenAI API + velocity' },
                         { file: 'assignments/Week_08_Assignment_Sprint_Review.md', title: 'Week 8: Sprint Review', desc: 'Included • Sprint 2 demo' }
-                    ]
+                    ],
+                    planningSheets: [
+                        { file: 'planning-sheets/Velocity_Tracking_Sheet.md', title: 'Velocity Tracking Sheet', desc: 'Sprint-over-sprint trends' },
+                        { file: 'planning-sheets/Sprint_Retrospective_Template.md', title: 'Sprint Retrospective Template', desc: 'Sprint 2 reflection' }
+                    ],
+                    knowledgeCheck: { file: 'knowledge-checks/Module_04_Knowledge_Check.md', title: 'Module 4: AI Agents & Sprint 2', desc: '14 questions • Unlimited attempts' },
+                    activity: { file: 'activities/Module_04_Sprint_Planning_Workshop.md', title: 'Sprint Planning Workshop', desc: '60 minutes • Real sprint planning' }
                 },
                 5: {
                     assignments: [
                         { file: 'assignments/Week_09_Assignment_Neural_Networks_Sprint.md', title: 'Week 9-10: Neural Networks Sprint', desc: '75 points • Sprint 3: TensorFlow/Keras' }
-                    ]
+                    ],
+                    planningSheets: [
+                        { file: 'planning-sheets/Sprint_Planning_Template.md', title: 'Sprint Planning Template', desc: 'Sprint 3 planning' },
+                        { file: 'planning-sheets/Exit_Ticket_Template.md', title: 'Exit Ticket Template', desc: 'Weekly reflection' }
+                    ],
+                    knowledgeCheck: { file: 'knowledge-checks/Module_05_Knowledge_Check.md', title: 'Module 5: Neural Networks & Sprint 3', desc: '15 questions • Unlimited attempts' },
+                    activity: { file: 'activities/Module_05_Neural_Network_Architecture_Studio.md', title: 'Neural Network Architecture Studio', desc: '90 minutes • Building networks' }
                 },
                 6: {
                     assignments: [
                         { file: 'assignments/Week_11_Assignment_Computer_Vision_Sprint.md', title: 'Week 11-12: Computer Vision Sprint', desc: '100 points • Sprint 4: CNNs + ethics' }
-                    ]
+                    ],
+                    planningSheets: [
+                        { file: 'planning-sheets/Sprint_Planning_Template.md', title: 'Sprint Planning Template', desc: 'Sprint 4 planning' },
+                        { file: 'planning-sheets/Burndown_Chart_Template.md', title: 'Burndown Chart Template', desc: 'Track Sprint 4' }
+                    ],
+                    knowledgeCheck: { file: 'knowledge-checks/Module_06_Knowledge_Check.md', title: 'Module 6: Computer Vision & Sprint 4', desc: '15 questions • Unlimited attempts' },
+                    activity: { file: 'activities/Module_06_Transfer_Learning_Lab.md', title: 'Transfer Learning Lab', desc: '90 minutes • Fine-tuning pre-trained models' }
                 },
                 7: {
                     assignments: [
                         { file: 'assignments/Week_13_Assignment_NLP_Sprint.md', title: 'Week 13-14: NLP Sprint', desc: '125 points • Sprint 5: Text processing' }
-                    ]
+                    ],
+                    planningSheets: [
+                        { file: 'planning-sheets/Sprint_Planning_Template.md', title: 'Sprint Planning Template', desc: 'Sprint 5 planning' },
+                        { file: 'planning-sheets/Velocity_Tracking_Sheet.md', title: 'Velocity Tracking Sheet', desc: 'Velocity analysis' }
+                    ],
+                    knowledgeCheck: { file: 'knowledge-checks/Module_07_Knowledge_Check.md', title: 'Module 7: NLP & Sprint 5', desc: '14 questions • Unlimited attempts' },
+                    activity: { file: 'activities/Module_07_NLP_Pipeline_Workshop.md', title: 'NLP Pipeline Workshop', desc: '90 minutes • Text processing pipeline' }
                 },
                 8: {
                     assignments: [
                         { file: 'assignments/Week_15_Assignment_Capstone_Project.md', title: 'Week 15: Capstone Project', desc: '125 points • Final ML project' },
                         { file: 'assignments/Week_16_Assignment_Final_Presentation.md', title: 'Week 16: Final Presentation', desc: '25 points • Portfolio defense' }
-                    ]
+                    ],
+                    planningSheets: [
+                        { file: 'planning-sheets/Exit_Ticket_Template.md', title: 'Final Reflection', desc: 'Course-level reflection' }
+                    ],
+                    knowledgeCheck: { file: 'knowledge-checks/Module_08_Knowledge_Check.md', title: 'Module 8: Capstone & Sprint 6', desc: '15 questions • Unlimited attempts' },
+                    activity: { file: 'activities/Module_08_Capstone_Demo_Day.md', title: 'Capstone Demo Day', desc: '120 minutes • Final presentations' }
                 }
             };
 
