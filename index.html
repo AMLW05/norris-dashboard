@@ -677,45 +677,47 @@
                                         </div>
                                     ` : '<p style="color: #5a6c7d; font-style: italic;">Module objectives to be developed</p>'}
 
-                                    ${course.code === 'CSC-113' && module.number <= 8 ? renderModuleMaterials(course.code, module.number) : ''}
+                                    ${(course.code === 'CSC-113' || course.code === 'CSC-114') && module.number <= 8 ? renderModuleMaterials(course.code, module.number) : ''}
                                 </div>
                             </div>
                         `).join('')}
                     </div>
 
-                    ${course.code === 'CSC-113' ? `
+                    ${(course.code === 'CSC-113' || course.code === 'CSC-114') ? `
                         <h3 style="margin-top: 30px; margin-bottom: 15px; color: var(--navy);">📚 Course Overview Materials</h3>
                         <div style="background: #f8f9fa; border-left: 5px solid var(--success); padding: 25px; border-radius: 8px; margin-bottom: 20px;">
                             <p style="margin-bottom: 20px; color: var(--text-dark); font-size: 1.05em;">
                                 <strong>Status:</strong> ✅ 100% Complete - Certification Ready<br>
-                                <strong>Total Materials:</strong> 32 files, 536+ pages<br>
+                                <strong>Total Materials:</strong> ${course.code === 'CSC-113' ? '32 files, 536+ pages' : '29 files, 450+ pages'}<br>
                                 <strong>Module-specific materials embedded in each module above</strong>
                             </p>
 
                             <!-- Course Overview Docs Section (always applies) -->
                             <div class="materials-section" style="margin-bottom: 15px;">
-                                <div class="materials-header" onclick="toggleMaterials('csc113-overview')"
+                                <div class="materials-header" onclick="toggleMaterials('${course.code.toLowerCase()}-overview')"
                                      style="background: white; padding: 15px; border-radius: 8px; border: 2px solid #e3f2fd; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
                                     <div>
                                         <h4 style="color: var(--primary); margin: 0; font-size: 1.1em;">📋 Course Overview Documents</h4>
-                                        <p style="margin: 5px 0 0 0; color: #5a6c7d; font-size: 0.9em;">Certification package • 55+ pages</p>
+                                        <p style="margin: 5px 0 0 0; color: #5a6c7d; font-size: 0.9em;">Certification package • ${course.code === 'CSC-113' ? '55+' : '60+'} pages</p>
                                     </div>
                                     <span style="font-size: 1.5em; color: var(--primary);">▼</span>
                                 </div>
-                                <div class="materials-content" id="csc113-overview" style="display: none; padding: 20px; background: white; border: 2px solid #e3f2fd; border-top: none; border-radius: 0 0 8px 8px;">
+                                <div class="materials-content" id="${course.code.toLowerCase()}-overview" style="display: none; padding: 20px; background: white; border: 2px solid #e3f2fd; border-top: none; border-radius: 0 0 8px 8px;">
                                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
-                                        <button class="material-item-btn" onclick="viewMaterial('CSC-113', 'README.md')" style="padding: 15px; text-align: left; background: #e3f2fd; border: 1px solid #64b5f6; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
+                                        <button class="material-item-btn" onclick="viewMaterial('${course.code}', 'README.md')" style="padding: 15px; text-align: left; background: #e3f2fd; border: 1px solid #64b5f6; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
                                             <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Course README</div>
                                             <div style="font-size: 0.85em; color: #5a6c7d;">Overview & structure • 5 pages</div>
                                         </button>
-                                        <button class="material-item-btn" onclick="viewMaterial('CSC-113', 'COURSEMAP.md')" style="padding: 15px; text-align: left; background: #e3f2fd; border: 1px solid #64b5f6; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
+                                        <button class="material-item-btn" onclick="viewMaterial('${course.code}', 'COURSEMAP.md')" style="padding: 15px; text-align: left; background: #e3f2fd; border: 1px solid #64b5f6; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
                                             <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Complete Coursemap</div>
                                             <div style="font-size: 0.85em; color: #5a6c7d;">Certification document • 50+ pages</div>
                                         </button>
-                                        <button class="material-item-btn" onclick="viewMaterial('CSC-113', 'MATERIALS_INDEX.md')" style="padding: 15px; text-align: left; background: #e3f2fd; border: 1px solid #64b5f6; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
+                                        ${course.code === 'CSC-113' ? `
+                                        <button class="material-item-btn" onclick="viewMaterial('${course.code}', 'MATERIALS_INDEX.md')" style="padding: 15px; text-align: left; background: #e3f2fd; border: 1px solid #64b5f6; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
                                             <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Materials Index</div>
                                             <div style="font-size: 0.85em; color: #5a6c7d;">Complete catalog • 30+ pages</div>
                                         </button>
+                                        ` : ''}
                                     </div>
                                 </div>
                             </div>
@@ -729,11 +731,11 @@
                                         <div>QM 22/22 Standards</div>
                                     </div>
                                     <div>
-                                        <div style="font-size: 2em; font-weight: bold;">32</div>
+                                        <div style="font-size: 2em; font-weight: bold;">${course.code === 'CSC-113' ? '32' : '29'}</div>
                                         <div>Total Files</div>
                                     </div>
                                     <div>
-                                        <div style="font-size: 2em; font-weight: bold;">536+</div>
+                                        <div style="font-size: 2em; font-weight: bold;">${course.code === 'CSC-113' ? '536+' : '450+'}</div>
                                         <div>Total Pages</div>
                                     </div>
                                     <div>
@@ -756,7 +758,7 @@
 
         function renderModuleMaterials(courseCode, moduleNum) {
             // Map module numbers to their specific materials
-            const moduleMaterials = {
+            const moduleMaterialsCSC113 = {
                 1: {
                     assignments: [
                         { file: 'assignments/Week_01_Assignment_Hello_GitHub.md', title: 'Week 1: Hello GitHub', desc: '25 points • Portfolio setup' },
@@ -850,7 +852,52 @@
                 }
             };
 
-            const materials = moduleMaterials[moduleNum];
+            const moduleMaterialsCSC114 = {
+                1: {
+                    assignments: [
+                        { file: 'assignments/Week_01_Assignment_ML_Environment_Setup.md', title: 'Week 1: ML Environment Setup & First Model', desc: '25 points • Python, scikit-learn' },
+                        { file: 'assignments/Week_02_Assignment_Data_Processing.md', title: 'Week 2: Data Processing & Feature Engineering', desc: '25 points • pandas, numpy' }
+                    ]
+                },
+                2: {
+                    assignments: [
+                        { file: 'assignments/Week_03_Assignment_Classification_Models.md', title: 'Week 3: Classification Models', desc: '25 points • Algorithms comparison' },
+                        { file: 'assignments/Week_04_Assignment_Regression_Models.md', title: 'Week 4: Regression & Real-world Applications', desc: '25 points • Predictive models' }
+                    ]
+                },
+                3: {
+                    assignments: [
+                        { file: 'assignments/Week_05_Assignment_Model_Evaluation_Sprint.md', title: 'Weeks 5-6: Model Evaluation Sprint', desc: '50 points • Sprint 1: Evaluation metrics + PM' }
+                    ]
+                },
+                4: {
+                    assignments: [
+                        { file: 'assignments/Week_07_Assignment_AI_Agent_Sprint.md', title: 'Weeks 7-8: AI Agent Sprint', desc: '50 points • Sprint 2: OpenAI API + velocity planning' }
+                    ]
+                },
+                5: {
+                    assignments: [
+                        { file: 'assignments/Week_09_Assignment_Neural_Networks_Sprint.md', title: 'Weeks 9-10: Neural Networks Sprint', desc: '75 points • Sprint 3: TensorFlow/Keras + habitual PM' }
+                    ]
+                },
+                6: {
+                    assignments: [
+                        { file: 'assignments/Week_11_Assignment_Computer_Vision_Sprint.md', title: 'Weeks 11-12: Computer Vision Sprint', desc: '100 points • Sprint 4: CNNs + ethics integration' }
+                    ]
+                },
+                7: {
+                    assignments: [
+                        { file: 'assignments/Week_13_Assignment_NLP_Sprint.md', title: 'Weeks 13-14: NLP Sprint', desc: '125 points • Sprint 5: Text processing + optimization' }
+                    ]
+                },
+                8: {
+                    assignments: [
+                        { file: 'assignments/Week_15_Assignment_Capstone.md', title: 'Weeks 15-16: Capstone Project & Presentation', desc: '150 points • Sprint 6: Final ML project + process portfolio' }
+                    ]
+                }
+            };
+
+            const materials = courseCode === 'CSC-113' ? moduleMaterialsCSC113[moduleNum] : moduleMaterialsCSC114[moduleNum];
             if (!materials) return '';
 
             return `
