@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 6: Trees & Heaps - Sprint 3</title>
+    <style>
+        /* Canvas-compatible CSS */
+        .module-header {
+            background: linear-gradient(135deg, #00897B 0%, #00695C 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .module-header h1 {
+            margin: 0 0 10px 0;
+            font-size: 2.5em;
+            font-weight: bold;
+        }
+
+        .module-meta {
+            display: flex;
+            gap: 20px;
+            margin-top: 15px;
+            font-size: 0.95em;
+        }
+
+        .meta-item {
+            background: rgba(255,255,255,0.2);
+            padding: 8px 15px;
+            border-radius: 5px;
+        }
+
+        .content-section {
+            background: #f8f9fa;
+            border-left: 5px solid #00897B;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 5px;
+        }
+
+        .content-section h2 {
+            color: #00897B;
+            margin-top: 0;
+            font-size: 1.8em;
+            border-bottom: 2px solid #00897B;
+            padding-bottom: 10px;
+        }
+
+        .learning-objectives {
+            background: #E0F2F1;
+            border-left: 5px solid #00897B;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .learning-objectives ul {
+            margin: 10px 0;
+            padding-left: 25px;
+        }
+
+        .learning-objectives li {
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+
+        .assignment-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .assignment-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .assignment-card h3 {
+            color: #00897B;
+            margin-top: 0;
+            font-size: 1.5em;
+        }
+
+        .assignment-meta {
+            display: flex;
+            gap: 15px;
+            margin: 15px 0;
+            font-size: 0.9em;
+            color: #666;
+            flex-wrap: wrap;
+        }
+
+        .points-badge {
+            background: #4caf50;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .due-date {
+            background: #ff9800;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+        }
+
+        .pm-badge {
+            background: #9c27b0;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .sprint-badge {
+            background: #00897B;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .button-primary {
+            background: #00897B;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 6px;
+            text-decoration: none;
+            display: inline-block;
+            margin: 10px 10px 10px 0;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .button-primary:hover {
+            background: #00695C;
+            color: white;
+            text-decoration: none;
+        }
+
+        .button-secondary {
+            background: #6c757d;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 6px;
+            text-decoration: none;
+            display: inline-block;
+            margin: 10px 10px 10px 0;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .button-secondary:hover {
+            background: #5a6268;
+            color: white;
+            text-decoration: none;
+        }
+
+        .button-print {
+            background: #607d8b;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 6px;
+            text-decoration: none;
+            display: inline-block;
+            margin: 10px 10px 10px 0;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            font-size: 1em;
+        }
+
+        .button-print:hover {
+            background: #546e7a;
+        }
+
+        .week-timeline {
+            display: flex;
+            justify-content: space-between;
+            margin: 30px 0;
+            padding: 20px;
+            background: linear-gradient(to right, #f5f5f5, #e0e0e0);
+            border-radius: 10px;
+        }
+
+        .week {
+            flex: 1;
+            text-align: center;
+            padding: 20px;
+            background: white;
+            margin: 0 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .week h3 {
+            color: #00897B;
+            margin-top: 0;
+        }
+
+        .pm-integration-box {
+            background: #f3e5f5;
+            border: 2px solid #9c27b0;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .pm-integration-box h4 {
+            margin-top: 0;
+            color: #7b1fa2;
+            font-size: 1.3em;
+        }
+
+        .tip-box {
+            background: #e8f5e9;
+            border: 2px solid #4caf50;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .tip-box h4 {
+            margin-top: 0;
+            color: #2e7d32;
+            font-size: 1.3em;
+        }
+
+        .resource-card {
+            background: #fff9c4;
+            border-left: 5px solid #fbc02d;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .resource-card h4 {
+            margin-top: 0;
+            color: #f57f17;
+        }
+
+        @media print {
+            .button-primary, .button-secondary, .button-print {
+                display: none;
+            }
+            .module-header {
+                break-inside: avoid;
+            }
+            .assignment-card {
+                break-inside: avoid;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .week-timeline {
+                flex-direction: column;
+            }
+            .week {
+                margin: 10px 0;
+            }
+            .module-meta {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+    <script>
+        function printModule() {
+            window.print();
+        }
+    </script>
+</head>
+<body>
+
+<div style="text-align: right; margin-bottom: 10px;">
+    <button onclick="printModule()" class="button-print">Print Module Page</button>
+</div>
+
+<div class="module-header">
+    <h1>Module 6: Trees & Heaps - Sprint 3</h1>
+    <p style="font-size: 1.2em; margin: 10px 0;">Hierarchical structures and priority queues</p>
+    <div class="module-meta">
+        <div class="meta-item">Duration: Weeks 11-12</div>
+        <div class="meta-item">Points: 100</div>
+        <div class="meta-item">Due: End of Week 12</div>
+        <div class="meta-item" style="background: #9c27b0;">SPRINT 3</div>
+    </div>
+</div>
+
+<!-- Learning Objectives -->
+<div class="learning-objectives">
+    <h2>Module Learning Outcomes</h2>
+    <p><strong>By the end of this module, you will be able to:</strong></p>
+    <ul>
+        <li><strong>MLO 6.1:</strong> Implement binary search trees (BST) with all operations</li>
+        <li><strong>MLO 6.2:</strong> Execute tree traversals (inorder, preorder, postorder, level-order)</li>
+        <li><strong>MLO 6.3:</strong> Build heap data structure for priority queue</li>
+        <li><strong>MLO 6.4:</strong> Design expression tree evaluator</li>
+        <li><strong>MLO 6.5:</strong> Manage sprint with PM becoming habitual</li>
+    </ul>
+    <p><strong>CLOs Addressed:</strong> CLO1 (Implement data structures), CLO2 (Analyze complexity), CLO4 (Professional workflows), CLO5 (Create-first approach)</p>
+</div>
+
+<!-- Week Timeline -->
+<div class="content-section">
+    <h2>Two-Week Sprint Overview</h2>
+    <div class="week-timeline">
+        <div class="week">
+            <h3>Week 11</h3>
+            <p><strong>BST & Traversals</strong></p>
+            <ul style="text-align: left;">
+                <li>Sprint planning (autonomous)</li>
+                <li>Build: Binary search tree</li>
+                <li>Implement: Insert, delete, search</li>
+                <li>Master: Tree traversals</li>
+            </ul>
+        </div>
+        <div class="week">
+            <h3>Week 12</h3>
+            <p><strong>Heaps & Review</strong></p>
+            <ul style="text-align: left;">
+                <li>Build: Heap priority queue</li>
+                <li>Apply: Expression tree</li>
+                <li>Sprint review & retrospective</li>
+                <li>Reflect: PM mastery progress</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- PM Integration Highlight -->
+<div class="pm-integration-box">
+    <h4>PM Integration: Workflow Becoming Habitual</h4>
+    <p><strong>This module focuses on:</strong></p>
+    <ul>
+        <li><strong>Autonomous Planning:</strong> Less scaffolding provided—you own the sprint planning process</li>
+        <li><strong>Consistent Velocity:</strong> Sprint 3 velocity should stabilize (less variance from Sprint 2)</li>
+        <li><strong>Retrospective Maturity:</strong> Deeper insights, actionable improvements</li>
+        <li><strong>Workflow Automation:</strong> GitHub workflow should feel natural by now</li>
+        <li><strong>Process Portfolio Begins:</strong> Start documenting sprint growth for Module 8</li>
+    </ul>
+    <p><strong>Why it matters:</strong> By Sprint 3, PM should feel automatic. You're not learning sprint mechanics anymore—you're refining your personal workflow. The goal is making good habits invisible so you can focus entirely on technical complexity.</p>
+</div>
+
+<!-- Assignments -->
+<div class="content-section">
+    <h2>Assignments (100 points total)</h2>
+
+    <div class="assignment-card">
+        <h3>M06-A1: BST & Heap Implementation Sprint</h3>
+        <div class="assignment-meta">
+            <span class="points-badge">75 points</span>
+            <span class="due-date">Due: End of Week 12</span>
+            <span class="pm-badge">Process: 35%</span>
+            <span class="sprint-badge">Sprint 3</span>
+        </div>
+        <p><strong>What you'll build:</strong></p>
+        <ul>
+            <li>Binary Search Tree with insert, delete, search operations</li>
+            <li>All tree traversals: inorder, preorder, postorder, level-order (BFS)</li>
+            <li>Min heap or max heap for priority queue</li>
+            <li>Heap operations: insert, extractMin/Max, heapify</li>
+            <li>Application: Task scheduler using heap, or file system using BST</li>
+        </ul>
+        <p><strong>Sprint deliverables (autonomous):</strong></p>
+        <ul>
+            <li>Sprint planning (you create the plan, less template provided)</li>
+            <li>Daily standup updates</li>
+            <li>Burndown chart</li>
+            <li>Working BST and heap with comprehensive tests</li>
+        </ul>
+        <p><strong>Technical Skills:</strong> Tree structures, recursive traversals, heap properties, tree balancing concepts</p>
+        <p><strong>Process Skills:</strong> Autonomous planning, consistent velocity, workflow mastery</p>
+        <a href="#" class="button-primary">View Assignment Details</a>
+        <a href="#" class="button-secondary">Download Rubric</a>
+    </div>
+
+    <div class="assignment-card">
+        <h3>M06-A2: Expression Tree Evaluator</h3>
+        <div class="assignment-meta">
+            <span class="points-badge">25 points</span>
+            <span class="due-date">Due: End of Week 12</span>
+            <span class="pm-badge">Process: 30%</span>
+        </div>
+        <p><strong>What you'll build:</strong></p>
+        <ul>
+            <li>Expression tree parser (converts infix to tree: "3 + 5 * 2")</li>
+            <li>Tree evaluation using postorder traversal</li>
+            <li>Support for +, -, *, / operators</li>
+            <li>Visualize tree structure</li>
+            <li>Mini retrospective on Sprint 3 process maturity</li>
+        </ul>
+        <p><strong>Technical Skills:</strong> Expression parsing, postorder evaluation, tree building</p>
+        <p><strong>Process Skills:</strong> Sprint retrospective, velocity consistency, process reflection</p>
+        <a href="#" class="button-primary">View Assignment Details</a>
+        <a href="#" class="button-secondary">Download Rubric</a>
+    </div>
+</div>
+
+<!-- Code Example -->
+<div class="content-section">
+    <h2>Code Preview: Binary Search Tree</h2>
+    <p>Recursive tree operations:</p>
+    <pre style="background: #263238; color: #aed581; padding: 20px; border-radius: 5px; overflow-x: auto;">
+<code>struct Node {
+    int data;
+    Node* left;
+    Node* right;
+    Node(int val) : data(val), left(nullptr), right(nullptr) {}
+};
+
+class BST {
+private:
+    Node* root;
+
+    Node* insertHelper(Node* node, int val) {
+        if (node == nullptr) {
+            return new Node(val);
+        }
+        if (val &lt; node-&gt;data) {
+            node-&gt;left = insertHelper(node-&gt;left, val);
+        } else {
+            node-&gt;right = insertHelper(node-&gt;right, val);
+        }
+        return node;
+    }
+
+    void inorderHelper(Node* node) {
+        if (node == nullptr) return;
+        inorderHelper(node-&gt;left);
+        std::cout &lt;&lt; node-&gt;data &lt;&lt; " ";
+        inorderHelper(node-&gt;right);
+    }
+
+public:
+    BST() : root(nullptr) {}
+
+    void insert(int val) {
+        root = insertHelper(root, val);
+    }
+
+    void inorderTraversal() {
+        inorderHelper(root);
+        std::cout &lt;&lt; std::endl;
+    }
+};</code>
+</pre>
+    <p><strong>Key insight:</strong> BST maintains order property (left < parent < right). Inorder traversal visits nodes in sorted order. O(log n) average for balanced trees.</p>
+</div>
+
+<!-- Resources -->
+<div class="content-section">
+    <h2>Learning Resources</h2>
+
+    <div class="resource-card">
+        <h4>VisuAlgo - Tree Visualizations</h4>
+        <p><a href="https://visualgo.net/en/bst" target="_blank">BST Operations Animated</a></p>
+        <p><a href="https://visualgo.net/en/heap" target="_blank">Heap Operations Animated</a></p>
+        <p>Watch insert, delete, and traversals step-by-step.</p>
+    </div>
+
+    <div class="resource-card">
+        <h4>Tree Traversal Practice</h4>
+        <p><a href="https://www.cs.usfca.edu/~galles/visualization/BST.html" target="_blank">Interactive BST Visualization</a></p>
+        <p>Build trees and see traversal orders in real-time.</p>
+    </div>
+
+    <div class="resource-card">
+        <h4>Expression Tree Tutorial</h4>
+        <p>Learn how compilers parse mathematical expressions into trees.</p>
+    </div>
+</div>
+
+<!-- Tips -->
+<div class="tip-box">
+    <h4>Drew's Tips for Success</h4>
+    <ul>
+        <li><strong>Trees are recursion in disguise:</strong> Every tree operation uses recursion naturally. Master it here.</li>
+        <li><strong>Inorder = sorted:</strong> Inorder traversal of BST gives sorted output. This is why BSTs matter.</li>
+        <li><strong>Heap != BST:</strong> Heaps maintain parent-child relationship (parent >= children), not left < right. Different use cases.</li>
+        <li><strong>Heaps enable priority queues:</strong> O(log n) insert/extract makes heaps perfect for task scheduling.</li>
+        <li><strong>Expression trees are compiler fundamentals:</strong> Understanding them unlocks how programming languages work.</li>
+        <li><strong>Sprint 3 autonomy:</strong> Less hand-holding this sprint. You should know the workflow by now. Ask for help if you don't.</li>
+        <li><strong>Velocity should stabilize:</strong> Sprint 1 = learning. Sprint 2 = adjusting. Sprint 3 = consistent delivery.</li>
+    </ul>
+</div>
+
+<!-- Drew's Note -->
+<div class="content-section" style="background: #fff8e1; border-left-color: #fbc02d;">
+    <h2 style="color: #f57f17;">Drew's Note</h2>
+    <p style="font-size: 1.1em; line-height: 1.6;">
+        Trees are where data structures get beautiful. BSTs give you O(log n) search with sorted order. Heaps give you O(log n) priority access. Expression trees show you how compilers parse math. This module is dense—pace yourself.
+    </p>
+    <p style="font-size: 1.1em; line-height: 1.6;">
+        <strong>Sprint 3 is about consistency.</strong> Your velocity should stabilize. Your workflow should feel automatic. Your retrospectives should show maturity (less "I forgot to commit" and more "My estimation improved by 20%"). This is professional development becoming habitual.
+    </p>
+    <p style="font-size: 1.1em; line-height: 1.6; font-weight: bold;">
+        If PM still feels awkward by Sprint 3, you're fighting the process. Embrace it. Module 8's portfolio will ask you to reflect on growth across all sprints—make Sprint 3 the turning point.
+    </p>
+</div>
+
+<!-- Process Grading -->
+<div class="content-section" style="background: #f3e5f5; border-left-color: #9c27b0;">
+    <h2 style="color: #9c27b0;">Process Grading Breakdown</h2>
+    <p><strong>M06-A1:</strong> 75 points = 49 technical + 26 process</p>
+    <ul>
+        <li>Autonomous sprint planning quality: 7 pts</li>
+        <li>Velocity consistency (vs Sprint 2): 6 pts</li>
+        <li>Daily standup discipline: 5 pts</li>
+        <li>Burndown chart accuracy: 4 pts</li>
+        <li>GitHub workflow mastery: 4 pts</li>
+    </ul>
+    <p><strong>M06-A2:</strong> 25 points = 17 technical + 8 process</p>
+    <ul>
+        <li>Sprint retrospective depth: 4 pts</li>
+        <li>Velocity analysis (3 sprints): 2 pts</li>
+        <li>Process maturity reflection: 2 pts</li>
+    </ul>
+</div>
+
+<!-- Footer -->
+<div style="margin-top: 40px; padding: 20px; background: #f5f5f5; border-radius: 10px; text-align: center;">
+    <h3 style="margin-top: 0;">Ready for Sprint 3?</h3>
+    <p style="font-size: 1.1em; margin: 15px 0;">Build trees, heaps, and expression evaluators with autonomous sprint workflow!</p>
+    <a href="#" class="button-primary" style="font-size: 1.2em; padding: 15px 30px;">Start Sprint 3 Planning</a>
+    <p style="margin-top: 30px; font-style: italic; color: #666;">
+        "Trees teach recursion. Recursion teaches thinking hierarchically. Hierarchical thinking unlocks everything." – Drew Norris
+    </p>
+</div>
+
+</body>
+</html>

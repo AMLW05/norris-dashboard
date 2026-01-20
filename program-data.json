@@ -694,6 +694,326 @@
       ]
     },
     {
+      "id": "CSC-249",
+      "code": "CSC-249",
+      "title": "Data Structures & Algorithms",
+      "credits": 3,
+      "classHours": 2,
+      "labHours": 3,
+      "term": "Spring 2026",
+      "prerequisites": "CSC-134 (Intro to Programming - C++)",
+      "description": "Data structures and algorithms with create-first pedagogy. Students implement lists, stacks, queues, trees, graphs, hash tables, sorting, searching, recursion. Mandatory AI collaboration with prompts.txt documentation. Dual-language (C++ or Python). 4 complete sprint cycles (Modules 4-7). 40% process grading. Upon completion: design data structures, implement algorithms, analyze complexity, manage technical projects professionally.",
+      "status": "development",
+      "completionPercent": 100,
+      "clos": [
+        {
+          "id": "CSC-249-CLO1",
+          "number": 1,
+          "text": "Implement fundamental data structures (lists, stacks, queues, trees, graphs, hash tables) using C++ or Python",
+          "bloomsLevel": "Apply",
+          "mappedOutcomes": ["PO2", "PO3"]
+        },
+        {
+          "id": "CSC-249-CLO2",
+          "number": 2,
+          "text": "Analyze algorithm complexity using Big O notation and select appropriate structures for problems",
+          "bloomsLevel": "Analyze",
+          "mappedOutcomes": ["PO2", "PO3"]
+        },
+        {
+          "id": "CSC-249-CLO3",
+          "number": 3,
+          "text": "Collaborate effectively with AI tools, documenting prompts and iterative learning processes",
+          "bloomsLevel": "Apply",
+          "mappedOutcomes": ["PO4", "PO5"]
+        },
+        {
+          "id": "CSC-249-CLO4",
+          "number": 4,
+          "text": "Apply professional development workflows (version control, code review, pull requests, sprint methodology)",
+          "bloomsLevel": "Apply",
+          "mappedOutcomes": ["PO1", "PO5"]
+        },
+        {
+          "id": "CSC-249-CLO5",
+          "number": 5,
+          "text": "Design solutions by building implementations first, then understanding theoretical foundations",
+          "bloomsLevel": "Create",
+          "mappedOutcomes": ["PO2", "PO5"]
+        }
+      ],
+      "modules": [
+        {
+          "number": 1,
+          "title": "Foundations & AI Collaboration",
+          "theme": "Professional workflows and ADT fundamentals",
+          "weeks": "1-2",
+          "mlos": [
+            {
+              "number": 1,
+              "text": "Configure professional development environment (GitHub, IDE, AI tools)",
+              "bloomsLevel": "Apply",
+              "linkedCLO": "CLO4"
+            },
+            {
+              "number": 2,
+              "text": "Implement simple ADTs (Stack, Queue) using create-first approach",
+              "bloomsLevel": "Apply",
+              "linkedCLO": "CLO1"
+            },
+            {
+              "number": 3,
+              "text": "Document AI collaboration patterns in prompts.txt",
+              "bloomsLevel": "Apply",
+              "linkedCLO": "CLO3"
+            }
+          ],
+          "assessments": [
+            {
+              "title": "M01-A1: GitHub Setup & First ADT (Stack)",
+              "points": 25,
+              "type": "Assignment"
+            },
+            {
+              "title": "M01-A2: AI Collaboration & Undo System",
+              "points": 25,
+              "type": "Assignment"
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "title": "Algorithm Analysis & Recursion",
+          "theme": "Measuring performance and thinking recursively",
+          "weeks": "3-4",
+          "mlos": [
+            {
+              "number": 1,
+              "text": "Measure algorithm performance using benchmarking tools",
+              "bloomsLevel": "Apply",
+              "linkedCLO": "CLO2"
+            },
+            {
+              "number": 2,
+              "text": "Implement recursive algorithms (factorial, Fibonacci, Tower of Hanoi)",
+              "bloomsLevel": "Apply",
+              "linkedCLO": "CLO1"
+            }
+          ],
+          "assessments": [
+            {
+              "title": "M02-A1: Benchmarking Lab & Big O Analysis",
+              "points": 25,
+              "type": "Assignment"
+            },
+            {
+              "title": "M02-A2: Recursive Algorithms Project",
+              "points": 25,
+              "type": "Assignment"
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "title": "Sorting Algorithms",
+          "theme": "Classic algorithms and divide-and-conquer",
+          "weeks": "5-6",
+          "mlos": [
+            {
+              "number": 1,
+              "text": "Implement sorting algorithms (selection, insertion, merge, quick)",
+              "bloomsLevel": "Apply",
+              "linkedCLO": "CLO1"
+            },
+            {
+              "number": 2,
+              "text": "Benchmark sorting performance on different datasets",
+              "bloomsLevel": "Analyze",
+              "linkedCLO": "CLO2"
+            }
+          ],
+          "assessments": [
+            {
+              "title": "M03-A1: Sorting Implementation & Visualization",
+              "points": 25,
+              "type": "Assignment"
+            },
+            {
+              "title": "M03-A2: Sorting Comparison Report",
+              "points": 25,
+              "type": "Assignment"
+            }
+          ]
+        },
+        {
+          "number": 4,
+          "title": "Linear Structures - Sprint 1",
+          "theme": "Linked lists with first complete sprint",
+          "weeks": "7-8",
+          "mlos": [
+            {
+              "number": 1,
+              "text": "Implement node-based linked lists from scratch",
+              "bloomsLevel": "Apply",
+              "linkedCLO": "CLO1"
+            },
+            {
+              "number": 2,
+              "text": "Execute first complete sprint cycle (planning, standups, retrospective)",
+              "bloomsLevel": "Apply",
+              "linkedCLO": "CLO4"
+            }
+          ],
+          "assessments": [
+            {
+              "title": "M04-A1: Linked List Implementation Sprint",
+              "points": 50,
+              "type": "Sprint"
+            },
+            {
+              "title": "M04-A2: Sprint 1 Retrospective",
+              "points": 25,
+              "type": "Reflection"
+            }
+          ]
+        },
+        {
+          "number": 5,
+          "title": "Hashing & Hash Tables - Sprint 2",
+          "theme": "O(1) lookup with collision strategies",
+          "weeks": "9-10",
+          "mlos": [
+            {
+              "number": 1,
+              "text": "Design hash functions and implement collision resolution",
+              "bloomsLevel": "Create",
+              "linkedCLO": "CLO1"
+            },
+            {
+              "number": 2,
+              "text": "Apply velocity tracking to improve sprint planning",
+              "bloomsLevel": "Apply",
+              "linkedCLO": "CLO4"
+            }
+          ],
+          "assessments": [
+            {
+              "title": "M05-A1: Hash Table Implementation Sprint",
+              "points": 50,
+              "type": "Sprint"
+            },
+            {
+              "title": "M05-A2: Sprint 2 Review & Velocity Analysis",
+              "points": 25,
+              "type": "Reflection"
+            }
+          ]
+        },
+        {
+          "number": 6,
+          "title": "Trees & Heaps - Sprint 3",
+          "theme": "Hierarchical structures and priority queues",
+          "weeks": "11-12",
+          "mlos": [
+            {
+              "number": 1,
+              "text": "Implement binary search trees with all operations",
+              "bloomsLevel": "Apply",
+              "linkedCLO": "CLO1"
+            },
+            {
+              "number": 2,
+              "text": "Build heap data structure for priority queue",
+              "bloomsLevel": "Apply",
+              "linkedCLO": "CLO1"
+            }
+          ],
+          "assessments": [
+            {
+              "title": "M06-A1: BST & Heap Implementation Sprint",
+              "points": 75,
+              "type": "Sprint"
+            },
+            {
+              "title": "M06-A2: Expression Tree Evaluator",
+              "points": 25,
+              "type": "Assignment"
+            }
+          ]
+        },
+        {
+          "number": 7,
+          "title": "Graphs & Advanced Algorithms - Sprint 4",
+          "theme": "Network structures and graph traversal",
+          "weeks": "13-14",
+          "mlos": [
+            {
+              "number": 1,
+              "text": "Implement graph representations and traversal algorithms (BFS, DFS)",
+              "bloomsLevel": "Apply",
+              "linkedCLO": "CLO1"
+            },
+            {
+              "number": 2,
+              "text": "Optimize sprint process based on 3 prior sprints",
+              "bloomsLevel": "Evaluate",
+              "linkedCLO": "CLO4"
+            }
+          ],
+          "assessments": [
+            {
+              "title": "M07-A1: Graph Implementation & Traversal Sprint",
+              "points": 75,
+              "type": "Sprint"
+            },
+            {
+              "title": "M07-A2: Real-World Graph Application",
+              "points": 50,
+              "type": "Assignment"
+            }
+          ]
+        },
+        {
+          "number": 8,
+          "title": "Integration Project & Portfolio",
+          "theme": "Capstone demonstrating mastery",
+          "weeks": "15-16",
+          "mlos": [
+            {
+              "number": 1,
+              "text": "Design application using 3+ data structures appropriately",
+              "bloomsLevel": "Create",
+              "linkedCLO": "CLO1"
+            },
+            {
+              "number": 2,
+              "text": "Justify structure selection with complexity analysis",
+              "bloomsLevel": "Evaluate",
+              "linkedCLO": "CLO2"
+            },
+            {
+              "number": 3,
+              "text": "Create process portfolio demonstrating sprint growth",
+              "bloomsLevel": "Create",
+              "linkedCLO": "CLO4"
+            }
+          ],
+          "assessments": [
+            {
+              "title": "M08-A1: Final Integration Project",
+              "points": 100,
+              "type": "Project"
+            },
+            {
+              "title": "M08-A2: Technical Presentation & Process Portfolio",
+              "points": 75,
+              "type": "Presentation"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "id": "CTS-285",
       "code": "CTS-285",
       "title": "Systems Analysis & Design",
