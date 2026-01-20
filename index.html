@@ -678,18 +678,18 @@
                                         </div>
                                     ` : '<p style="color: #5a6c7d; font-style: italic;">Module objectives to be developed</p>'}
 
-                                    ${(course.code === 'CSC-113' || course.code === 'CSC-114' || course.code === 'CTS-285') && module.number <= 8 ? renderModuleMaterials(course.code, module.number) : ''}
+                                    ${(course.code === 'CSC-113' || course.code === 'CSC-114' || course.code === 'CSC-249' || course.code === 'CTS-285') && module.number <= 8 ? renderModuleMaterials(course.code, module.number) : ''}
                                 </div>
                             </div>
                         `).join('')}
                     </div>
 
-                    ${(course.code === 'CSC-113' || course.code === 'CSC-114' || course.code === 'CTS-285') ? `
+                    ${(course.code === 'CSC-113' || course.code === 'CSC-114' || course.code === 'CSC-249' || course.code === 'CTS-285') ? `
                         <h3 style="margin-top: 30px; margin-bottom: 15px; color: var(--navy);">📚 Course Overview Materials</h3>
                         <div style="background: #f8f9fa; border-left: 5px solid var(--success); padding: 25px; border-radius: 8px; margin-bottom: 20px;">
                             <p style="margin-bottom: 20px; color: var(--text-dark); font-size: 1.05em;">
-                                <strong>Status:</strong> ✅ 100% Complete - Certification Ready<br>
-                                <strong>Total Materials:</strong> ${course.code === 'CSC-113' ? '32 files, 536+ pages' : course.code === 'CSC-114' ? '46 files, 650+ pages' : '58 files, 25,000+ lines'}<br>
+                                <strong>Status:</strong> ${course.code === 'CSC-249' ? '✅ 100% Complete - QM Certified (22/22)' : '✅ 100% Complete - Certification Ready'}<br>
+                                <strong>Total Materials:</strong> ${course.code === 'CSC-113' ? '32 files, 536+ pages' : course.code === 'CSC-114' ? '46 files, 650+ pages' : course.code === 'CSC-249' ? '63 files, 700+ pages' : '58 files, 25,000+ lines'}<br>
                                 <strong>Module-specific materials embedded in each module above</strong>
                             </p>
 
@@ -715,7 +715,7 @@
                                         </button>
                                         <button class="material-item-btn" onclick="viewMaterial('${course.code}', 'MATERIALS_INDEX.md')" style="padding: 15px; text-align: left; background: #e3f2fd; border: 1px solid #64b5f6; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
                                             <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Materials Index</div>
-                                            <div style="font-size: 0.85em; color: #5a6c7d;">Complete catalog • ${course.code === 'CSC-113' ? '30+' : course.code === 'CSC-114' ? '35+' : '58'} ${course.code === 'CTS-285' ? 'files' : 'pages'}</div>
+                                            <div style="font-size: 0.85em; color: #5a6c7d;">Complete catalog • ${course.code === 'CSC-113' ? '30+' : course.code === 'CSC-114' ? '35+' : course.code === 'CSC-249' ? '31+' : '58'} ${course.code === 'CTS-285' ? 'files' : 'pages'}</div>
                                         </button>
                                         ${(course.code === 'CSC-114' || course.code === 'CTS-285') ? `
                                         <button class="material-item-btn" onclick="viewMaterial('${course.code}', 'instructor-guide/INSTRUCTOR_GUIDE.md')" style="padding: 15px; text-align: left; background: #e3f2fd; border: 1px solid #64b5f6; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
@@ -1125,8 +1125,113 @@
                 }
             };
 
+            const moduleMaterialsCSC249 = {
+                1: {
+                    assignments: [
+                        { file: 'assignments/Week_01_Assignment_GitHub_First_ADT.md', title: 'Week 1: GitHub Setup & First ADT (Stack)', desc: '25 points • Sacred Flow workflow' },
+                        { file: 'assignments/Week_02_Assignment_AI_Undo_System.md', title: 'Week 2: AI Collaboration & Undo System', desc: '25 points • AI-assisted development' }
+                    ],
+                    planningSheets: [
+                        { file: 'planning-sheets/AI_Prompt_Documentation_Template.md', title: 'AI Prompt Documentation Template', desc: 'prompts.txt structure' },
+                        { file: 'planning-sheets/Exit_Ticket_Template.md', title: 'Exit Ticket Template', desc: 'Weekly reflection' }
+                    ],
+                    knowledgeCheck: { file: 'knowledge-checks/Module_01_Knowledge_Check.md', title: 'Module 1: Foundations & AI Collaboration', desc: '15 questions • Unlimited attempts' },
+                    activity: { file: 'activities/Module_01_Sacred_Flow_Lab_CS249.md', title: 'Sacred Flow Lab for CSC-249', desc: '60-90 minutes • GitHub workflow' }
+                },
+                2: {
+                    assignments: [
+                        { file: 'assignments/Week_03_Assignment_Benchmarking_BigO.md', title: 'Week 3: Benchmarking Lab & Big O Analysis', desc: '25 points • Performance measurement' },
+                        { file: 'assignments/Week_04_Assignment_Recursive_Algorithms.md', title: 'Week 4: Recursive Algorithms Project', desc: '25 points • Recursion practice' }
+                    ],
+                    planningSheets: [
+                        { file: 'planning-sheets/AI_Prompt_Documentation_Template.md', title: 'AI Prompt Documentation Template', desc: 'AI collaboration tracking' },
+                        { file: 'planning-sheets/Exit_Ticket_Template.md', title: 'Exit Ticket Template', desc: 'Weekly reflection' }
+                    ],
+                    knowledgeCheck: { file: 'knowledge-checks/Module_02_Knowledge_Check.md', title: 'Module 2: Algorithm Analysis & Recursion', desc: '15 questions • Unlimited attempts' },
+                    activity: { file: 'activities/Module_02_Benchmarking_Workshop.md', title: 'Benchmarking Workshop', desc: '60 minutes • timeit/chrono practice' }
+                },
+                3: {
+                    assignments: [
+                        { file: 'assignments/Week_05_Assignment_Sorting_Implementation.md', title: 'Week 5: Sorting Implementation & Visualization', desc: '25 points • Multiple algorithms' },
+                        { file: 'assignments/Week_06_Assignment_Sorting_Comparison.md', title: 'Week 6: Sorting Comparison Report', desc: '25 points • Performance analysis' }
+                    ],
+                    planningSheets: [
+                        { file: 'planning-sheets/AI_Prompt_Documentation_Template.md', title: 'AI Prompt Documentation Template', desc: 'AI collaboration tracking' },
+                        { file: 'planning-sheets/Exit_Ticket_Template.md', title: 'Exit Ticket Template', desc: 'Weekly reflection' }
+                    ],
+                    knowledgeCheck: { file: 'knowledge-checks/Module_03_Knowledge_Check.md', title: 'Module 3: Sorting Algorithms', desc: '15 questions • Unlimited attempts' },
+                    activity: { file: 'activities/Module_03_Sorting_Visualization_Lab.md', title: 'Sorting Visualization Lab', desc: '90 minutes • VisuAlgo exploration' }
+                },
+                4: {
+                    assignments: [
+                        { file: 'assignments/Week_07_Assignment_Linked_List_Sprint.md', title: 'Week 7: Linked List Implementation Sprint', desc: '50 points • Sprint 1' },
+                        { file: 'assignments/Week_08_Assignment_Sprint1_Retrospective.md', title: 'Week 8: Sprint 1 Retrospective', desc: '25 points • Process reflection' }
+                    ],
+                    planningSheets: [
+                        { file: 'planning-sheets/Sprint_Planning_Template.md', title: 'Sprint Planning Template', desc: 'Sprint 1 planning' },
+                        { file: 'planning-sheets/Daily_Standup_Template.md', title: 'Daily Standup Template', desc: 'Daily accountability' },
+                        { file: 'planning-sheets/Sprint_Retrospective_Template.md', title: 'Sprint Retrospective Template', desc: 'Start/Stop/Continue' },
+                        { file: 'planning-sheets/Burndown_Chart_Template.md', title: 'Burndown Chart Template', desc: 'Sprint progress tracking' }
+                    ],
+                    knowledgeCheck: { file: 'knowledge-checks/Module_04_Knowledge_Check.md', title: 'Module 4: Linear Structures - Sprint 1', desc: '15 questions • Unlimited attempts' },
+                    activity: { file: 'activities/Module_04_Linked_List_Visualization.md', title: 'Linked List Visualization', desc: '75 minutes • Pointer manipulation' }
+                },
+                5: {
+                    assignments: [
+                        { file: 'assignments/Week_09_Assignment_Hash_Table_Sprint.md', title: 'Week 9: Hash Table Implementation Sprint', desc: '50 points • Sprint 2' },
+                        { file: 'assignments/Week_10_Assignment_Sprint2_Velocity.md', title: 'Week 10: Sprint 2 Review & Velocity Analysis', desc: '25 points • Velocity tracking' }
+                    ],
+                    planningSheets: [
+                        { file: 'planning-sheets/Sprint_Planning_Template.md', title: 'Sprint Planning Template', desc: 'Sprint 2 planning' },
+                        { file: 'planning-sheets/Daily_Standup_Template.md', title: 'Daily Standup Template', desc: 'Daily sprint tracking' },
+                        { file: 'planning-sheets/Sprint_Retrospective_Template.md', title: 'Sprint Retrospective Template', desc: 'Process improvement' },
+                        { file: 'planning-sheets/Burndown_Chart_Template.md', title: 'Burndown Chart Template', desc: 'Sprint progress tracking' }
+                    ],
+                    knowledgeCheck: { file: 'knowledge-checks/Module_05_Knowledge_Check.md', title: 'Module 5: Hashing & Hash Tables - Sprint 2', desc: '15 questions • Unlimited attempts' },
+                    activity: { file: 'activities/Module_05_Hash_Collision_Workshop.md', title: 'Hash Collision Workshop', desc: '90 minutes • Collision resolution' }
+                },
+                6: {
+                    assignments: [
+                        { file: 'assignments/Week_11_Assignment_BST_Heap_Sprint.md', title: 'Week 11: BST & Heap Implementation Sprint', desc: '75 points • Sprint 3' },
+                        { file: 'assignments/Week_12_Assignment_Expression_Tree.md', title: 'Week 12: Expression Tree Evaluator', desc: '25 points • Tree application' }
+                    ],
+                    planningSheets: [
+                        { file: 'planning-sheets/Sprint_Planning_Template.md', title: 'Sprint Planning Template', desc: 'Sprint 3 planning' },
+                        { file: 'planning-sheets/Daily_Standup_Template.md', title: 'Daily Standup Template', desc: 'Daily sprint tracking' },
+                        { file: 'planning-sheets/Sprint_Retrospective_Template.md', title: 'Sprint Retrospective Template', desc: 'Process optimization' }
+                    ],
+                    knowledgeCheck: { file: 'knowledge-checks/Module_06_Knowledge_Check.md', title: 'Module 6: Trees & Heaps - Sprint 3', desc: '15 questions • Unlimited attempts' },
+                    activity: { file: 'activities/Module_06_Tree_Traversal_Lab.md', title: 'Tree Traversal Lab', desc: '90 minutes • Inorder/preorder/postorder' }
+                },
+                7: {
+                    assignments: [
+                        { file: 'assignments/Week_13_Assignment_Graph_Sprint.md', title: 'Week 13: Graph Implementation & Traversal Sprint', desc: '75 points • Sprint 4' },
+                        { file: 'assignments/Week_14_Assignment_Graph_Application.md', title: 'Week 14: Real-World Graph Application', desc: '50 points • Graph application' }
+                    ],
+                    planningSheets: [
+                        { file: 'planning-sheets/Sprint_Planning_Template.md', title: 'Sprint Planning Template', desc: 'Sprint 4 planning' },
+                        { file: 'planning-sheets/Daily_Standup_Template.md', title: 'Daily Standup Template', desc: 'Daily sprint tracking' },
+                        { file: 'planning-sheets/Sprint_Retrospective_Template.md', title: 'Sprint Retrospective Template', desc: 'Final sprint reflection' }
+                    ],
+                    knowledgeCheck: { file: 'knowledge-checks/Module_07_Knowledge_Check.md', title: 'Module 7: Graphs & Advanced Algorithms - Sprint 4', desc: '14 questions • Unlimited attempts' },
+                    activity: { file: 'activities/Module_07_Graph_Traversal_Workshop.md', title: 'Graph Traversal Workshop', desc: '120 minutes • BFS/DFS practice' }
+                },
+                8: {
+                    assignments: [
+                        { file: 'assignments/Week_15_Assignment_Final_Project.md', title: 'Week 15: Final Integration Project', desc: '100 points • Capstone project' },
+                        { file: 'assignments/Week_16_Assignment_Presentation_Portfolio.md', title: 'Week 16: Technical Presentation & Process Portfolio', desc: '75 points • Final presentation' }
+                    ],
+                    planningSheets: [
+                        { file: 'planning-sheets/Sprint_Planning_Template.md', title: 'Sprint Planning Template', desc: 'Final sprint planning' }
+                    ],
+                    knowledgeCheck: { file: 'knowledge-checks/Module_08_Knowledge_Check.md', title: 'Module 8: Integration Project & Portfolio', desc: '14 questions • Unlimited attempts' },
+                    activity: { file: 'activities/Module_08_Capstone_Demo_Day.md', title: 'Capstone Demo Day', desc: '120 minutes • Presentations' }
+                }
+            };
+
             const materials = courseCode === 'CSC-113' ? moduleMaterialsCSC113[moduleNum] :
                              courseCode === 'CSC-114' ? moduleMaterialsCSC114[moduleNum] :
+                             courseCode === 'CSC-249' ? moduleMaterialsCSC249[moduleNum] :
                              courseCode === 'CTS-285' ? moduleMaterialsCTS285[moduleNum] : null;
             if (!materials) return '';
 
