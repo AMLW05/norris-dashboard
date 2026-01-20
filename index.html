@@ -537,6 +537,7 @@
                     <button class="filter-btn active" onclick="filterCourses('all')">Show All</button>
                     <button class="filter-btn" onclick="filterCourses('CSC-113')">CSC-113 Only</button>
                     <button class="filter-btn" onclick="filterCourses('CSC-114')">CSC-114 Only</button>
+                    <button class="filter-btn" onclick="filterCourses('CSC-249')">CSC-249 Only</button>
                     <button class="filter-btn" onclick="filterCourses('CTS-285')">CTS-285 Only</button>
                     <button class="filter-btn" onclick="filterCourses('CTS-289')">CTS-289 Only</button>
                 </div>
@@ -816,11 +817,11 @@
                                         <div>QM ${course.code === 'CTS-285' ? '96/100' : '22/22 Standards'}</div>
                                     </div>
                                     <div>
-                                        <div style="font-size: 2em; font-weight: bold;">${course.code === 'CSC-113' ? '32' : course.code === 'CSC-114' ? '46' : '58'}</div>
+                                        <div style="font-size: 2em; font-weight: bold;">${course.code === 'CSC-113' ? '32' : course.code === 'CSC-114' ? '46' : course.code === 'CSC-249' ? '63' : '58'}</div>
                                         <div>Total Files</div>
                                     </div>
                                     <div>
-                                        <div style="font-size: 2em; font-weight: bold;">${course.code === 'CSC-113' ? '536+' : course.code === 'CSC-114' ? '650+' : '25K+'}</div>
+                                        <div style="font-size: 2em; font-weight: bold;">${course.code === 'CSC-113' ? '536+' : course.code === 'CSC-114' ? '650+' : course.code === 'CSC-249' ? '700+' : '25K+'}</div>
                                         <div>${course.code === 'CTS-285' ? 'Lines of Content' : 'Total Pages'}</div>
                                     </div>
                                     <div>
