@@ -655,6 +655,38 @@ Create `SPRINT2_REVIEW.md`:
 
 ---
 
+## Peer Code Review Requirement
+
+**What to do**: Review ONE classmate's Sprint 2 PR by end of Week 9.
+
+**Find PRs**: Check Discord `#sprint2-reviews` for list
+
+**Review focus**:
+- Hash function implementation
+- Collision handling strategy
+- Load factor and resizing logic
+- Test coverage
+
+**Feedback template** (on GitHub PR):
+```
+## Sprint 2 Code Review
+
+**Strengths**:
+- [2-3 specific things done well]
+
+**Improvement opportunities**:
+- [2-3 constructive suggestions]
+
+**Hash function analysis**:
+- [Does it distribute evenly? Comment on quality]
+
+**Overall assessment**: [Approve / Request Changes / Comment]
+```
+
+**Points**: 2 points (included in rubric below)
+
+---
+
 ## Grading Rubric (50 points)
 
 | Component | Points | Criteria |

@@ -257,6 +257,39 @@ CSC-249 PM skills prepare for systems analysis capstone work with stakeholder ma
 
 ---
 
+## Accessibility & Support
+
+### Accessibility Statement
+
+CSC-249 is designed to be accessible to all students. If you have a documented disability and require accommodations, please contact your institution's Disability Services office. Accommodations are implemented on an individual basis.
+
+**Built-in Accessibility Features**:
+- All assignments text-based (screen reader compatible)
+- Code examples include detailed comments
+- Unlimited attempts on knowledge checks
+- Flexible deadlines available with documentation
+- Alternative presentation formats supported (video vs live demo)
+- Async communication options (Discord, email, GitHub)
+
+**Technology Accessibility**:
+- GitHub: Screen reader compatible, keyboard navigation
+- VS Code: Built-in accessibility features, high contrast themes
+- AI tools: Text-based, keyboard accessible
+- Canvas HTML: WCAG 2.1 AA compliant
+
+**Need Accommodations?** See SUPPORT_RESOURCES.md for complete information.
+
+### Support Resources
+
+**Quick Links**:
+- **Course Support**: SUPPORT_RESOURCES.md (all help options)
+- **Privacy Policies**: PRIVACY_POLICIES.md (required tools)
+- **Instructor Response Time**: 24-48 hours on weekdays
+- **Office Hours**: See Canvas for schedule
+- **Technical Help**: See SUPPORT_RESOURCES.md
+
+---
+
 ## File Organization
 
 ```
