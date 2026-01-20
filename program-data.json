@@ -703,7 +703,7 @@
       "term": "Spring 2026",
       "prerequisites": "CSC-134 (Intro to Programming - C++)",
       "description": "Data structures and algorithms with create-first pedagogy. Students implement lists, stacks, queues, trees, graphs, hash tables, sorting, searching, recursion. Mandatory AI collaboration with prompts.txt documentation. Dual-language (C++ or Python). 4 complete sprint cycles (Modules 4-7). 40% process grading. Upon completion: design data structures, implement algorithms, analyze complexity, manage technical projects professionally.",
-      "status": "development",
+      "status": "complete",
       "completionPercent": 100,
       "clos": [
         {
