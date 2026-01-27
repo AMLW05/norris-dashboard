@@ -718,7 +718,7 @@
                                             <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Materials Index</div>
                                             <div style="font-size: 0.85em; color: #5a6c7d;">Complete catalog • ${course.code === 'CSC-113' ? '30+' : course.code === 'CSC-114' ? '35+' : course.code === 'CSC-249' ? '31+' : '58'} ${course.code === 'CTS-285' ? 'files' : 'pages'}</div>
                                         </button>
-                                        ${(course.code === 'CSC-114' || course.code === 'CTS-285') ? `
+                                        ${(course.code === 'CSC-114' || course.code === 'CSC-249' || course.code === 'CTS-285') ? `
                                         <button class="material-item-btn" onclick="viewMaterial('${course.code}', 'instructor-guide/INSTRUCTOR_GUIDE.md')" style="padding: 15px; text-align: left; background: #e3f2fd; border: 1px solid #64b5f6; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
                                             <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Instructor Guide</div>
                                             <div style="font-size: 0.85em; color: #5a6c7d;">Teaching playbook • 60+ pages</div>
@@ -728,14 +728,14 @@
                                 </div>
                             </div>
 
-                            ${(course.code === 'CSC-114' || course.code === 'CTS-285') ? `
+                            ${(course.code === 'CSC-114' || course.code === 'CSC-249' || course.code === 'CTS-285') ? `
                             <!-- Reference Materials Section -->
                             <div class="materials-section" style="margin-bottom: 15px;">
                                 <div class="materials-header" onclick="toggleMaterials('${course.code.toLowerCase()}-reference')"
                                      style="background: white; padding: 15px; border-radius: 8px; border: 2px solid #f3e5f5; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
                                     <div>
                                         <h4 style="color: #9c27b0; margin: 0; font-size: 1.1em;">📖 Reference Materials</h4>
-                                        <p style="margin: 5px 0 0 0; color: #5a6c7d; font-size: 0.9em;">Quick reference guides • ${course.code === 'CSC-114' ? '75+ terms, 90+ code snippets' : '75+ terms, 80+ code examples'}</p>
+                                        <p style="margin: 5px 0 0 0; color: #5a6c7d; font-size: 0.9em;">Quick reference guides • ${course.code === 'CSC-114' ? '75+ terms, 90+ code snippets' : course.code === 'CSC-249' ? '85+ terms, 50+ code examples' : '75+ terms, 80+ code examples'}</p>
                                     </div>
                                     <span style="font-size: 1.5em; color: #9c27b0;">▼</span>
                                 </div>
@@ -753,6 +753,20 @@
                                         <button class="material-item-btn" onclick="viewMaterial('${course.code}', 'reference-materials/TROUBLESHOOTING_GUIDE.md')" style="padding: 15px; text-align: left; background: #f3e5f5; border: 1px solid #ba68c8; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
                                             <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Troubleshooting Guide</div>
                                             <div style="font-size: 0.85em; color: #5a6c7d;">40+ common issues solved</div>
+                                        </button>
+                                        ` : ''}
+                                        ${course.code === 'CSC-249' ? `
+                                        <button class="material-item-btn" onclick="viewMaterial('${course.code}', 'reference-materials/DS_ALGO_GLOSSARY.md')" style="padding: 15px; text-align: left; background: #f3e5f5; border: 1px solid #ba68c8; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
+                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Data Structures Glossary</div>
+                                            <div style="font-size: 0.85em; color: #5a6c7d;">85+ terms defined</div>
+                                        </button>
+                                        <button class="material-item-btn" onclick="viewMaterial('${course.code}', 'reference-materials/QUICK_REFERENCE_CARDS.md')" style="padding: 15px; text-align: left; background: #f3e5f5; border: 1px solid #ba68c8; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
+                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Quick Reference Cards</div>
+                                            <div style="font-size: 0.85em; color: #5a6c7d;">C++ & Python code snippets</div>
+                                        </button>
+                                        <button class="material-item-btn" onclick="viewMaterial('${course.code}', 'reference-materials/TROUBLESHOOTING_GUIDE.md')" style="padding: 15px; text-align: left; background: #f3e5f5; border: 1px solid #ba68c8; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
+                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Troubleshooting Guide</div>
+                                            <div style="font-size: 0.85em; color: #5a6c7d;">50+ common errors solved</div>
                                         </button>
                                         ` : ''}
                                         ${course.code === 'CTS-285' ? `
@@ -774,8 +788,8 @@
                             </div>
                             ` : ''}
 
-                            ${course.code === 'CTS-285' ? `
-                            <!-- PM Materials Section (CTS-285 only) -->
+                            ${(course.code === 'CSC-249' || course.code === 'CTS-285') ? `
+                            <!-- PM Materials Section -->
                             <div class="materials-section" style="margin-bottom: 15px;">
                                 <div class="materials-header" onclick="toggleMaterials('${course.code.toLowerCase()}-pm')"
                                      style="background: white; padding: 15px; border-radius: 8px; border: 2px solid #fff3e0; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
@@ -787,6 +801,21 @@
                                 </div>
                                 <div class="materials-content" id="${course.code.toLowerCase()}-pm" style="display: none; padding: 20px; background: white; border: 2px solid #fff3e0; border-top: none; border-radius: 0 0 8px 8px;">
                                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+                                        ${course.code === 'CSC-249' ? `
+                                        <button class="material-item-btn" onclick="viewMaterial('${course.code}', 'pm-materials/00-PM-Integration-Overview.md')" style="padding: 15px; text-align: left; background: #fff3e0; border: 1px solid #ffb74d; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
+                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">PM Integration Overview</div>
+                                            <div style="font-size: 0.85em; color: #5a6c7d;">40% process grading explained</div>
+                                        </button>
+                                        <button class="material-item-btn" onclick="viewMaterial('${course.code}', 'pm-materials/01-Sprint-Basics-For-CSC249.md')" style="padding: 15px; text-align: left; background: #fff3e0; border: 1px solid #ffb74d; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
+                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Sprint Basics for CSC-249</div>
+                                            <div style="font-size: 0.85em; color: #5a6c7d;">Sprint methodology guide</div>
+                                        </button>
+                                        <button class="material-item-btn" onclick="viewMaterial('${course.code}', 'pm-materials/02-AI-Collaboration-Guidelines.md')" style="padding: 15px; text-align: left; background: #fff3e0; border: 1px solid #ffb74d; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
+                                            <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">AI Collaboration Guidelines</div>
+                                            <div style="font-size: 0.85em; color: #5a6c7d;">Mandatory AI tools guide</div>
+                                        </button>
+                                        ` : ''}
+                                        ${course.code === 'CTS-285' ? `
                                         <button class="material-item-btn" onclick="viewMaterial('${course.code}', 'pm-materials/00-PM-Integration-Overview.md')" style="padding: 15px; text-align: left; background: #fff3e0; border: 1px solid #ffb74d; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
                                             <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">PM Integration Overview</div>
                                             <div style="font-size: 0.85em; color: #5a6c7d;">40% process grading explained</div>
@@ -803,6 +832,7 @@
                                             <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Sprint Ceremonies</div>
                                             <div style="font-size: 0.85em; color: #5a6c7d;">10-minute lesson</div>
                                         </button>
+                                        ` : ''}
                                     </div>
                                 </div>
                             </div>
