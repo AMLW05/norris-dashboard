@@ -700,7 +700,7 @@
                                      style="background: white; padding: 15px; border-radius: 8px; border: 2px solid #e3f2fd; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
                                     <div>
                                         <h4 style="color: var(--primary); margin: 0; font-size: 1.1em;">📋 Course Overview Documents</h4>
-                                        <p style="margin: 5px 0 0 0; color: #5a6c7d; font-size: 0.9em;">Certification package • ${course.code === 'CSC-113' ? '55+' : '60+'} pages</p>
+                                        <p style="margin: 5px 0 0 0; color: #5a6c7d; font-size: 0.9em;">Certification package • ${course.code === 'CSC-113' ? '55+' : course.code === 'CSC-249' ? '65+' : '60+'} pages</p>
                                     </div>
                                     <span style="font-size: 1.5em; color: var(--primary);">▼</span>
                                 </div>
@@ -712,7 +712,7 @@
                                         </button>
                                         <button class="material-item-btn" onclick="viewMaterial('${course.code}', 'COURSEMAP.md')" style="padding: 15px; text-align: left; background: #e3f2fd; border: 1px solid #64b5f6; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
                                             <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Complete Coursemap</div>
-                                            <div style="font-size: 0.85em; color: #5a6c7d;">Certification document • ${course.code === 'CTS-285' ? '650+' : '50+'} pages</div>
+                                            <div style="font-size: 0.85em; color: #5a6c7d;">Certification document • ${course.code === 'CTS-285' ? '650+' : course.code === 'CSC-249' ? '55+' : '50+'} pages</div>
                                         </button>
                                         <button class="material-item-btn" onclick="viewMaterial('${course.code}', 'MATERIALS_INDEX.md')" style="padding: 15px; text-align: left; background: #e3f2fd; border: 1px solid #64b5f6; border-radius: 6px; cursor: pointer; transition: all 0.3s;">
                                             <div style="font-weight: bold; color: var(--navy); margin-bottom: 5px;">Materials Index</div>
