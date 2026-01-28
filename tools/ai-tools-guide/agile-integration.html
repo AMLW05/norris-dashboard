@@ -1544,58 +1544,192 @@
                     </div>
                 </div>
 
-                <div class="practice-card">
+                <div class="practice-card" style="background: var(--bg-primary); border: 2px solid var(--border-color);" onclick="togglePractice(this)">
+                    <span class="expand-indicator">▼</span>
                     <div class="practice-icon">🎓</div>
                     <h3>Learn from AI</h3>
                     <p>
                         After each task, ask AI to explain the concepts involved.
                         This builds understanding for exams and future projects.
                     </p>
+                    <div class="practice-expanded-content">
+                        <h4>Post-Task Learning Questions:</h4>
+                        <ul>
+                            <li>"Explain the algorithm you just used in simple terms"</li>
+                            <li>"What's the time complexity of this solution and why?"</li>
+                            <li>"What are the pros and cons of this approach?"</li>
+                            <li>"When should I use this pattern vs. alternatives?"</li>
+                        </ul>
+                        <h4>Build Exam Readiness:</h4>
+                        <ul>
+                            <li>After AI helps solve a problem, ask for 3 similar practice problems</li>
+                            <li>Request conceptual explanations you can study</li>
+                            <li>Ask for common mistakes to avoid</li>
+                        </ul>
+                        <h4>Example Learning Prompt:</h4>
+                        <p style="background: var(--bg-tertiary); padding: 1rem; border-radius: 6px; font-family: monospace; font-size: 0.9rem; margin-top: 0.5rem;">
+                            "Thanks for helping me implement bubble sort. Now explain: 1) Why is it O(n²)? 2) When would I use this vs. quicksort? 3) Give me 3 practice problems to test my understanding."
+                        </p>
+                    </div>
                 </div>
 
-                <div class="practice-card">
+                <div class="practice-card" style="background: var(--bg-primary); border: 2px solid var(--border-color);" onclick="togglePractice(this)">
+                    <span class="expand-indicator">▼</span>
                     <div class="practice-icon">✅</div>
                     <h3>Test Everything</h3>
                     <p>
                         AI-generated code needs testing just like human code.
                         Use ChatGPT to generate comprehensive test cases.
                     </p>
+                    <div class="practice-expanded-content">
+                        <h4>Testing Workflow:</h4>
+                        <ul>
+                            <li><strong>Step 1:</strong> Get code from AI (Copilot, ChatGPT, Claude)</li>
+                            <li><strong>Step 2:</strong> Ask ChatGPT: "Generate JUnit tests for this code"</li>
+                            <li><strong>Step 3:</strong> Run the tests and verify they pass</li>
+                            <li><strong>Step 4:</strong> Add edge case tests the AI missed</li>
+                        </ul>
+                        <h4>Types of Tests to Request:</h4>
+                        <ul>
+                            <li><strong>Normal cases:</strong> Expected inputs and outputs</li>
+                            <li><strong>Edge cases:</strong> Empty, null, zero, negative, boundary values</li>
+                            <li><strong>Error cases:</strong> Invalid inputs that should throw exceptions</li>
+                        </ul>
+                        <h4>Example Test Request:</h4>
+                        <p style="background: var(--bg-tertiary); padding: 1rem; border-radius: 6px; font-family: monospace; font-size: 0.9rem; margin-top: 0.5rem;">
+                            "Generate JUnit test cases for this Calculator class. Include tests for: 1) Normal operations, 2) Division by zero, 3) Null inputs, 4) Integer overflow. Explain what each test validates."
+                        </p>
+                    </div>
                 </div>
 
-                <div class="practice-card">
+                <div class="practice-card" style="background: var(--bg-primary); border: 2px solid var(--border-color);" onclick="togglePractice(this)">
+                    <span class="expand-indicator">▼</span>
                     <div class="practice-icon">🤝</div>
                     <h3>Collaborate with AI</h3>
                     <p>
                         Treat AI as a junior developer. Give it clear instructions,
                         review its work, and provide feedback to get better results.
                     </p>
+                    <div class="practice-expanded-content">
+                        <h4>Effective AI Collaboration:</h4>
+                        <ul>
+                            <li><strong>Clear Instructions:</strong> Specify language, requirements, constraints</li>
+                            <li><strong>Iterative Refinement:</strong> "Good start, but change X to Y"</li>
+                            <li><strong>Code Reviews:</strong> Point out issues and ask for fixes</li>
+                            <li><strong>Learning Mode:</strong> Ask AI to explain its decisions</li>
+                        </ul>
+                        <h4>Junior Developer Mindset:</h4>
+                        <ul>
+                            <li>Would you accept code from a junior without review? No → Same with AI</li>
+                            <li>Would you blindly trust a junior's architecture? No → Same with AI</li>
+                            <li>Would you expect perfect code on first try? No → Iterate with AI</li>
+                        </ul>
+                        <h4>Feedback Loop Example:</h4>
+                        <p style="background: var(--bg-tertiary); padding: 1rem; border-radius: 6px; margin-top: 0.5rem;">
+                            <strong>First:</strong> "Write a Java class for managing inventory"<br>
+                            <strong>Review:</strong> "Good, but add input validation and use HashMap instead of ArrayList"<br>
+                            <strong>Refine:</strong> "Now add exception handling for negative quantities"<br>
+                            <strong>Final:</strong> Verify and customize for your needs
+                        </p>
+                    </div>
                 </div>
 
-                <div class="practice-card">
+                <div class="practice-card" style="background: var(--bg-primary); border: 2px solid var(--border-color);" onclick="togglePractice(this)">
+                    <span class="expand-indicator">▼</span>
                     <div class="practice-icon">🚫</div>
                     <h3>Know When NOT to Use AI</h3>
                     <p>
                         Simple problems you can solve in 2 minutes? Do it yourself.
                         Build your skills first, use AI for acceleration, not replacement.
                     </p>
+                    <div class="practice-expanded-content">
+                        <h4>When to Code Yourself:</h4>
+                        <ul>
+                            <li><strong>Simple syntax:</strong> Basic for loops, if statements, variable declarations</li>
+                            <li><strong>Learning phase:</strong> First 3 times doing something new (build muscle memory)</li>
+                            <li><strong>Exams/quizzes:</strong> Academic integrity requires your own work</li>
+                            <li><strong>Quick 2-minute tasks:</strong> Asking AI takes longer than just doing it</li>
+                        </ul>
+                        <h4>Skill Building First:</h4>
+                        <ul>
+                            <li><strong>Week 1-3 CSC-113:</strong> Minimal AI (learn basics manually)</li>
+                            <li><strong>Week 4+:</strong> Start using AI for speed, but understand everything</li>
+                            <li><strong>Before midterm:</strong> Practice coding without AI to verify you've learned</li>
+                        </ul>
+                        <h4>The 10-Minute Rule:</h4>
+                        <p style="background: var(--bg-tertiary); padding: 1rem; border-radius: 6px; margin-top: 0.5rem;">
+                            <strong>Try it yourself for 10 minutes first.</strong> If stuck, THEN use AI. This ensures you're learning, not just getting answers. You'll be surprised how much you can figure out!
+                        </p>
+                    </div>
                 </div>
 
-                <div class="practice-card">
+                <div class="practice-card" style="background: var(--bg-primary); border: 2px solid var(--border-color);" onclick="togglePractice(this)">
+                    <span class="expand-indicator">▼</span>
                     <div class="practice-icon">💾</div>
                     <h3>Save Useful Conversations</h3>
                     <p>
                         When AI generates great explanations or code, save them.
                         Build a personal knowledge base for future reference.
                     </p>
+                    <div class="practice-expanded-content">
+                        <h4>What to Save:</h4>
+                        <ul>
+                            <li><strong>Great prompts:</strong> Templates that worked well</li>
+                            <li><strong>Concept explanations:</strong> Clear explanations you can reference</li>
+                            <li><strong>Code patterns:</strong> Reusable solutions to common problems</li>
+                            <li><strong>Debugging strategies:</strong> How AI helped solve complex bugs</li>
+                        </ul>
+                        <h4>Where to Save:</h4>
+                        <ul>
+                            <li><strong>GitHub Gists:</strong> Code snippets with descriptions</li>
+                            <li><strong>Notion/Obsidian:</strong> Organize by topic/course</li>
+                            <li><strong>Markdown files:</strong> In your project repos (useful-prompts.md)</li>
+                            <li><strong>ChatGPT/Claude:</strong> Use built-in save/share features</li>
+                        </ul>
+                        <h4>Knowledge Base Structure:</h4>
+                        <p style="background: var(--bg-tertiary); padding: 1rem; border-radius: 6px; margin-top: 0.5rem;">
+                            <strong>Example folders:</strong><br>
+                            📁 CSC-113/<br>
+                            &nbsp;&nbsp;📄 debugging-prompts.md<br>
+                            &nbsp;&nbsp;📄 loop-patterns.md<br>
+                            📁 CSC-114/<br>
+                            &nbsp;&nbsp;📄 design-patterns.md<br>
+                            &nbsp;&nbsp;📄 architecture-questions.md
+                        </p>
+                    </div>
                 </div>
 
-                <div class="practice-card">
+                <div class="practice-card" style="background: var(--bg-primary); border: 2px solid var(--border-color);" onclick="togglePractice(this)">
+                    <span class="expand-indicator">▼</span>
                     <div class="practice-icon">🔄</div>
                     <h3>Iterate on Prompts</h3>
                     <p>
                         First AI response not quite right? Refine your prompt.
                         Good prompting is a skill - practice makes perfect.
                     </p>
+                    <div class="practice-expanded-content">
+                        <h4>Iteration Strategies:</h4>
+                        <ul>
+                            <li><strong>Start broad:</strong> "Explain inheritance in Java"</li>
+                            <li><strong>Add specificity:</strong> "Focus on the difference between extends and implements"</li>
+                            <li><strong>Request examples:</strong> "Show me with Animal/Dog/Cat classes"</li>
+                            <li><strong>Adjust complexity:</strong> "Explain like I'm a beginner" or "Include advanced topics"</li>
+                        </ul>
+                        <h4>Common Refinements:</h4>
+                        <ul>
+                            <li>"Make it simpler" / "Add more detail"</li>
+                            <li>"Show code examples" / "Just explain conceptually"</li>
+                            <li>"Use CSC-113 concepts only" / "Include design patterns"</li>
+                            <li>"What's the trade-off?" / "Why did you choose this approach?"</li>
+                        </ul>
+                        <h4>Prompt Iteration Example:</h4>
+                        <p style="background: var(--bg-tertiary); padding: 1rem; border-radius: 6px; margin-top: 0.5rem;">
+                            <strong>V1:</strong> "Help with arrays" (Too vague)<br>
+                            <strong>V2:</strong> "Explain how to sort an array in Java" (Better)<br>
+                            <strong>V3:</strong> "Show me bubble sort vs. Arrays.sort() with pros/cons" (Specific)<br>
+                            <strong>V4:</strong> "Now explain when I should use each in CSC-113 assignments" (Perfect)
+                        </p>
+                    </div>
                 </div>
             </div>
         </section>
