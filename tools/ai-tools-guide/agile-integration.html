@@ -534,9 +534,57 @@
             transition: all 0.3s ease;
         }
 
+        .practice-card {
+            cursor: pointer;
+            position: relative;
+        }
+
         .practice-card:hover {
             border-color: var(--primary);
             transform: translateY(-2px);
+        }
+
+        .practice-card.expanded {
+            grid-column: 1 / -1;
+        }
+
+        .practice-expanded-content {
+            display: none;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 2px solid var(--border-color);
+        }
+
+        .practice-card.expanded .practice-expanded-content {
+            display: block;
+        }
+
+        .practice-expanded-content h4 {
+            color: var(--primary);
+            margin: 1rem 0 0.5rem 0;
+            font-size: 1rem;
+        }
+
+        .practice-expanded-content ul {
+            margin-left: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .practice-expanded-content li {
+            margin: 0.5rem 0;
+            color: var(--text-secondary);
+        }
+
+        .expand-indicator {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .practice-card.expanded .expand-indicator {
+            transform: rotate(180deg);
         }
 
         .practice-icon {
@@ -1308,58 +1356,192 @@
             <h2>Best Practices for AI in Agile Workflow</h2>
 
             <div class="practice-grid" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); max-width: 1100px; margin: 2rem auto;">
-                <div class="practice-card" style="background: var(--bg-primary); border: 2px solid var(--border-color);">
+                <div class="practice-card" style="background: var(--bg-primary); border: 2px solid var(--border-color);" onclick="togglePractice(this)">
+                    <span class="expand-indicator">▼</span>
                     <div class="practice-icon">🎯</div>
                     <h3>Start with Planning</h3>
                     <p>
                         Never jump straight to coding. Use Claude to plan your approach first.
                         5 minutes of planning saves hours of refactoring.
                     </p>
+                    <div class="practice-expanded-content">
+                        <h4>Why Planning Matters:</h4>
+                        <ul>
+                            <li>Prevents architectural mistakes that are expensive to fix later</li>
+                            <li>Helps identify design patterns early (Factory, Observer, Strategy)</li>
+                            <li>Clarifies requirements before you write a single line</li>
+                        </ul>
+                        <h4>How to Do It:</h4>
+                        <ul>
+                            <li>Open Claude and describe your project/assignment</li>
+                            <li>Ask: "What's the best class structure for this problem?"</li>
+                            <li>Ask: "What design patterns would fit this scenario?"</li>
+                            <li>Get a plan BEFORE opening your IDE</li>
+                        </ul>
+                        <h4>Example Prompt:</h4>
+                        <p style="background: var(--bg-tertiary); padding: 1rem; border-radius: 6px; font-family: monospace; font-size: 0.9rem; margin-top: 0.5rem;">
+                            "I'm building a library management system for CSC-114. It needs to manage books, borrowers, due dates, and fines. What class structure and design patterns should I use? Please explain using SOLID principles."
+                        </p>
+                    </div>
                 </div>
 
-                <div class="practice-card" style="background: #e0e7ff; border: 3px solid var(--primary); box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);">
+                <div class="practice-card" style="background: #e0e7ff; border: 3px solid var(--primary); box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);" onclick="togglePractice(this)">
+                    <span class="expand-indicator">▼</span>
                     <div class="practice-icon">🔄</div>
                     <h3>Switch Tools Intentionally</h3>
                     <p>
                         Don't stick with one tool out of habit. Each tool has strengths -
                         use the decision tree above to choose the right tool for each task.
                     </p>
+                    <div class="practice-expanded-content">
+                        <h4>When to Switch:</h4>
+                        <ul>
+                            <li><strong>Start with Copilot?</strong> Switch to Claude if you're confused about architecture</li>
+                            <li><strong>Using ChatGPT?</strong> Switch to Claude if you need to analyze your entire codebase</li>
+                            <li><strong>Using Claude?</strong> Switch to Copilot once you know what to build</li>
+                        </ul>
+                        <h4>Decision Framework:</h4>
+                        <ul>
+                            <li><strong>Planning phase:</strong> Claude (architecture, design patterns)</li>
+                            <li><strong>Coding phase:</strong> Copilot (real-time suggestions in IDE)</li>
+                            <li><strong>Stuck on concept:</strong> ChatGPT (explanations, tutorials)</li>
+                            <li><strong>Complex debugging:</strong> Claude (deep analysis)</li>
+                            <li><strong>Research needed:</strong> Gemini (documentation, best practices)</li>
+                        </ul>
+                        <h4>Pro Tip:</h4>
+                        <p style="background: var(--bg-tertiary); padding: 1rem; border-radius: 6px; margin-top: 0.5rem;">
+                            Use the <strong>Usage Tracker</strong> to log which tool you used for each task. After 10 tasks, review your patterns and see if you're choosing intentionally or just using what's easiest.
+                        </p>
+                    </div>
                 </div>
 
-                <div class="practice-card" style="background: var(--bg-primary); border: 2px solid var(--border-color);">
+                <div class="practice-card" style="background: var(--bg-primary); border: 2px solid var(--border-color);" onclick="togglePractice(this)">
+                    <span class="expand-indicator">▼</span>
                     <div class="practice-icon">📝</div>
                     <h3>Document Your Workflow</h3>
                     <p>
                         Keep notes on what worked and what didn't. After each sprint,
                         reflect on your tool usage and adjust for the next sprint.
                     </p>
+                    <div class="practice-expanded-content">
+                        <h4>What to Document:</h4>
+                        <ul>
+                            <li>Which tool you used for each task</li>
+                            <li>How helpful was it? (Rate 1-5)</li>
+                            <li>What prompt worked best?</li>
+                            <li>What would you do differently next time?</li>
+                        </ul>
+                        <h4>Tools for Documentation:</h4>
+                        <ul>
+                            <li><strong>Usage Tracker:</strong> Built into this guide (click "Usage Tracker" in main menu)</li>
+                            <li><strong>Markdown Notes:</strong> Create a workflow.md file in your project</li>
+                            <li><strong>Code Comments:</strong> Add "// Generated with Claude" or "// Copilot suggestion, reviewed"</li>
+                        </ul>
+                        <h4>Sprint Retrospective Questions:</h4>
+                        <ul>
+                            <li>Did I choose the right tool for each phase?</li>
+                            <li>Where did AI help me learn vs. just complete tasks?</li>
+                            <li>What prompts should I save for next sprint?</li>
+                        </ul>
+                    </div>
                 </div>
 
-                <div class="practice-card" style="background: var(--bg-primary); border: 2px solid var(--border-color);">
+                <div class="practice-card" style="background: var(--bg-primary); border: 2px solid var(--border-color);" onclick="togglePractice(this)">
+                    <span class="expand-indicator">▼</span>
                     <div class="practice-icon">🧠</div>
                     <h3>Understand Before Using</h3>
                     <p>
                         Never paste AI-generated code without understanding it.
                         Ask the AI to explain any code you don't fully comprehend.
                     </p>
+                    <div class="practice-expanded-content">
+                        <h4>The Understanding Test:</h4>
+                        <ul>
+                            <li>Can you explain each line to someone else?</li>
+                            <li>Do you know WHY the AI chose this approach?</li>
+                            <li>Could you write similar code from scratch?</li>
+                            <li>If you can't answer YES to all three, ask for explanation!</li>
+                        </ul>
+                        <h4>How to Learn from AI Code:</h4>
+                        <ul>
+                            <li><strong>Step 1:</strong> Get the code from AI</li>
+                            <li><strong>Step 2:</strong> Ask "Explain each part of this code like I'm learning it for the first time"</li>
+                            <li><strong>Step 3:</strong> Ask "Why did you choose this approach over alternatives?"</li>
+                            <li><strong>Step 4:</strong> Modify the code yourself to test understanding</li>
+                        </ul>
+                        <h4>Example Follow-Up Prompt:</h4>
+                        <p style="background: var(--bg-tertiary); padding: 1rem; border-radius: 6px; font-family: monospace; font-size: 0.9rem; margin-top: 0.5rem;">
+                            "Thanks for the code! Before I use it, can you explain: 1) What does line 15 do and why? 2) Why did you use a HashMap instead of an ArrayList? 3) What would break if I removed the null check?"
+                        </p>
+                    </div>
                 </div>
 
-                <div class="practice-card" style="background: var(--bg-primary); border: 2px solid var(--border-color);">
+                <div class="practice-card" style="background: var(--bg-primary); border: 2px solid var(--border-color);" onclick="togglePractice(this)">
+                    <span class="expand-indicator">▼</span>
                     <div class="practice-icon">🔍</div>
                     <h3>Review AI Suggestions</h3>
                     <p>
                         AI can make mistakes. Always review suggestions critically.
                         Use Claude to review code from Copilot or ChatGPT.
                     </p>
+                    <div class="practice-expanded-content">
+                        <h4>Common AI Mistakes:</h4>
+                        <ul>
+                            <li><strong>Outdated practices:</strong> AI may suggest old patterns</li>
+                            <li><strong>Over-engineering:</strong> Complex solutions for simple problems</li>
+                            <li><strong>Edge cases missed:</strong> Null checks, empty arrays, boundary conditions</li>
+                            <li><strong>Security issues:</strong> SQL injection, XSS vulnerabilities</li>
+                        </ul>
+                        <h4>Review Checklist:</h4>
+                        <ul>
+                            <li>✅ Does it compile/run?</li>
+                            <li>✅ Does it handle edge cases (null, empty, negative)?</li>
+                            <li>✅ Is it following course requirements (e.g., "must use Factory pattern")?</li>
+                            <li>✅ Is it readable and maintainable?</li>
+                            <li>✅ Are there any security concerns?</li>
+                        </ul>
+                        <h4>Cross-Check Strategy:</h4>
+                        <p style="background: var(--bg-tertiary); padding: 1rem; border-radius: 6px; margin-top: 0.5rem;">
+                            <strong>Best Practice:</strong> Got code from Copilot? Paste it into Claude and ask: "Review this code for bugs, edge cases, and best practices. What would you improve?"
+                        </p>
+                    </div>
                 </div>
 
-                <div class="practice-card" style="background: var(--bg-primary); border: 2px solid var(--border-color);">
+                <div class="practice-card" style="background: var(--bg-primary); border: 2px solid var(--border-color);" onclick="togglePractice(this)">
+                    <span class="expand-indicator">▼</span>
                     <div class="practice-icon">⚡</div>
                     <h3>Copilot for Speed, Claude for Depth</h3>
                     <p>
                         Use Copilot when you know exactly what to build.
                         Use Claude when you need to figure out what to build or why.
                     </p>
+                    <div class="practice-expanded-content">
+                        <h4>Copilot Strengths (Speed):</h4>
+                        <ul>
+                            <li>Real-time suggestions as you type</li>
+                            <li>Great for boilerplate (getters, setters, constructors)</li>
+                            <li>Autocompletes based on context of current file</li>
+                            <li>Fast implementation once you know the approach</li>
+                        </ul>
+                        <h4>Claude Strengths (Depth):</h4>
+                        <ul>
+                            <li>Reads your entire codebase (200K tokens)</li>
+                            <li>Suggests design patterns and architecture</li>
+                            <li>Explains trade-offs between approaches</li>
+                            <li>Deep analysis of complex bugs</li>
+                        </ul>
+                        <h4>Perfect Workflow:</h4>
+                        <ul>
+                            <li><strong>Phase 1 (Planning):</strong> Ask Claude "How should I structure this?"</li>
+                            <li><strong>Phase 2 (Implementation):</strong> Use Copilot in your IDE to write the code</li>
+                            <li><strong>Phase 3 (Review):</strong> Paste back to Claude "Does this follow best practices?"</li>
+                        </ul>
+                        <h4>When to Switch Mid-Task:</h4>
+                        <p style="background: var(--bg-tertiary); padding: 1rem; border-radius: 6px; margin-top: 0.5rem;">
+                            <strong>In Copilot:</strong> Getting suggestions but confused? → Switch to ChatGPT/Claude<br>
+                            <strong>In Claude:</strong> Got a clear plan? → Switch to Copilot for fast coding
+                        </p>
+                    </div>
                 </div>
 
                 <div class="practice-card">
@@ -1491,6 +1673,27 @@
                 localStorage.setItem(checkbox.id, checkbox.checked);
             });
         });
+
+        // Best Practices card toggle
+        function togglePractice(card) {
+            // Close all other cards
+            const allCards = document.querySelectorAll('.practice-card');
+            allCards.forEach(c => {
+                if (c !== card && c.classList.contains('expanded')) {
+                    c.classList.remove('expanded');
+                }
+            });
+
+            // Toggle the clicked card
+            card.classList.toggle('expanded');
+
+            // Smooth scroll to card if it's being expanded
+            if (card.classList.contains('expanded')) {
+                setTimeout(() => {
+                    card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }, 100);
+            }
+        }
 
         // Reset checklist button (optional - could add to UI)
         function resetChecklist() {
