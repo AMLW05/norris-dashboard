@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIT AI Tools Guide | CSC-113/114</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #667eea;
+            --primary-dark: #764ba2;
+            --navy: #1a1a2e;
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --danger: #d63031;
+            --gray-light: #f5f7fa;
+            --text-dark: #2c3e50;
+            --border: #e1e8ed;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+
+        body.dark-mode {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        }
+
+        body.dark-mode .container { background: #2c3e50; color: #ecf0f1; }
+        body.dark-mode .header { background: linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 100%); }
+        body.dark-mode .tool-card { background: #34495e; color: #ecf0f1; }
+        body.dark-mode .tool-card:hover { background: #3d566e; }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--navy) 0%, #16213e 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .header p { font-size: 1.1em; opacity: 0.95; margin-bottom: 5px; }
+        .header .subtitle { font-size: 0.95em; opacity: 0.85; font-style: italic; }
+
+        .dark-mode-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .dark-mode-toggle:hover { background: rgba(255,255,255,0.3); }
+
+        .intro-section {
+            padding: 40px;
+            background: var(--gray-light);
+            border-bottom: 2px solid var(--border);
+        }
+
+        body.dark-mode .intro-section { background: #1e2a38; }
+
+        .intro-section h2 { color: var(--primary); margin-bottom: 15px; }
+        .intro-section p { margin-bottom: 10px; line-height: 1.8; }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            padding: 40px;
+        }
+
+        .tool-card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
+        }
+
+        .tool-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .tool-card h3 {
+            color: var(--primary);
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .tool-card p {
+            color: #5a6c7d;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        body.dark-mode .tool-card p { color: #bdc3c7; }
+
+        .tool-tag {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            margin-right: 8px;
+            margin-top: 10px;
+        }
+
+        .footer {
+            background: var(--navy);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.8em; }
+            .header p { font-size: 1em; }
+            .tools-grid { grid-template-columns: 1fr; padding: 20px; }
+            .intro-section { padding: 20px; }
+            .dark-mode-toggle { top: 10px; right: 10px; padding: 8px 15px; font-size: 12px; }
+        }
+
+        @media print {
+            body { background: white; }
+            .container { box-shadow: none; }
+            .dark-mode-toggle { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <button class="dark-mode-toggle" onclick="toggleDarkMode()" aria-label="Toggle dark mode">🌓 Dark Mode</button>
+            <h1>CIT AI Tools Guide</h1>
+            <p>Comprehensive Guide for CSC-113 & CSC-114 Students</p>
+            <p class="subtitle">Making Informed Decisions About AI Coding Assistants</p>
+        </header>
+
+        <section class="intro-section">
+            <h2>Welcome to Your AI Tools Resource Hub</h2>
+            <p>As a Computer Information Technology student at FTCC, you have access to powerful AI tools that can accelerate your learning and coding productivity. This guide helps you understand which tool to use, when to use it, and how to integrate AI assistance into professional workflows.</p>
+            <p><strong>Important:</strong> These tools are learning aids, not replacements for understanding. The goal is to use AI to enhance your comprehension and efficiency while developing strong foundational skills.</p>
+        </section>
+
+        <section class="tools-grid">
+            <a href="comparison-guide.html" class="tool-card">
+                <span class="tool-icon">📊</span>
+                <h3>Comparison Guide</h3>
+                <p>Compare GitHub Copilot, ChatGPT, Claude, and Google Gemini side-by-side. Understand strengths, limitations, free access options, and which tool fits your needs.</p>
+                <span class="tool-tag">CSC-113</span>
+                <span class="tool-tag">CSC-114</span>
+            </a>
+
+            <a href="decision-tool.html" class="tool-card">
+                <span class="tool-icon">🤖</span>
+                <h3>Interactive Decision Tool</h3>
+                <p>Answer a few questions and get personalized AI tool recommendations using a weighted decision algorithm. Learn machine learning concepts while choosing the right tool.</p>
+                <span class="tool-tag">Interactive</span>
+                <span class="tool-tag">ML Concepts</span>
+            </a>
+
+            <a href="agile-integration.html" class="tool-card">
+                <span class="tool-icon">🔄</span>
+                <h3>SCRUM/Agile Integration</h3>
+                <p>Discover where each AI tool fits into professional Agile workflows. From sprint planning to deployment, learn which tool to use at each phase.</p>
+                <span class="tool-tag">Professional Skills</span>
+                <span class="tool-tag">Workflow</span>
+            </a>
+        </section>
+
+        <footer class="footer">
+            <p><strong>Norris Dashboard</strong> | FTCC Computer Information Technology</p>
+            <p><a href="../../index.html">← Back to Main Dashboard</a></p>
+            <p style="margin-top: 15px; font-size: 0.9em; opacity: 0.8;">Last Updated: January 2026</p>
+        </footer>
+    </div>
+
+    <script>
+        // Dark mode toggle with localStorage persistence
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            localStorage.setItem('darkMode', isDark);
+            updateToggleButton();
+        }
+
+        function updateToggleButton() {
+            const btn = document.querySelector('.dark-mode-toggle');
+            const isDark = document.body.classList.contains('dark-mode');
+            btn.textContent = isDark ? '☀️ Light Mode' : '🌓 Dark Mode';
+        }
+
+        // Load dark mode preference on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedMode = localStorage.getItem('darkMode');
+            if (savedMode === 'true') {
+                document.body.classList.add('dark-mode');
+            }
+            updateToggleButton();
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'd' && e.ctrlKey) {
+                e.preventDefault();
+                toggleDarkMode();
+            }
+        });
+    </script>
+</body>
+</html>

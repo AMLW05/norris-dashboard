@@ -1,0 +1,1723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Tools Comparison Guide | CIT</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #667eea;
+            --primary-dark: #764ba2;
+            --navy: #1a1a2e;
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --danger: #d63031;
+            --info: #3498db;
+            --gray-light: #f5f7fa;
+            --text-dark: #2c3e50;
+            --border: #e1e8ed;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+
+        body.dark-mode {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        }
+
+        body.dark-mode .container { background: #2c3e50; color: #ecf0f1; }
+        body.dark-mode .header { background: linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 100%); }
+        body.dark-mode .nav-tabs { background: #34495e; border-bottom-color: #1e2a38; }
+        body.dark-mode .nav-tab { color: #bdc3c7; }
+        body.dark-mode .nav-tab.active { background: #2c3e50; color: #3498db; border-bottom-color: #3498db; }
+        body.dark-mode .tab-content { background: #2c3e50; }
+        body.dark-mode .feature-grid { background: #34495e; }
+        body.dark-mode .feature-item { border-bottom-color: #1e2a38; }
+        body.dark-mode .comparison-table { background: #34495e; }
+        body.dark-mode .comparison-table th { background: #1e2a38; }
+        body.dark-mode .comparison-table td, body.dark-mode .comparison-table th { border-color: #1e2a38; }
+        body.dark-mode .info-box { background: #34495e; border-left-color: #3498db; }
+        body.dark-mode .calculator-section { background: #34495e; }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--navy) 0%, #16213e 100%);
+            color: white;
+            padding: 30px 40px;
+            position: relative;
+        }
+
+        .header h1 { font-size: 2em; margin-bottom: 8px; }
+        .header p { font-size: 1em; opacity: 0.9; }
+
+        .dark-mode-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.3s;
+        }
+
+        .dark-mode-toggle:hover { background: rgba(255,255,255,0.3); }
+
+        .nav-tabs {
+            display: flex;
+            background: var(--gray-light);
+            border-bottom: 2px solid var(--border);
+            overflow-x: auto;
+            scrollbar-width: thin;
+        }
+
+        .nav-tabs::-webkit-scrollbar { height: 6px; }
+        .nav-tabs::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 3px; }
+
+        .nav-tab {
+            padding: 18px 24px;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            font-size: 14px;
+            font-weight: 600;
+            color: #5a6c7d;
+            transition: all 0.3s;
+            white-space: nowrap;
+            border-bottom: 3px solid transparent;
+            flex-shrink: 0;
+        }
+
+        .nav-tab:hover { background: rgba(102, 126, 234, 0.1); }
+        .nav-tab.active {
+            background: white;
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 30px;
+            animation: fadeIn 0.3s;
+        }
+
+        .tab-content.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tool-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .tool-icon {
+            font-size: 3em;
+            margin-right: 20px;
+        }
+
+        .tool-header h2 {
+            color: var(--primary);
+            font-size: 2em;
+        }
+
+        .tool-header .tagline {
+            color: #5a6c7d;
+            font-size: 1.1em;
+            margin-top: 5px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+            background: var(--gray-light);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .feature-item {
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .feature-item:last-child { border-bottom: none; }
+
+        .feature-label {
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 5px;
+            font-size: 0.95em;
+        }
+
+        .feature-value {
+            color: var(--text-dark);
+            font-size: 1.05em;
+        }
+
+        body.dark-mode .feature-value { color: #ecf0f1; }
+
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid var(--info);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .info-box h3 {
+            color: var(--info);
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .info-box ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        .info-box li {
+            margin: 8px 0;
+            line-height: 1.6;
+        }
+
+        .success-box {
+            background: #d4edda;
+            border-left: 4px solid var(--success);
+        }
+
+        .success-box h3 { color: var(--success); }
+
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid var(--warning);
+        }
+
+        .warning-box h3 { color: #d4a106; }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .comparison-table th {
+            background: var(--primary);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .comparison-table td {
+            padding: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .comparison-table tr:last-child td { border-bottom: none; }
+
+        .comparison-table tr:nth-child(even) { background: var(--gray-light); }
+
+        body.dark-mode .comparison-table tr:nth-child(even) { background: #34495e; }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin: 2px;
+        }
+
+        .badge-success { background: #d4edda; color: #155724; }
+        .badge-warning { background: #fff3cd; color: #856404; }
+        .badge-info { background: #d1ecf1; color: #0c5460; }
+        .badge-free { background: #00b894; color: white; }
+
+        .calculator-section {
+            background: var(--gray-light);
+            padding: 25px;
+            border-radius: 10px;
+            margin: 25px 0;
+        }
+
+        .calculator-input {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .calculator-input label {
+            font-weight: 600;
+            min-width: 200px;
+        }
+
+        .calculator-input input[type="number"] {
+            padding: 10px;
+            border: 2px solid var(--border);
+            border-radius: 6px;
+            font-size: 1em;
+            width: 150px;
+        }
+
+        .calculator-input input[type="range"] {
+            width: 300px;
+        }
+
+        .calculator-result {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        body.dark-mode .calculator-result { background: #34495e; }
+
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .result-row:last-child { border-bottom: none; font-weight: 700; font-size: 1.1em; }
+
+        .copy-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9em;
+            margin-top: 10px;
+            transition: all 0.3s;
+        }
+
+        .copy-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin: 20px 0;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .back-link:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.5em; }
+            .tab-content { padding: 20px; }
+            .feature-grid { grid-template-columns: 1fr; }
+            .tool-header { flex-direction: column; text-align: center; }
+            .tool-icon { margin-right: 0; margin-bottom: 10px; }
+            .calculator-input { flex-direction: column; align-items: flex-start; }
+            .calculator-input input[type="range"] { width: 100%; }
+            .result-row { flex-direction: column; gap: 5px; }
+        }
+
+        @media print {
+            body { background: white; }
+            .container { box-shadow: none; }
+            .dark-mode-toggle, .copy-btn, .back-link { display: none; }
+            .tab-content { display: block !important; page-break-after: always; }
+            .nav-tabs { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <button class="dark-mode-toggle" onclick="toggleDarkMode()" aria-label="Toggle dark mode">🌓 Dark Mode</button>
+            <h1>AI Tools Comparison Guide</h1>
+            <p>Comprehensive comparison for CSC-113/114 students - Updated January 2026</p>
+        </header>
+
+        <nav class="nav-tabs" role="tablist">
+            <button class="nav-tab active" onclick="switchTab(0)" role="tab" aria-selected="true">Overview</button>
+            <button class="nav-tab" onclick="switchTab(1)" role="tab">GitHub Copilot</button>
+            <button class="nav-tab" onclick="switchTab(2)" role="tab">ChatGPT</button>
+            <button class="nav-tab" onclick="switchTab(3)" role="tab">Claude</button>
+            <button class="nav-tab" onclick="switchTab(4)" role="tab">Google Gemini</button>
+            <button class="nav-tab" onclick="switchTab(5)" role="tab">Model Comparison</button>
+            <button class="nav-tab" onclick="switchTab(6)" role="tab">Interfaces & Integration</button>
+            <button class="nav-tab" onclick="switchTab(7)" role="tab">CSC-113/114 Guidance</button>
+            <button class="nav-tab" onclick="switchTab(8)" role="tab">Cost Calculator</button>
+        </nav>
+
+        <!-- TAB 0: OVERVIEW -->
+        <div class="tab-content active" role="tabpanel">
+            <a href="index.html" class="back-link">← Back to AI Tools Guide</a>
+
+            <h2 style="color: var(--primary); margin-bottom: 20px;">Quick Reference Guide</h2>
+
+            <div class="info-box success-box">
+                <h3>🎓 For FTCC Students: All Tools Have Free Access!</h3>
+                <ul>
+                    <li><strong>GitHub Copilot:</strong> 100% FREE with GitHub Student Developer Pack (requires FTCC email verification)</li>
+                    <li><strong>ChatGPT:</strong> FREE tier with GPT-4o mini (sufficient for most coursework)</li>
+                    <li><strong>Claude:</strong> FREE tier with Claude 3.5 Sonnet (generous usage limits)</li>
+                    <li><strong>Google Gemini:</strong> FREE tier with Gemini 2.5 Flash (1M token context window)</li>
+                </ul>
+            </div>
+
+            <h3 style="margin-top: 30px; margin-bottom: 15px;">Choose Your Tool by Task:</h3>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Task Type</th>
+                        <th>Best Tool</th>
+                        <th>Why?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Writing code in real-time</strong></td>
+                        <td>GitHub Copilot <span class="badge badge-free">FREE</span></td>
+                        <td>IDE-integrated, autocomplete-style, instant suggestions</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Understanding concepts</strong></td>
+                        <td>ChatGPT <span class="badge badge-free">FREE</span></td>
+                        <td>Excellent explanations, multimodal (can view images)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Debugging complex logic</strong></td>
+                        <td>Claude <span class="badge badge-free">FREE</span></td>
+                        <td>200K context reads entire projects, deep analysis</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Architecture decisions</strong></td>
+                        <td>Claude <span class="badge badge-free">FREE</span></td>
+                        <td>Analyzes full codebase structure, suggests design patterns</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Research-heavy projects</strong></td>
+                        <td>Google Gemini <span class="badge badge-free">FREE</span></td>
+                        <td>Deep Research feature, 1M token context, web search</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Quick syntax help</strong></td>
+                        <td>GitHub Copilot <span class="badge badge-free">FREE</span></td>
+                        <td>Low learning curve, IDE-native, real-time</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Learning new frameworks</strong></td>
+                        <td>ChatGPT or Claude <span class="badge badge-free">FREE</span></td>
+                        <td>Both provide step-by-step tutorials and explanations</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Refactoring large codebases</strong></td>
+                        <td>Claude <span class="badge badge-free">FREE</span></td>
+                        <td>Can read 400+ pages of code at once, deep analysis</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="info-box">
+                <h3>💡 Recommended Workflow for CIT Students</h3>
+                <ul>
+                    <li><strong>Primary:</strong> GitHub Copilot (FREE with Student Pack) - Use daily for coding</li>
+                    <li><strong>Secondary:</strong> ChatGPT FREE - Use when stuck or learning new concepts</li>
+                    <li><strong>Tertiary:</strong> Claude FREE - Use for complex debugging and architecture decisions</li>
+                    <li><strong>Specialty:</strong> Google Gemini FREE - Use for research-heavy assignments</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- TAB 1: GITHUB COPILOT -->
+        <div class="tab-content" role="tabpanel">
+            <a href="index.html" class="back-link">← Back to AI Tools Guide</a>
+
+            <div class="tool-header">
+                <span class="tool-icon">🤖</span>
+                <div>
+                    <h2>GitHub Copilot</h2>
+                    <p class="tagline">Your AI pair programmer, right in your IDE</p>
+                    <span class="badge badge-free">100% FREE for FTCC Students</span>
+                </div>
+            </div>
+
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <div class="feature-label">Student Access</div>
+                    <div class="feature-value">FREE with GitHub Student Developer Pack</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-label">Models</div>
+                    <div class="feature-value">GPT-4o Turbo, specialized code models</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-label">Context Window</div>
+                    <div class="feature-value">~8K tokens (current file + open tabs)</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-label">IDE Integration</div>
+                    <div class="feature-value">VS Code, JetBrains, Visual Studio, Neovim, Xcode</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-label">Learning Curve</div>
+                    <div class="feature-value">⭐ Low (autocomplete style)</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-label">Best For</div>
+                    <div class="feature-value">Real-time coding assistance</div>
+                </div>
+            </div>
+
+            <div class="info-box success-box">
+                <h3>✅ How to Get FREE Access (FTCC Students)</h3>
+                <ol style="margin-left: 20px; margin-top: 10px;">
+                    <li>Go to <a href="https://education.github.com/pack" target="_blank" style="color: var(--success);">education.github.com/pack</a></li>
+                    <li>Sign in with your GitHub account (create one if needed)</li>
+                    <li>Click "Get student benefits"</li>
+                    <li>Verify with your <strong>@my.faytechcc.edu</strong> email</li>
+                    <li>Once approved, GitHub Copilot will be FREE in your account</li>
+                    <li>Install the Copilot extension in VS Code or your IDE</li>
+                </ol>
+            </div>
+
+            <div class="info-box">
+                <h3>💪 Strengths</h3>
+                <ul>
+                    <li><strong>IDE Integration:</strong> Works seamlessly inside your code editor - no context switching</li>
+                    <li><strong>Real-time Suggestions:</strong> Autocomplete-style assistance as you type</li>
+                    <li><strong>Codebase Awareness:</strong> Understands your project structure and open files</li>
+                    <li><strong>Job-Ready Skill:</strong> Widely used in professional development teams</li>
+                    <li><strong>Low Learning Curve:</strong> Feels like smart autocomplete, easy to start using</li>
+                    <li><strong>Multi-Language Support:</strong> Works with Python, Java, JavaScript, C++, and 50+ languages</li>
+                </ul>
+            </div>
+
+            <div class="info-box warning-box">
+                <h3>⚠️ Limitations</h3>
+                <ul>
+                    <li><strong>Limited Context:</strong> Only sees ~8K tokens (current file + open tabs), not entire project</li>
+                    <li><strong>Narrower Scope:</strong> Optimized for code generation, less effective for broad conceptual questions</li>
+                    <li><strong>Requires IDE:</strong> Must be coding in a supported editor to use it</li>
+                    <li><strong>Can Suggest Outdated Patterns:</strong> May not always follow latest best practices</li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <h3>🎯 Best Use Cases for CSC-113/114</h3>
+                <ul>
+                    <li><strong>CSC-113:</strong> Primary tool for learning syntax and building projects</li>
+                    <li><strong>CSC-114:</strong> Implementation assistant after you've designed architecture</li>
+                    <li>Writing boilerplate code (getters/setters, constructors)</li>
+                    <li>Generating unit tests</li>
+                    <li>Learning new syntax patterns</li>
+                    <li>Quick documentation generation</li>
+                </ul>
+            </div>
+
+            <div class="info-box success-box">
+                <h3>✨ CSC-113 Recommended Workflow</h3>
+                <ol style="margin-left: 20px; margin-top: 10px;">
+                    <li><strong>You:</strong> Write pseudocode or comments describing what you want</li>
+                    <li><strong>Copilot:</strong> Suggests implementation</li>
+                    <li><strong>You:</strong> Review, understand, and refactor the suggestion</li>
+                    <li><strong>You:</strong> Test the code and verify it works as expected</li>
+                </ol>
+                <p style="margin-top: 10px;"><strong>Key:</strong> Never accept suggestions blindly. Always understand what the code does.</p>
+            </div>
+
+            <button class="copy-btn" onclick="copyText('GitHub Copilot: FREE for students, IDE-integrated, best for real-time coding')">📋 Copy Quick Summary</button>
+        </div>
+
+        <!-- TAB 2: CHATGPT -->
+        <div class="tab-content" role="tabpanel">
+            <a href="index.html" class="back-link">← Back to AI Tools Guide</a>
+
+            <div class="tool-header">
+                <span class="tool-icon">💬</span>
+                <div>
+                    <h2>ChatGPT</h2>
+                    <p class="tagline">Conversational AI for problem-solving and learning</p>
+                    <span class="badge badge-free">FREE Tier Available</span>
+                </div>
+            </div>
+
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <div class="feature-label">Free Access</div>
+                    <div class="feature-value">GPT-4o mini (sufficient for coursework)</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-label">Models</div>
+                    <div class="feature-value">GPT-4o, GPT-5.2, o1 (reasoning)</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-label">Context Window</div>
+                    <div class="feature-value">128K tokens (~300 pages of code)</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-label">Interface</div>
+                    <div class="feature-value">Web, mobile app, API</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-label">Learning Curve</div>
+                    <div class="feature-value">⭐⭐ Medium (conversational)</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-label">Best For</div>
+                    <div class="feature-value">Learning concepts, debugging logic</div>
+                </div>
+            </div>
+
+            <div class="info-box success-box">
+                <h3>✅ How to Access FREE</h3>
+                <ol style="margin-left: 20px; margin-top: 10px;">
+                    <li>Go to <a href="https://chat.openai.com" target="_blank" style="color: var(--success);">chat.openai.com</a></li>
+                    <li>Create a free account with any email</li>
+                    <li>Start chatting immediately - no credit card required</li>
+                    <li>FREE tier includes GPT-4o mini (excellent for student work)</li>
+                </ol>
+                <p style="margin-top: 10px;"><strong>Note:</strong> Free tier has usage limits, but they're generous for coursework.</p>
+            </div>
+
+            <div class="info-box">
+                <h3>💪 Strengths</h3>
+                <ul>
+                    <li><strong>Excellent Explanations:</strong> Best at breaking down complex concepts for learners</li>
+                    <li><strong>Multimodal:</strong> Can view images, PDFs, and files you upload</li>
+                    <li><strong>Web Search:</strong> Can fetch current information and documentation</li>
+                    <li><strong>Conversational:</strong> Natural back-and-forth dialogue for problem-solving</li>
+                    <li><strong>Broad Knowledge:</strong> Not just coding - helps with algorithms, theory, math</li>
+                    <li><strong>Memory:</strong> Remembers context within a conversation</li>
+                </ul>
+            </div>
+
+            <div class="info-box warning-box">
+                <h3>⚠️ Limitations</h3>
+                <ul>
+                    <li><strong>Context Switching:</strong> Requires leaving your IDE to use it</li>
+                    <li><strong>No Direct File Access:</strong> You must copy/paste code or upload files</li>
+                    <li><strong>Free Tier Limits:</strong> Rate limits on requests during high-demand periods</li>
+                    <li><strong>Can Hallucinate:</strong> Sometimes generates plausible-sounding but incorrect answers</li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <h3>🎯 Best Use Cases for CSC-113/114</h3>
+                <ul>
+                    <li>Understanding programming concepts (loops, recursion, OOP)</li>
+                    <li>Debugging logic errors (explain what's wrong with your approach)</li>
+                    <li>Learning new frameworks or libraries</li>
+                    <li>Getting step-by-step explanations of algorithms</li>
+                    <li>Generating test cases for your code</li>
+                    <li>Translating between programming languages</li>
+                    <li>Explaining error messages</li>
+                </ul>
+            </div>
+
+            <div class="info-box success-box">
+                <h3>✨ Effective Prompt Examples</h3>
+                <ul style="list-style: none; margin-left: 0;">
+                    <li style="margin: 10px 0;">
+                        <strong>❌ Weak:</strong> "Fix my code"<br>
+                        <strong>✅ Strong:</strong> "I'm getting a NullPointerException on line 42. Here's my code: [paste code]. Can you explain why this happens and how to fix it?"
+                    </li>
+                    <li style="margin: 10px 0;">
+                        <strong>❌ Weak:</strong> "How do loops work?"<br>
+                        <strong>✅ Strong:</strong> "I'm learning Java loops in CSC-113. Can you explain the difference between for, while, and do-while loops with practical examples?"
+                    </li>
+                    <li style="margin: 10px 0;">
+                        <strong>❌ Weak:</strong> "Write a function"<br>
+                        <strong>✅ Strong:</strong> "I need a Java function that takes an ArrayList of integers and returns the average. Can you show me the implementation and explain each step?"
+                    </li>
+                </ul>
+            </div>
+
+            <button class="copy-btn" onclick="copyText('ChatGPT: FREE tier available, excellent for learning concepts and debugging logic')">📋 Copy Quick Summary</button>
+        </div>
+
+        <!-- TAB 3: CLAUDE -->
+        <div class="tab-content" role="tabpanel">
+            <a href="index.html" class="back-link">← Back to AI Tools Guide</a>
+
+            <div class="tool-header">
+                <span class="tool-icon">🧠</span>
+                <div>
+                    <h2>Claude</h2>
+                    <p class="tagline">Deep analysis and architectural thinking</p>
+                    <span class="badge badge-free">FREE Tier Available</span>
+                </div>
+            </div>
+
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <div class="feature-label">Free Access</div>
+                    <div class="feature-value">Claude 3.5 Sonnet (generous limits)</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-label">Models</div>
+                    <div class="feature-value">Claude 3.5 Sonnet, Opus, Haiku</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-label">Context Window</div>
+                    <div class="feature-value">200K tokens (~400 pages of code!)</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-label">Interface</div>
+                    <div class="feature-value">Web (claude.ai), API, Claude Code CLI</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-label">Learning Curve</div>
+                    <div class="feature-value">⭐⭐⭐ Medium-High (requires deliberate use)</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-label">Best For</div>
+                    <div class="feature-value">Architecture, refactoring, complex debugging</div>
+                </div>
+            </div>
+
+            <div class="info-box success-box">
+                <h3>✅ How to Access FREE</h3>
+                <ol style="margin-left: 20px; margin-top: 10px;">
+                    <li>Go to <a href="https://claude.ai" target="_blank" style="color: var(--success);">claude.ai</a></li>
+                    <li>Create a free account with any email</li>
+                    <li>Start using Claude 3.5 Sonnet immediately</li>
+                    <li>FREE tier includes generous usage limits (suitable for student projects)</li>
+                </ol>
+                <p style="margin-top: 10px;"><strong>Bonus:</strong> Claude Code (CLI interface) also available for terminal-based workflows.</p>
+            </div>
+
+            <div class="info-box">
+                <h3>💪 Strengths</h3>
+                <ul>
+                    <li><strong>Massive Context:</strong> 200K tokens = can read your ENTIRE codebase at once</li>
+                    <li><strong>Deep Analysis:</strong> Excels at understanding complex code architecture</li>
+                    <li><strong>Code Quality:</strong> Often produces more thoughtful, well-structured code</li>
+                    <li><strong>Detailed Explanations:</strong> Provides thorough reasoning behind suggestions</li>
+                    <li><strong>MCP Extensions:</strong> Can integrate with external tools and databases</li>
+                    <li><strong>Refactoring Expert:</strong> Excellent at improving existing code structure</li>
+                </ul>
+            </div>
+
+            <div class="info-box warning-box">
+                <h3>⚠️ Limitations</h3>
+                <ul>
+                    <li><strong>Slower Responses:</strong> Takes longer to generate responses than Copilot</li>
+                    <li><strong>Not IDE-Native:</strong> Requires context switching (copy/paste or file upload)</li>
+                    <li><strong>Higher Learning Curve:</strong> Need to learn how to prompt effectively</li>
+                    <li><strong>Free Tier Rate Limits:</strong> Usage caps reset daily</li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <h3>🎯 Best Use Cases for CSC-113/114</h3>
+                <ul>
+                    <li><strong>CSC-114 Architecture:</strong> Primary tool for design pattern decisions</li>
+                    <li>Understanding large codebases (can read entire projects)</li>
+                    <li>Refactoring messy code into clean, maintainable structure</li>
+                    <li>Complex debugging (paste entire project, ask for analysis)</li>
+                    <li>Learning design patterns and SOLID principles</li>
+                    <li>Code reviews and optimization suggestions</li>
+                    <li>Understanding inheritance hierarchies and class relationships</li>
+                </ul>
+            </div>
+
+            <div class="info-box success-box">
+                <h3>✨ CSC-114 Workflow Example</h3>
+                <ol style="margin-left: 20px; margin-top: 10px;">
+                    <li><strong>You:</strong> Upload your entire project to Claude (or paste key files)</li>
+                    <li><strong>Claude:</strong> Analyzes architecture, identifies design pattern opportunities</li>
+                    <li><strong>You:</strong> Ask "How can I refactor this to use the Factory pattern?"</li>
+                    <li><strong>Claude:</strong> Provides detailed refactoring plan with code examples</li>
+                    <li><strong>You:</strong> Implement using Copilot for real-time assistance</li>
+                    <li><strong>Claude:</strong> Review the refactored code for quality</li>
+                </ol>
+            </div>
+
+            <div class="info-box">
+                <h3>📊 Context Window Comparison</h3>
+                <p><strong>Claude's 200K tokens means you can paste:</strong></p>
+                <ul>
+                    <li>10-15 full Java classes with methods and documentation</li>
+                    <li>An entire small-to-medium project's source code</li>
+                    <li>All your assignment files for comprehensive feedback</li>
+                    <li>Multiple related files to understand dependencies</li>
+                </ul>
+                <p style="margin-top: 10px;"><strong>Copilot's 8K tokens means it sees:</strong></p>
+                <ul>
+                    <li>Current file + a few open tabs</li>
+                    <li>1-2 classes at most</li>
+                </ul>
+            </div>
+
+            <button class="copy-btn" onclick="copyText('Claude: FREE tier, 200K context window, best for architecture and complex analysis')">📋 Copy Quick Summary</button>
+        </div>
+
+        <!-- TAB 4: GOOGLE GEMINI -->
+        <div class="tab-content" role="tabpanel">
+            <a href="index.html" class="back-link">← Back to AI Tools Guide</a>
+
+            <div class="tool-header">
+                <span class="tool-icon">💎</span>
+                <div>
+                    <h2>Google Gemini</h2>
+                    <p class="tagline">Research-powered AI with massive context</p>
+                    <span class="badge badge-free">FREE Tier Available</span>
+                </div>
+            </div>
+
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <div class="feature-label">Free Access</div>
+                    <div class="feature-value">Gemini 2.5 Flash with 1M token context</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-label">Models</div>
+                    <div class="feature-value">Gemini 2.5 Pro, Flash, Code Assist</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-label">Context Window</div>
+                    <div class="feature-value">1M tokens (reads 1500+ pages!)</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-label">Interface</div>
+                    <div class="feature-value">Web (gemini.google.com), API, Workspace integration</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-label">Learning Curve</div>
+                    <div class="feature-value">⭐⭐ Medium (similar to ChatGPT)</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-label">Best For</div>
+                    <div class="feature-value">Research-heavy projects, massive codebases</div>
+                </div>
+            </div>
+
+            <div class="info-box success-box">
+                <h3>✅ How to Access FREE</h3>
+                <ol style="margin-left: 20px; margin-top: 10px;">
+                    <li>Go to <a href="https://gemini.google.com" target="_blank" style="color: var(--success);">gemini.google.com</a></li>
+                    <li>Sign in with your Google account (any email)</li>
+                    <li>Start using Gemini 2.5 Flash immediately</li>
+                    <li>FREE tier includes 1M token context window</li>
+                </ol>
+            </div>
+
+            <div class="info-box">
+                <h3>💪 Strengths</h3>
+                <ul>
+                    <li><strong>Massive Context:</strong> 1M tokens = 5x Claude, 125x Copilot (can read textbooks!)</li>
+                    <li><strong>Deep Research:</strong> Built-in research mode for comprehensive investigations</li>
+                    <li><strong>Multimodal:</strong> Handles images, videos, audio, and documents</li>
+                    <li><strong>Google Workspace Integration:</strong> Works with Drive, Docs, Sheets</li>
+                    <li><strong>Web Search:</strong> Real-time access to current information</li>
+                    <li><strong>Long-Form Analysis:</strong> Can analyze entire documentation sets</li>
+                </ul>
+            </div>
+
+            <div class="info-box warning-box">
+                <h3>⚠️ Limitations</h3>
+                <ul>
+                    <li><strong>Less Coding-Specialized:</strong> Not as focused on code generation as Copilot</li>
+                    <li><strong>No IDE Integration:</strong> Requires browser-based workflow</li>
+                    <li><strong>Newer to Market:</strong> Smaller community of coding-specific resources</li>
+                    <li><strong>Free Tier Limits:</strong> Rate limits on extremely long conversations</li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <h3>🎯 Best Use Cases for CSC-113/114</h3>
+                <ul>
+                    <li>Research-heavy projects (e.g., analyzing open-source libraries)</li>
+                    <li>Reading and understanding large documentation sets</li>
+                    <li>Projects requiring multiple external API integrations</li>
+                    <li>Analyzing very large codebases (entire frameworks)</li>
+                    <li>Comparing multiple implementation approaches with research</li>
+                    <li>Learning from technical documentation and tutorials</li>
+                </ul>
+            </div>
+
+            <div class="info-box success-box">
+                <h3>✨ When to Choose Gemini Over Others</h3>
+                <ul>
+                    <li><strong>Instead of ChatGPT:</strong> When you need deeper research or larger context</li>
+                    <li><strong>Instead of Claude:</strong> When you need web search + massive context (1M vs 200K)</li>
+                    <li><strong>Instead of Copilot:</strong> When planning architecture for very large projects</li>
+                    <li><strong>Unique Strength:</strong> Deep Research mode can compile information from multiple sources</li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <h3>📊 Context Window Showdown</h3>
+                <table class="comparison-table" style="margin-top: 15px;">
+                    <thead>
+                        <tr>
+                            <th>Tool</th>
+                            <th>Context</th>
+                            <th>Equivalent</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Gemini</strong></td>
+                            <td>1M tokens</td>
+                            <td>~1500 pages / multiple textbooks</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Claude</strong></td>
+                            <td>200K tokens</td>
+                            <td>~400 pages / full project</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ChatGPT</strong></td>
+                            <td>128K tokens</td>
+                            <td>~300 pages / several files</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Copilot</strong></td>
+                            <td>8K tokens</td>
+                            <td>~20 pages / current file</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <button class="copy-btn" onclick="copyText('Google Gemini: FREE tier, 1M token context, best for research-heavy projects')">📋 Copy Quick Summary</button>
+        </div>
+
+        <!-- TAB 5: MODEL COMPARISON -->
+        <div class="tab-content" role="tabpanel">
+            <a href="index.html" class="back-link">← Back to AI Tools Guide</a>
+
+            <h2 style="color: var(--primary); margin-bottom: 20px;">Capability Matrix: Free Tiers Comparison</h2>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>GitHub Copilot <span class="badge badge-free">FREE</span></th>
+                        <th>ChatGPT <span class="badge badge-free">FREE</span></th>
+                        <th>Claude <span class="badge badge-free">FREE</span></th>
+                        <th>Gemini <span class="badge badge-free">FREE</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Free Model</strong></td>
+                        <td>GPT-4o Turbo (Student Pack)</td>
+                        <td>GPT-4o mini</td>
+                        <td>Claude 3.5 Sonnet</td>
+                        <td>Gemini 2.5 Flash</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Context Window</strong></td>
+                        <td>8K tokens</td>
+                        <td>128K tokens</td>
+                        <td>200K tokens</td>
+                        <td>1M tokens 🏆</td>
+                    </tr>
+                    <tr>
+                        <td><strong>IDE Integration</strong></td>
+                        <td>✅ Native (VS Code, JetBrains, etc.)</td>
+                        <td>❌ Third-party only</td>
+                        <td>❌ Third-party only</td>
+                        <td>❌ Third-party only</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Real-time Suggestions</strong></td>
+                        <td>✅ Instant autocomplete</td>
+                        <td>❌ Manual query</td>
+                        <td>❌ Manual query</td>
+                        <td>❌ Manual query</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Multimodal (Images)</strong></td>
+                        <td>❌ Code only</td>
+                        <td>✅ Images, PDFs</td>
+                        <td>✅ Images, PDFs</td>
+                        <td>✅ Images, video, audio</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Web Search</strong></td>
+                        <td>❌</td>
+                        <td>✅ Limited (free tier)</td>
+                        <td>❌</td>
+                        <td>✅ Full access</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Code Generation Quality</strong></td>
+                        <td>⭐⭐⭐⭐ (Specialized)</td>
+                        <td>⭐⭐⭐ (General-purpose)</td>
+                        <td>⭐⭐⭐⭐⭐ (Thoughtful)</td>
+                        <td>⭐⭐⭐ (General-purpose)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Explanation Quality</strong></td>
+                        <td>⭐⭐ (Limited)</td>
+                        <td>⭐⭐⭐⭐⭐ (Excellent)</td>
+                        <td>⭐⭐⭐⭐⭐ (Detailed)</td>
+                        <td>⭐⭐⭐⭐ (Good)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Architecture Analysis</strong></td>
+                        <td>⭐⭐ (Limited context)</td>
+                        <td>⭐⭐⭐ (Good)</td>
+                        <td>⭐⭐⭐⭐⭐ (Excellent) 🏆</td>
+                        <td>⭐⭐⭐⭐ (Very good)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Learning Curve</strong></td>
+                        <td>⭐ Low 🏆</td>
+                        <td>⭐⭐ Medium</td>
+                        <td>⭐⭐⭐ Medium-High</td>
+                        <td>⭐⭐ Medium</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Response Speed</strong></td>
+                        <td>⚡ Instant 🏆</td>
+                        <td>⚡ Fast (1-3 sec)</td>
+                        <td>🐢 Slower (3-8 sec)</td>
+                        <td>⚡ Fast (1-3 sec)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Best for CSC-113</strong></td>
+                        <td>✅ Primary tool</td>
+                        <td>✅ Secondary (learning)</td>
+                        <td>⚠️ Tertiary (complex bugs)</td>
+                        <td>⚠️ Specialty (research)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Best for CSC-114</strong></td>
+                        <td>✅ Implementation</td>
+                        <td>✅ Debugging logic</td>
+                        <td>✅ Primary (architecture) 🏆</td>
+                        <td>✅ Large codebases</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 style="margin-top: 40px; margin-bottom: 20px;">Language & Framework Support</h3>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Language/Framework</th>
+                        <th>Copilot</th>
+                        <th>ChatGPT</th>
+                        <th>Claude</th>
+                        <th>Gemini</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Java (CSC-113/114)</strong></td>
+                        <td>⭐⭐⭐⭐⭐</td>
+                        <td>⭐⭐⭐⭐⭐</td>
+                        <td>⭐⭐⭐⭐⭐</td>
+                        <td>⭐⭐⭐⭐</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Python</strong></td>
+                        <td>⭐⭐⭐⭐⭐</td>
+                        <td>⭐⭐⭐⭐⭐</td>
+                        <td>⭐⭐⭐⭐⭐</td>
+                        <td>⭐⭐⭐⭐⭐</td>
+                    </tr>
+                    <tr>
+                        <td><strong>JavaScript/TypeScript</strong></td>
+                        <td>⭐⭐⭐⭐⭐</td>
+                        <td>⭐⭐⭐⭐⭐</td>
+                        <td>⭐⭐⭐⭐⭐</td>
+                        <td>⭐⭐⭐⭐</td>
+                    </tr>
+                    <tr>
+                        <td><strong>C/C++</strong></td>
+                        <td>⭐⭐⭐⭐</td>
+                        <td>⭐⭐⭐⭐</td>
+                        <td>⭐⭐⭐⭐</td>
+                        <td>⭐⭐⭐</td>
+                    </tr>
+                    <tr>
+                        <td><strong>SQL/Databases</strong></td>
+                        <td>⭐⭐⭐</td>
+                        <td>⭐⭐⭐⭐⭐</td>
+                        <td>⭐⭐⭐⭐⭐</td>
+                        <td>⭐⭐⭐⭐</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Web Frameworks (React, etc.)</strong></td>
+                        <td>⭐⭐⭐⭐⭐</td>
+                        <td>⭐⭐⭐⭐</td>
+                        <td>⭐⭐⭐⭐</td>
+                        <td>⭐⭐⭐⭐</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="info-box">
+                <h3>🎯 Quick Decision Guide</h3>
+                <ul>
+                    <li><strong>Need speed?</strong> → Copilot (instant)</li>
+                    <li><strong>Need explanations?</strong> → ChatGPT (best teacher)</li>
+                    <li><strong>Need deep analysis?</strong> → Claude (200K context)</li>
+                    <li><strong>Need massive context?</strong> → Gemini (1M tokens)</li>
+                    <li><strong>Need IDE integration?</strong> → Copilot (only option)</li>
+                    <li><strong>Need web search?</strong> → Gemini or ChatGPT</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- TAB 6: INTERFACES & INTEGRATION -->
+        <div class="tab-content" role="tabpanel">
+            <a href="index.html" class="back-link">← Back to AI Tools Guide</a>
+
+            <h2 style="color: var(--primary); margin-bottom: 20px;">How to Access Each Tool</h2>
+
+            <div class="info-box success-box">
+                <h3>🤖 GitHub Copilot - IDE Integration</h3>
+                <p><strong>Access Methods:</strong></p>
+                <ul>
+                    <li><strong>VS Code:</strong> Install "GitHub Copilot" extension (most popular for students)</li>
+                    <li><strong>JetBrains IDEs:</strong> IntelliJ IDEA, PyCharm, WebStorm (install Copilot plugin)</li>
+                    <li><strong>Visual Studio:</strong> Native integration for Windows developers</li>
+                    <li><strong>Neovim:</strong> For terminal-based workflows</li>
+                    <li><strong>Xcode:</strong> For Mac/iOS development</li>
+                </ul>
+                <p style="margin-top: 10px;"><strong>How it works:</strong> Works INSIDE your code editor. As you type, it suggests completions in real-time. No context switching required.</p>
+            </div>
+
+            <div class="info-box">
+                <h3>💬 ChatGPT - Multiple Interfaces</h3>
+                <p><strong>Access Methods:</strong></p>
+                <ul>
+                    <li><strong>Web:</strong> <a href="https://chat.openai.com" target="_blank" style="color: var(--primary);">chat.openai.com</a> (main interface)</li>
+                    <li><strong>Mobile Apps:</strong> iOS and Android apps available</li>
+                    <li><strong>API:</strong> Programmatic access for building your own tools</li>
+                    <li><strong>Third-party IDE plugins:</strong> Unofficial VS Code extensions (require API key)</li>
+                </ul>
+                <p style="margin-top: 10px;"><strong>How it works:</strong> Open in browser, paste code or ask questions, copy responses back to IDE. Conversational interface.</p>
+            </div>
+
+            <div class="info-box">
+                <h3>🧠 Claude - Web & CLI</h3>
+                <p><strong>Access Methods:</strong></p>
+                <ul>
+                    <li><strong>Web:</strong> <a href="https://claude.ai" target="_blank" style="color: var(--primary);">claude.ai</a> (main interface, file uploads supported)</li>
+                    <li><strong>Claude Code:</strong> CLI interface for terminal users (requires API key)</li>
+                    <li><strong>API:</strong> Programmatic access via Anthropic API</li>
+                    <li><strong>MCP (Model Context Protocol):</strong> Advanced integrations with external tools</li>
+                </ul>
+                <p style="margin-top: 10px;"><strong>How it works:</strong> Upload files or paste code. Claude can read multiple files at once. Great for project-level analysis.</p>
+            </div>
+
+            <div class="info-box">
+                <h3>💎 Google Gemini - Web & Workspace</h3>
+                <p><strong>Access Methods:</strong></p>
+                <ul>
+                    <li><strong>Web:</strong> <a href="https://gemini.google.com" target="_blank" style="color: var(--primary);">gemini.google.com</a> (main interface)</li>
+                    <li><strong>Google Workspace:</strong> Integrated with Drive, Docs, Sheets</li>
+                    <li><strong>API:</strong> Vertex AI and Google AI Studio for developers</li>
+                    <li><strong>Mobile Apps:</strong> iOS and Android apps</li>
+                </ul>
+                <p style="margin-top: 10px;"><strong>How it works:</strong> Similar to ChatGPT. Can access files from Google Drive. Deep Research mode for comprehensive analysis.</p>
+            </div>
+
+            <h3 style="margin-top: 40px; margin-bottom: 20px;">Workflow Integration Comparison</h3>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Workflow Need</th>
+                        <th>Best Tool</th>
+                        <th>How to Use</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Coding in VS Code</strong></td>
+                        <td>Copilot (FREE)</td>
+                        <td>Install extension, enable, start typing - suggestions appear automatically</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Stuck on a concept</strong></td>
+                        <td>ChatGPT (FREE)</td>
+                        <td>Open chat.openai.com in browser, paste code snippet, ask question</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Complex debugging</strong></td>
+                        <td>Claude (FREE)</td>
+                        <td>Go to claude.ai, upload entire project folder, ask for analysis</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Reading documentation</strong></td>
+                        <td>Gemini (FREE)</td>
+                        <td>Open gemini.google.com, paste docs link, use Deep Research</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Team collaboration</strong></td>
+                        <td>Gemini (FREE) or ChatGPT</td>
+                        <td>Share conversation links or use Google Workspace integration</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="info-box warning-box">
+                <h3>⚠️ API Access (Advanced Students)</h3>
+                <p>All tools offer API access for building custom integrations:</p>
+                <ul>
+                    <li><strong>GitHub Copilot API:</strong> Part of GitHub Copilot subscription</li>
+                    <li><strong>OpenAI API:</strong> Pay-per-token pricing (separate from ChatGPT free tier)</li>
+                    <li><strong>Claude API:</strong> Pay-per-token pricing via Anthropic</li>
+                    <li><strong>Gemini API:</strong> Google AI Studio (free tier available)</li>
+                </ul>
+                <p style="margin-top: 10px;"><strong>For CSC-113/114:</strong> API access NOT required. Web/IDE interfaces are sufficient.</p>
+            </div>
+
+            <div class="info-box success-box">
+                <h3>✨ Recommended Setup for FTCC CIT Students</h3>
+                <ol style="margin-left: 20px; margin-top: 10px;">
+                    <li><strong>Install GitHub Copilot in VS Code</strong> (primary coding tool - FREE with Student Pack)</li>
+                    <li><strong>Bookmark chat.openai.com</strong> (for when you need concept explanations - FREE)</li>
+                    <li><strong>Bookmark claude.ai</strong> (for complex projects and architecture - FREE)</li>
+                    <li><strong>Bookmark gemini.google.com</strong> (for research-heavy assignments - FREE)</li>
+                </ol>
+                <p style="margin-top: 15px;"><strong>Total Cost: $0</strong> - All tools have free tiers suitable for coursework!</p>
+            </div>
+        </div>
+
+        <!-- TAB 7: CSC-113/114 GUIDANCE -->
+        <div class="tab-content" role="tabpanel">
+            <a href="index.html" class="back-link">← Back to AI Tools Guide</a>
+
+            <h2 style="color: var(--primary); margin-bottom: 20px;">Course-Specific Guidance</h2>
+
+            <div class="info-box success-box">
+                <h3>📚 CSC-113: Introduction to Programming (Java)</h3>
+                <p><strong>Primary Tool:</strong> GitHub Copilot (FREE with Student Pack)</p>
+                <p><strong>Why:</strong> IDE-integrated, prevents over-reliance, helps you learn syntax without doing the thinking for you.</p>
+
+                <p style="margin-top: 15px;"><strong>Recommended Workflow:</strong></p>
+                <ol style="margin-left: 20px; margin-top: 10px;">
+                    <li><strong>You:</strong> Write pseudocode or comments describing what you want</li>
+                    <li><strong>Copilot:</strong> Suggests Java implementation</li>
+                    <li><strong>You:</strong> Read, understand, and refactor the suggestion</li>
+                    <li><strong>You:</strong> Test and verify it works as expected</li>
+                    <li><strong>If stuck:</strong> Ask ChatGPT (FREE) "Explain this Java concept to me"</li>
+                </ol>
+
+                <p style="margin-top: 15px;"><strong>Learning Focus:</strong></p>
+                <ul>
+                    <li>Understand EVERY line of code Copilot suggests</li>
+                    <li>Use AI to learn syntax, not to avoid learning</li>
+                    <li>Build muscle memory by typing, not just accepting</li>
+                    <li>Ask "why" when Copilot suggests something unfamiliar</li>
+                </ul>
+
+                <p style="margin-top: 15px;"><strong>Common Tasks & Tools:</strong></p>
+                <table class="comparison-table" style="margin-top: 10px;">
+                    <thead>
+                        <tr>
+                            <th>Task</th>
+                            <th>Primary Tool</th>
+                            <th>Secondary Tool</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Writing loops</td>
+                            <td>Copilot (real-time)</td>
+                            <td>ChatGPT (if confused)</td>
+                        </tr>
+                        <tr>
+                            <td>Understanding methods</td>
+                            <td>ChatGPT (explanations)</td>
+                            <td>Copilot (examples)</td>
+                        </tr>
+                        <tr>
+                            <td>Debugging syntax errors</td>
+                            <td>Copilot (inline fixes)</td>
+                            <td>ChatGPT (error explanations)</td>
+                        </tr>
+                        <tr>
+                            <td>Learning arrays</td>
+                            <td>ChatGPT (concepts)</td>
+                            <td>Copilot (practice)</td>
+                        </tr>
+                        <tr>
+                            <td>Writing classes</td>
+                            <td>Copilot (structure)</td>
+                            <td>ChatGPT (OOP concepts)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="info-box">
+                <h3>🚀 CSC-114: Object-Oriented Programming (Advanced Java)</h3>
+                <p><strong>Primary Tool:</strong> Claude (FREE tier) for architecture, Copilot (FREE) for implementation</p>
+                <p><strong>Why:</strong> CSC-114 is about DESIGN thinking. Claude excels at architecture decisions, design patterns, and understanding class relationships.</p>
+
+                <p style="margin-top: 15px;"><strong>Recommended Workflow:</strong></p>
+                <ol style="margin-left: 20px; margin-top: 10px;">
+                    <li><strong>You:</strong> Design class structure and relationships</li>
+                    <li><strong>Claude:</strong> Review architecture, suggest design patterns (upload project)</li>
+                    <li><strong>You:</strong> Refine design based on Claude's feedback</li>
+                    <li><strong>Copilot:</strong> Implement classes with real-time assistance</li>
+                    <li><strong>Claude:</strong> Review implementation for SOLID principles</li>
+                    <li><strong>You:</strong> Optimize and document</li>
+                </ol>
+
+                <p style="margin-top: 15px;"><strong>Learning Focus:</strong></p>
+                <ul>
+                    <li>Design BEFORE coding (AI helps validate, not replace design thinking)</li>
+                    <li>Understand design patterns (Factory, Observer, Strategy, etc.)</li>
+                    <li>Practice SOLID principles</li>
+                    <li>Learn when to use inheritance vs. composition</li>
+                    <li>Understand polymorphism and abstraction deeply</li>
+                </ul>
+
+                <p style="margin-top: 15px;"><strong>Common Tasks & Tools:</strong></p>
+                <table class="comparison-table" style="margin-top: 10px;">
+                    <thead>
+                        <tr>
+                            <th>Task</th>
+                            <th>Primary Tool</th>
+                            <th>Secondary Tool</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Design patterns</td>
+                            <td>Claude (architecture)</td>
+                            <td>ChatGPT (learning)</td>
+                        </tr>
+                        <tr>
+                            <td>Class relationships</td>
+                            <td>Claude (analysis)</td>
+                            <td>Copilot (implementation)</td>
+                        </tr>
+                        <tr>
+                            <td>Refactoring</td>
+                            <td>Claude (suggestions)</td>
+                            <td>Copilot (execution)</td>
+                        </tr>
+                        <tr>
+                            <td>Implementing interfaces</td>
+                            <td>Copilot (speed)</td>
+                            <td>Claude (design validation)</td>
+                        </tr>
+                        <tr>
+                            <td>Understanding inheritance</td>
+                            <td>ChatGPT (concepts)</td>
+                            <td>Claude (complex hierarchies)</td>
+                        </tr>
+                        <tr>
+                            <td>Exception handling</td>
+                            <td>Copilot (patterns)</td>
+                            <td>Claude (architecture)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="info-box warning-box">
+                <h3>⚠️ Academic Integrity Guidelines</h3>
+                <p><strong>Using AI tools is ENCOURAGED at FTCC, but you must use them ethically:</strong></p>
+                <ul>
+                    <li><strong>✅ DO:</strong> Use AI to understand concepts and learn</li>
+                    <li><strong>✅ DO:</strong> Use AI as a tutor and debugging assistant</li>
+                    <li><strong>✅ DO:</strong> Ask AI to explain code you don't understand</li>
+                    <li><strong>✅ DO:</strong> Use AI suggestions as starting points, then customize</li>
+                    <li><strong>❌ DON'T:</strong> Copy-paste AI solutions without understanding them</li>
+                    <li><strong>❌ DON'T:</strong> Submit AI-generated code as 100% your own work</li>
+                    <li><strong>❌ DON'T:</strong> Use AI to bypass learning fundamental concepts</li>
+                    <li><strong>❌ DON'T:</strong> Rely on AI for exams or individual assessments</li>
+                </ul>
+                <p style="margin-top: 10px;"><strong>Golden Rule:</strong> If you can't explain and defend every line of code you submit, you didn't learn it.</p>
+            </div>
+
+            <div class="info-box success-box">
+                <h3>✨ Best Practices for Both Courses</h3>
+                <ul>
+                    <li><strong>Start with pseudocode:</strong> Plan your logic BEFORE asking AI</li>
+                    <li><strong>Read every line:</strong> Never accept AI suggestions blindly</li>
+                    <li><strong>Ask "why":</strong> When AI suggests something, ask it to explain</li>
+                    <li><strong>Test everything:</strong> AI can be wrong - always verify</li>
+                    <li><strong>Refactor:</strong> Improve AI suggestions to match your style</li>
+                    <li><strong>Document:</strong> Comment your code to prove you understand it</li>
+                    <li><strong>Practice without AI:</strong> Regularly code without assistance to build skills</li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <h3>🎯 When to Use Each Tool (Quick Reference)</h3>
+                <table class="comparison-table" style="margin-top: 10px;">
+                    <thead>
+                        <tr>
+                            <th>Situation</th>
+                            <th>CSC-113 Tool</th>
+                            <th>CSC-114 Tool</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Writing code</td>
+                            <td>Copilot (FREE)</td>
+                            <td>Copilot (FREE)</td>
+                        </tr>
+                        <tr>
+                            <td>Learning concepts</td>
+                            <td>ChatGPT (FREE)</td>
+                            <td>ChatGPT or Claude (FREE)</td>
+                        </tr>
+                        <tr>
+                            <td>Debugging</td>
+                            <td>Copilot + ChatGPT (FREE)</td>
+                            <td>Claude (FREE)</td>
+                        </tr>
+                        <tr>
+                            <td>Architecture</td>
+                            <td>N/A (focus on basics)</td>
+                            <td>Claude (FREE) 🏆</td>
+                        </tr>
+                        <tr>
+                            <td>Refactoring</td>
+                            <td>Copilot (FREE)</td>
+                            <td>Claude (FREE)</td>
+                        </tr>
+                        <tr>
+                            <td>Research</td>
+                            <td>ChatGPT or Gemini (FREE)</td>
+                            <td>Gemini or Claude (FREE)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- TAB 8: COST CALCULATOR -->
+        <div class="tab-content" role="tabpanel">
+            <a href="index.html" class="back-link">← Back to AI Tools Guide</a>
+
+            <h2 style="color: var(--primary); margin-bottom: 20px;">Free Tier Analysis for Students</h2>
+
+            <div class="info-box success-box">
+                <h3>🎓 Great News: Everything You Need is FREE!</h3>
+                <p>As an FTCC student, you have access to free tiers of ALL four major AI coding tools. Here's what you get without spending a dollar:</p>
+            </div>
+
+            <h3 style="margin-top: 30px; margin-bottom: 15px;">Free Tier Comparison</h3>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Tool</th>
+                        <th>Free Access</th>
+                        <th>What You Get</th>
+                        <th>Limitations</th>
+                        <th>Sufficient for Coursework?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>GitHub Copilot</strong></td>
+                        <td><span class="badge badge-free">100% FREE</span><br>(Student Pack)</td>
+                        <td>
+                            • Full Copilot Pro features<br>
+                            • GPT-4o Turbo model<br>
+                            • All IDE integrations<br>
+                            • Unlimited suggestions
+                        </td>
+                        <td>
+                            • Requires GitHub Student Pack verification<br>
+                            • Must revalidate student status yearly
+                        </td>
+                        <td><strong>✅ YES</strong> - Perfect for CSC-113/114</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ChatGPT</strong></td>
+                        <td><span class="badge badge-free">FREE</span><br>(No verification needed)</td>
+                        <td>
+                            • GPT-4o mini model<br>
+                            • 128K context window<br>
+                            • Multimodal (images, PDFs)<br>
+                            • Limited web search
+                        </td>
+                        <td>
+                            • Rate limits during peak hours<br>
+                            • No access to o1 (reasoning model)<br>
+                            • Slower responses during high traffic
+                        </td>
+                        <td><strong>✅ YES</strong> - Excellent for learning</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Claude</strong></td>
+                        <td><span class="badge badge-free">FREE</span><br>(No verification needed)</td>
+                        <td>
+                            • Claude 3.5 Sonnet model<br>
+                            • 200K context window<br>
+                            • File uploads<br>
+                            • Generous usage limits
+                        </td>
+                        <td>
+                            • Usage caps reset daily<br>
+                            • No Opus model access<br>
+                            • Rate limits apply
+                        </td>
+                        <td><strong>✅ YES</strong> - Great for CSC-114 architecture</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Google Gemini</strong></td>
+                        <td><span class="badge badge-free">FREE</span><br>(No verification needed)</td>
+                        <td>
+                            • Gemini 2.5 Flash<br>
+                            • 1M token context window<br>
+                            • Multimodal<br>
+                            • Web search<br>
+                            • Deep Research
+                        </td>
+                        <td>
+                            • Rate limits on long conversations<br>
+                            • No Gemini Ultra access
+                        </td>
+                        <td><strong>✅ YES</strong> - Excellent for research projects</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 style="margin-top: 40px; margin-bottom: 15px;">Total Cost for FTCC CIT Students</h3>
+
+            <div class="calculator-section">
+                <div class="calculator-result">
+                    <div class="result-row">
+                        <span><strong>GitHub Copilot (Student Pack):</strong></span>
+                        <span style="color: var(--success); font-weight: 700;">FREE ($0/mo)</span>
+                    </div>
+                    <div class="result-row">
+                        <span><strong>ChatGPT (Free Tier):</strong></span>
+                        <span style="color: var(--success); font-weight: 700;">FREE ($0/mo)</span>
+                    </div>
+                    <div class="result-row">
+                        <span><strong>Claude (Free Tier):</strong></span>
+                        <span style="color: var(--success); font-weight: 700;">FREE ($0/mo)</span>
+                    </div>
+                    <div class="result-row">
+                        <span><strong>Google Gemini (Free Tier):</strong></span>
+                        <span style="color: var(--success); font-weight: 700;">FREE ($0/mo)</span>
+                    </div>
+                    <div class="result-row" style="background: #d4edda; padding: 15px; margin-top: 10px; border-radius: 6px;">
+                        <span><strong>TOTAL MONTHLY COST:</strong></span>
+                        <span style="color: var(--success); font-size: 1.4em;">$0</span>
+                    </div>
+                    <div class="result-row" style="background: #d4edda; padding: 15px; border-radius: 6px;">
+                        <span><strong>TOTAL ANNUAL COST:</strong></span>
+                        <span style="color: var(--success); font-size: 1.4em;">$0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box success-box">
+                <h3>💰 What Professional Developers Would Pay</h3>
+                <p>If you were paying for all these tools without student benefits:</p>
+                <table class="comparison-table" style="margin-top: 10px;">
+                    <thead>
+                        <tr>
+                            <th>Tool</th>
+                            <th>Pro/Paid Tier</th>
+                            <th>Monthly Cost</th>
+                            <th>Annual Cost</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>GitHub Copilot Pro</td>
+                            <td>Individual</td>
+                            <td>$10/mo</td>
+                            <td>$100/yr</td>
+                        </tr>
+                        <tr>
+                            <td>ChatGPT Plus</td>
+                            <td>Plus</td>
+                            <td>$20/mo</td>
+                            <td>$240/yr</td>
+                        </tr>
+                        <tr>
+                            <td>Claude Pro</td>
+                            <td>Pro</td>
+                            <td>$20/mo</td>
+                            <td>$240/yr</td>
+                        </tr>
+                        <tr>
+                            <td>Google AI Pro</td>
+                            <td>AI Pro</td>
+                            <td>$20/mo</td>
+                            <td>$240/yr</td>
+                        </tr>
+                        <tr style="background: var(--warning); font-weight: 700;">
+                            <td colspan="2"><strong>TOTAL (Professional)</strong></td>
+                            <td><strong>$70/mo</strong></td>
+                            <td><strong>$820/yr</strong></td>
+                        </tr>
+                        <tr style="background: var(--success); color: white; font-weight: 700;">
+                            <td colspan="2"><strong>YOUR COST (Student)</strong></td>
+                            <td><strong>$0/mo</strong></td>
+                            <td><strong>$0/yr</strong></td>
+                        </tr>
+                        <tr style="background: #d4edda; font-weight: 700;">
+                            <td colspan="2"><strong>SAVINGS</strong></td>
+                            <td style="color: var(--success);"><strong>$70/mo</strong></td>
+                            <td style="color: var(--success);"><strong>$820/yr</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p style="margin-top: 15px; font-size: 1.1em; font-weight: 600;">As an FTCC student, you're getting <strong>$820/year worth of professional AI tools for FREE!</strong></p>
+            </div>
+
+            <div class="info-box">
+                <h3>📊 Usage Recommendations to Stay Within Free Tiers</h3>
+                <ul>
+                    <li><strong>GitHub Copilot:</strong> Unlimited! Use as much as you want (FREE with Student Pack)</li>
+                    <li><strong>ChatGPT:</strong> ~50-100 messages/day on free tier (more than enough for coursework)</li>
+                    <li><strong>Claude:</strong> ~30-50 conversations/day on free tier (resets daily)</li>
+                    <li><strong>Gemini:</strong> Generous limits, suitable for multiple research sessions/day</li>
+                </ul>
+                <p style="margin-top: 15px;"><strong>Bottom Line:</strong> Free tiers are MORE than sufficient for CSC-113 and CSC-114. You won't need paid plans for coursework.</p>
+            </div>
+
+            <div class="info-box warning-box">
+                <h3>⚠️ Should You Ever Upgrade?</h3>
+                <p><strong>For CSC-113/114: NO.</strong> Free tiers are perfect for coursework.</p>
+                <p style="margin-top: 10px;"><strong>You might consider paid tiers later if:</strong></p>
+                <ul>
+                    <li>You're building a large personal/freelance project (Claude Pro for deep analysis)</li>
+                    <li>You need o1 reasoning model for complex problems (ChatGPT Plus)</li>
+                    <li>You're doing heavy AI-assisted development (>8 hours/day)</li>
+                    <li>You graduate and lose GitHub Student Pack (then Copilot becomes $10/mo)</li>
+                </ul>
+                <p style="margin-top: 10px;"><strong>But for now:</strong> Stick with free tiers and invest your money in textbooks, hardware, or certifications instead!</p>
+            </div>
+
+            <button class="copy-btn" onclick="copyText('FTCC Student AI Tools Cost: $0/month, $0/year - All major tools have free tiers!')">📋 Copy Cost Summary</button>
+        </div>
+
+    </div>
+
+    <script>
+        // Tab switching
+        function switchTab(index) {
+            const tabs = document.querySelectorAll('.nav-tab');
+            const contents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach((tab, i) => {
+                if (i === index) {
+                    tab.classList.add('active');
+                    tab.setAttribute('aria-selected', 'true');
+                } else {
+                    tab.classList.remove('active');
+                    tab.setAttribute('aria-selected', 'false');
+                }
+            });
+
+            contents.forEach((content, i) => {
+                if (i === index) {
+                    content.classList.add('active');
+                } else {
+                    content.classList.remove('active');
+                }
+            });
+
+            // Smooth scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Dark mode toggle
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            localStorage.setItem('darkMode', isDark);
+            updateToggleButton();
+        }
+
+        function updateToggleButton() {
+            const btn = document.querySelector('.dark-mode-toggle');
+            const isDark = document.body.classList.contains('dark-mode');
+            btn.textContent = isDark ? '☀️ Light Mode' : '🌓 Dark Mode';
+        }
+
+        // Copy text to clipboard
+        function copyText(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = event.target;
+                const originalText = btn.textContent;
+                btn.textContent = '✅ Copied!';
+                btn.style.background = '#00b894';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.background = '';
+                }, 2000);
+            }).catch(err => {
+                alert('Failed to copy: ' + err);
+            });
+        }
+
+        // Load dark mode preference
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedMode = localStorage.getItem('darkMode');
+            if (savedMode === 'true') {
+                document.body.classList.add('dark-mode');
+            }
+            updateToggleButton();
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'd' && e.ctrlKey) {
+                e.preventDefault();
+                toggleDarkMode();
+            }
+
+            // Arrow keys for tab navigation
+            const activeTabIndex = Array.from(document.querySelectorAll('.nav-tab')).findIndex(tab => tab.classList.contains('active'));
+
+            if (e.key === 'ArrowRight' && activeTabIndex < 8) {
+                switchTab(activeTabIndex + 1);
+            } else if (e.key === 'ArrowLeft' && activeTabIndex > 0) {
+                switchTab(activeTabIndex - 1);
+            }
+        });
+    </script>
+</body>
+</html>

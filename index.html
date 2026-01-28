@@ -523,6 +523,7 @@
             <button class="nav-tab" onclick="showTab('matrix')">🔗 Alignment</button>
             <button class="nav-tab" onclick="showTab('threading')">🔄 Skill Threading</button>
             <button class="nav-tab" onclick="showTab('comparison')">⚖️ Compare</button>
+            <button class="nav-tab" onclick="showTab('ai-tools')">🤖 AI Tools</button>
         </div>
 
         <div id="overview" class="tab-content active">
@@ -566,6 +567,81 @@
                 </div>
             </div>
             <div id="comparisonView"></div>
+        </div>
+
+        <div id="ai-tools" class="tab-content">
+            <h2 style="color: var(--navy); margin-bottom: 20px;">🤖 AI Tools Guide for CIT Students</h2>
+            <p style="color: #5a6c7d; margin-bottom: 30px; line-height: 1.8;">
+                Comprehensive guide to choosing and using AI coding assistants (GitHub Copilot, ChatGPT, Claude, Google Gemini)
+                for CSC-113 and CSC-114. All tools have <strong>FREE tiers</strong> for students!
+            </p>
+
+            <div class="course-grid">
+                <div class="course-card" onclick="window.open('tools/ai-tools-guide/', '_blank')" style="cursor: pointer;">
+                    <div class="course-header">
+                        <span style="font-size: 3em; display: block; margin-bottom: 10px;">📚</span>
+                        <h3>AI Tools Overview</h3>
+                    </div>
+                    <p style="margin: 15px 0; line-height: 1.6;">
+                        Start here to explore all available resources and get an introduction to the four major AI coding assistants.
+                    </p>
+                    <div style="margin-top: 15px;">
+                        <span class="badge" style="background: #00b894; color: white; padding: 5px 10px; border-radius: 12px; font-size: 0.85em; margin-right: 5px;">FREE</span>
+                        <span class="badge" style="background: #667eea; color: white; padding: 5px 10px; border-radius: 12px; font-size: 0.85em;">CSC-113/114</span>
+                    </div>
+                </div>
+
+                <div class="course-card" onclick="window.open('tools/ai-tools-guide/comparison-guide.html', '_blank')" style="cursor: pointer;">
+                    <div class="course-header">
+                        <span style="font-size: 3em; display: block; margin-bottom: 10px;">📊</span>
+                        <h3>Comparison Guide</h3>
+                    </div>
+                    <p style="margin: 15px 0; line-height: 1.6;">
+                        9-tab comprehensive comparison covering features, pricing, context windows, and course-specific guidance for all tools.
+                    </p>
+                    <div style="margin-top: 15px;">
+                        <span class="badge" style="background: #00b894; color: white; padding: 5px 10px; border-radius: 12px; font-size: 0.85em; margin-right: 5px;">FREE Analysis</span>
+                        <span class="badge" style="background: #3498db; color: white; padding: 5px 10px; border-radius: 12px; font-size: 0.85em;">Detailed</span>
+                    </div>
+                </div>
+
+                <div class="course-card" onclick="window.open('tools/ai-tools-guide/decision-tool.html', '_blank')" style="cursor: pointer;">
+                    <div class="course-header">
+                        <span style="font-size: 3em; display: block; margin-bottom: 10px;">🤖</span>
+                        <h3>Interactive Decision Tool</h3>
+                    </div>
+                    <p style="margin: 15px 0; line-height: 1.6;">
+                        Answer 5 questions to get personalized AI tool recommendations using a machine learning-based weighted scoring algorithm.
+                    </p>
+                    <div style="margin-top: 15px;">
+                        <span class="badge" style="background: #fdcb6e; color: #2c3e50; padding: 5px 10px; border-radius: 12px; font-size: 0.85em; margin-right: 5px;">ML Concepts</span>
+                        <span class="badge" style="background: #e74c3c; color: white; padding: 5px 10px; border-radius: 12px; font-size: 0.85em;">Interactive</span>
+                    </div>
+                </div>
+
+                <div class="course-card" onclick="window.open('tools/ai-tools-guide/agile-integration.html', '_blank')" style="cursor: pointer;">
+                    <div class="course-header">
+                        <span style="font-size: 3em; display: block; margin-bottom: 10px;">🔄</span>
+                        <h3>SCRUM/Agile Integration</h3>
+                    </div>
+                    <p style="margin: 15px 0; line-height: 1.6;">
+                        Learn where each AI tool fits into professional Agile workflows: sprint planning, development, code review, deployment, and more.
+                    </p>
+                    <div style="margin-top: 15px;">
+                        <span class="badge" style="background: #9b59b6; color: white; padding: 5px 10px; border-radius: 12px; font-size: 0.85em; margin-right: 5px;">Professional Skills</span>
+                        <span class="badge" style="background: #00b894; color: white; padding: 5px 10px; border-radius: 12px; font-size: 0.85em;">Workflow</span>
+                    </div>
+                </div>
+            </div>
+
+            <div style="background: #e3f2fd; border-left: 4px solid #3498db; padding: 20px; margin-top: 30px; border-radius: 8px;">
+                <h3 style="color: #3498db; margin-bottom: 10px;">💡 Quick Recommendations</h3>
+                <ul style="margin-left: 20px; line-height: 1.8; color: #2c3e50;">
+                    <li><strong>CSC-113 Students:</strong> Start with GitHub Copilot (FREE with Student Pack) for daily coding + ChatGPT (FREE) for concept explanations</li>
+                    <li><strong>CSC-114 Students:</strong> Use Claude (FREE) for architecture decisions + Copilot (FREE) for implementation + ChatGPT (FREE) for debugging</li>
+                    <li><strong>All Students:</strong> Every tool covered has a FREE tier - total cost is $0!</li>
+                </ul>
+            </div>
         </div>
     </div>
 

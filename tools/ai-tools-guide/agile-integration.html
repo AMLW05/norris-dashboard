@@ -1,0 +1,1542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCRUM/Agile Workflow Integration - AI Tools Guide</title>
+    <style>
+        :root {
+            --primary: #667eea;
+            --primary-dark: #5568d3;
+            --secondary: #764ba2;
+            --accent: #f093fb;
+            --success: #4ade80;
+            --warning: #fbbf24;
+            --danger: #f87171;
+            --info: #60a5fa;
+
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-tertiary: #f1f5f9;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --border-color: #e2e8f0;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-tertiary: #334155;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --border-color: #334155;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 4px 6px var(--shadow);
+        }
+
+        .back-link {
+            position: absolute;
+            top: 1rem;
+            left: 2rem;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+            transition: transform 0.2s ease;
+        }
+
+        .back-link:hover {
+            transform: translateX(-4px);
+        }
+
+        .theme-toggle {
+            position: absolute;
+            top: 1rem;
+            right: 2rem;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.95;
+        }
+
+        /* Introduction */
+        .intro-section {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border-left: 4px solid var(--primary);
+            box-shadow: 0 2px 4px var(--shadow);
+        }
+
+        .intro-section h2 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        .intro-section p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .free-badge {
+            display: inline-block;
+            background: var(--success);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+
+        /* Workflow Timeline */
+        .workflow-timeline {
+            margin: 3rem 0;
+        }
+
+        .workflow-timeline h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: var(--primary);
+        }
+
+        .phase-card {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 2px solid var(--border-color);
+            box-shadow: 0 4px 6px var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .phase-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 12px var(--shadow);
+        }
+
+        .phase-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .phase-icon {
+            font-size: 2.5rem;
+            filter: drop-shadow(0 2px 4px var(--shadow));
+        }
+
+        .phase-title {
+            flex: 1;
+        }
+
+        .phase-title h3 {
+            font-size: 1.6rem;
+            color: var(--primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .phase-duration {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        .task-description {
+            background: var(--bg-tertiary);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border-left: 3px solid var(--info);
+        }
+
+        .task-description strong {
+            color: var(--primary);
+        }
+
+        .tool-recommendation {
+            margin-bottom: 1.5rem;
+        }
+
+        .tool-item {
+            background: var(--bg-primary);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            transition: all 0.3s ease;
+        }
+
+        .tool-item:hover {
+            border-color: var(--primary);
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+
+        .tool-item.primary {
+            border-color: var(--success);
+            background: linear-gradient(135deg, rgba(74, 222, 128, 0.1), rgba(102, 126, 234, 0.1));
+        }
+
+        .tool-item.secondary {
+            border-color: var(--info);
+            background: linear-gradient(135deg, rgba(96, 165, 250, 0.1), rgba(118, 75, 162, 0.1));
+        }
+
+        .tool-item.tertiary {
+            border-color: var(--warning);
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(240, 147, 251, 0.1));
+        }
+
+        .tool-item.not-recommended {
+            border-color: var(--danger);
+            background: linear-gradient(135deg, rgba(248, 113, 113, 0.1), rgba(203, 213, 225, 0.1));
+            opacity: 0.8;
+        }
+
+        .tool-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .tool-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--text-primary);
+        }
+
+        .priority-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .priority-badge.primary {
+            background: var(--success);
+            color: white;
+        }
+
+        .priority-badge.secondary {
+            background: var(--info);
+            color: white;
+        }
+
+        .priority-badge.tertiary {
+            background: var(--warning);
+            color: #1e293b;
+        }
+
+        .priority-badge.not-recommended {
+            background: var(--danger);
+            color: white;
+        }
+
+        .tool-reason {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-top: 0.5rem;
+        }
+
+        .tool-reason strong {
+            color: var(--primary);
+        }
+
+        /* Workflow Diagram */
+        .workflow-diagram {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 3rem 0;
+            box-shadow: 0 4px 6px var(--shadow);
+        }
+
+        .workflow-diagram h2 {
+            text-align: center;
+            color: var(--primary);
+            margin-bottom: 2rem;
+        }
+
+        .workflow-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .workflow-step {
+            background: var(--bg-primary);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .workflow-step:hover {
+            border-color: var(--primary);
+            transform: translateY(-4px);
+        }
+
+        .workflow-step-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .workflow-step-title {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .workflow-step-tool {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* SCRUM Checklist */
+        .scrum-checklist {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 3rem 0;
+            border: 2px solid var(--primary);
+            box-shadow: 0 4px 6px var(--shadow);
+        }
+
+        .scrum-checklist h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .checklist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .checklist-section {
+            background: var(--bg-primary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .checklist-section h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+            padding: 0.5rem;
+            border-radius: 4px;
+            transition: background 0.2s ease;
+        }
+
+        .checklist-item:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .checklist-item input[type="checkbox"] {
+            margin-top: 0.25rem;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .checklist-item label {
+            flex: 1;
+            cursor: pointer;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .print-button {
+            display: block;
+            margin: 1.5rem auto 0;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .print-button:hover {
+            background: var(--primary-dark);
+            transform: scale(1.05);
+        }
+
+        /* Course Differences */
+        .course-differences {
+            margin: 3rem 0;
+        }
+
+        .course-differences h2 {
+            text-align: center;
+            color: var(--primary);
+            margin-bottom: 2rem;
+        }
+
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .course-card {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 2rem;
+            border: 2px solid var(--border-color);
+            box-shadow: 0 4px 6px var(--shadow);
+        }
+
+        .course-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .course-focus {
+            background: var(--bg-tertiary);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border-left: 3px solid var(--primary);
+        }
+
+        .course-focus strong {
+            color: var(--primary);
+        }
+
+        .tool-priority-list {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .tool-priority-list li {
+            padding: 0.5rem;
+            margin-bottom: 0.5rem;
+            background: var(--bg-primary);
+            border-radius: 4px;
+            border-left: 3px solid var(--success);
+        }
+
+        .tool-priority-list li:nth-child(2) {
+            border-left-color: var(--info);
+        }
+
+        .tool-priority-list li:nth-child(3) {
+            border-left-color: var(--warning);
+        }
+
+        /* Best Practices */
+        .best-practices {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 3rem 0;
+            box-shadow: 0 4px 6px var(--shadow);
+        }
+
+        .best-practices h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .practice-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .practice-card {
+            background: var(--bg-primary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 2px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .practice-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .practice-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .practice-card h3 {
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+        }
+
+        .practice-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            header {
+                padding: 2rem 1rem;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+            }
+
+            .back-link, .theme-toggle {
+                position: static;
+                margin: 0.5rem auto;
+                display: inline-block;
+            }
+
+            .phase-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .phase-icon {
+                font-size: 2rem;
+            }
+
+            .workflow-steps {
+                grid-template-columns: 1fr;
+            }
+
+            .course-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+                color: black;
+            }
+
+            .theme-toggle, .back-link, .print-button {
+                display: none;
+            }
+
+            .phase-card, .scrum-checklist, .best-practices {
+                page-break-inside: avoid;
+                box-shadow: none;
+                border: 1px solid #ccc;
+            }
+
+            header {
+                background: #667eea;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+
+        /* Accessibility */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        *:focus-visible {
+            outline: 3px solid var(--primary);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html" class="back-link">
+            <span aria-hidden="true">←</span>
+            <span>Back to AI Tools Guide</span>
+        </a>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+            <span id="themeIcon">🌙</span> Dark Mode
+        </button>
+        <h1>SCRUM/Agile Workflow Integration</h1>
+        <p class="subtitle">Where AI Tools Fit in Your Professional Development Process</p>
+    </header>
+
+    <div class="container">
+        <!-- Introduction -->
+        <section class="intro-section">
+            <h2>How AI Tools Enhance Your Agile Workflow</h2>
+            <p>
+                In professional software development, teams use Agile methodologies (like SCRUM) to organize their work into sprints,
+                plan iteratively, and deliver value continuously. As a student developer, you'll follow similar processes in CSC-113 and CSC-114.
+            </p>
+            <p>
+                <strong>The key insight:</strong> Different AI tools excel at different phases of the development lifecycle. This guide shows you
+                exactly when to use each tool for maximum productivity and learning. <span class="free-badge">ALL FREE</span>
+            </p>
+            <p>
+                <strong>Important:</strong> AI tools are assistants, not replacements. You're still the developer making decisions,
+                writing code, and learning the fundamentals. Use AI to accelerate your workflow, not to bypass understanding.
+            </p>
+        </section>
+
+        <!-- Workflow Timeline -->
+        <section class="workflow-timeline">
+            <h2>SCRUM Sprint Workflow</h2>
+
+            <!-- Sprint Planning -->
+            <div class="phase-card">
+                <div class="phase-header">
+                    <div class="phase-icon" aria-hidden="true">🎯</div>
+                    <div class="phase-title">
+                        <h3>Sprint Planning</h3>
+                        <p class="phase-duration">Duration: 1-2 days at sprint start</p>
+                    </div>
+                </div>
+
+                <div class="task-description">
+                    <strong>Task:</strong> Break down user stories into actionable development tasks, estimate effort, plan architecture approach
+                </div>
+
+                <div class="tool-recommendation">
+                    <div class="tool-item primary">
+                        <div class="tool-header">
+                            <span class="tool-name">Claude <span class="free-badge">FREE</span></span>
+                            <span class="priority-badge primary">Primary</span>
+                        </div>
+                        <div class="tool-reason">
+                            <strong>Why Claude:</strong> Excels at breaking down complex problems into structured tasks.
+                            Its 200K context window allows you to paste entire project requirements and get comprehensive task breakdowns.
+                            Best for architectural planning and understanding system-level dependencies.
+                        </div>
+                    </div>
+
+                    <div class="tool-item secondary">
+                        <div class="tool-header">
+                            <span class="tool-name">ChatGPT <span class="free-badge">FREE</span></span>
+                            <span class="priority-badge secondary">Secondary</span>
+                        </div>
+                        <div class="tool-reason">
+                            <strong>Why ChatGPT:</strong> Good for general estimation help and creating user story templates.
+                            Useful for learning SCRUM terminology and planning techniques.
+                        </div>
+                    </div>
+
+                    <div class="tool-item not-recommended">
+                        <div class="tool-header">
+                            <span class="tool-name">GitHub Copilot</span>
+                            <span class="priority-badge not-recommended">Not Recommended</span>
+                        </div>
+                        <div class="tool-reason">
+                            <strong>Why Not:</strong> Copilot is implementation-focused and works best within your IDE during coding.
+                            It's not designed for high-level planning or task decomposition.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Design Phase -->
+            <div class="phase-card">
+                <div class="phase-header">
+                    <div class="phase-icon" aria-hidden="true">🏗️</div>
+                    <div class="phase-title">
+                        <h3>Design & Architecture</h3>
+                        <p class="phase-duration">Duration: Ongoing during sprint, heavy at start</p>
+                    </div>
+                </div>
+
+                <div class="task-description">
+                    <strong>Task:</strong> Design system architecture, choose design patterns, plan class structures, create data models
+                </div>
+
+                <div class="tool-recommendation">
+                    <div class="tool-item primary">
+                        <div class="tool-header">
+                            <span class="tool-name">Claude <span class="free-badge">FREE</span></span>
+                            <span class="priority-badge primary">Primary - STRONGEST</span>
+                        </div>
+                        <div class="tool-reason">
+                            <strong>Why Claude:</strong> The absolute best choice for architecture design. Can analyze your entire codebase
+                            (paste multiple files), suggest appropriate design patterns (Factory, Observer, Strategy, etc.), and explain trade-offs.
+                            Particularly strong at object-oriented design for CSC-113 and CSC-114.
+                        </div>
+                    </div>
+
+                    <div class="tool-item secondary">
+                        <div class="tool-header">
+                            <span class="tool-name">ChatGPT <span class="free-badge">FREE</span></span>
+                            <span class="priority-badge secondary">Secondary</span>
+                        </div>
+                        <div class="tool-reason">
+                            <strong>Why ChatGPT:</strong> Good for general design principles and learning design patterns.
+                            Works well for creating UML diagrams and explaining architecture concepts.
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background: var(--bg-tertiary); padding: 1rem; border-radius: 8px; margin-top: 1rem; border-left: 3px solid var(--success);">
+                    <strong style="color: var(--primary);">Pro Tip:</strong> Paste your entire project structure and requirements into Claude.
+                    Ask: "Suggest an architecture for this system using appropriate design patterns. Explain why each pattern fits."
+                </div>
+            </div>
+
+            <!-- Development Phase -->
+            <div class="phase-card">
+                <div class="phase-header">
+                    <div class="phase-icon" aria-hidden="true">⚙️</div>
+                    <div class="phase-title">
+                        <h3>Development (Main Coding)</h3>
+                        <p class="phase-duration">Duration: Majority of sprint time</p>
+                    </div>
+                </div>
+
+                <div class="task-description">
+                    <strong>Task:</strong> Implement features, write classes and methods, follow design patterns, integrate components
+                </div>
+
+                <div class="tool-recommendation">
+                    <div class="tool-item primary">
+                        <div class="tool-header">
+                            <span class="tool-name">GitHub Copilot <span class="free-badge">FREE (Student Pack)</span></span>
+                            <span class="priority-badge primary">Primary</span>
+                        </div>
+                        <div class="tool-reason">
+                            <strong>Why Copilot:</strong> This is where Copilot shines! Direct IDE integration means instant autocomplete,
+                            boilerplate generation, and real-time suggestions as you type. Dramatically speeds up coding once you know what to build.
+                            Best for: getters/setters, constructors, common algorithms, standard patterns.
+                        </div>
+                    </div>
+
+                    <div class="tool-item secondary">
+                        <div class="tool-header">
+                            <span class="tool-name">Claude <span class="free-badge">FREE</span></span>
+                            <span class="priority-badge secondary">Secondary</span>
+                        </div>
+                        <div class="tool-reason">
+                            <strong>Why Claude:</strong> Switch to Claude when you need architectural decisions mid-development ("Should this be a new class or method?"),
+                            refactoring guidance, or complex problem-solving. Great for code review and ensuring you're following best practices.
+                        </div>
+                    </div>
+
+                    <div class="tool-item tertiary">
+                        <div class="tool-header">
+                            <span class="tool-name">ChatGPT <span class="free-badge">FREE</span></span>
+                            <span class="priority-badge tertiary">Tertiary</span>
+                        </div>
+                        <div class="tool-reason">
+                            <strong>Why ChatGPT:</strong> Use when you're stuck and need a quick explanation or alternative approach.
+                            Good for learning new concepts on-the-fly without leaving your workflow.
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background: var(--bg-tertiary); padding: 1rem; border-radius: 8px; margin-top: 1rem; border-left: 3px solid var(--info);">
+                    <strong style="color: var(--primary);">Workflow Tip:</strong> Use Copilot for 80% of your coding (implementation).
+                    When you hit an architectural decision or complex problem, switch to Claude in your browser.
+                    This "Copilot + Claude" combo is extremely powerful.
+                </div>
+            </div>
+
+            <!-- Code Review -->
+            <div class="phase-card">
+                <div class="phase-header">
+                    <div class="phase-icon" aria-hidden="true">👀</div>
+                    <div class="phase-title">
+                        <h3>Code Review</h3>
+                        <p class="phase-duration">Duration: Continuous during sprint</p>
+                    </div>
+                </div>
+
+                <div class="task-description">
+                    <strong>Task:</strong> Review code quality, check for bugs, ensure design patterns are followed, verify readability
+                </div>
+
+                <div class="tool-recommendation">
+                    <div class="tool-item primary">
+                        <div class="tool-header">
+                            <span class="tool-name">Claude <span class="free-badge">FREE</span></span>
+                            <span class="priority-badge primary">Primary</span>
+                        </div>
+                        <div class="tool-reason">
+                            <strong>Why Claude:</strong> Best code analysis capabilities. Paste your code and ask for detailed review.
+                            Claude excels at identifying design pattern violations, suggesting refactorings, finding edge cases,
+                            and explaining why code could be improved. Great for self-review before submitting assignments.
+                        </div>
+                    </div>
+
+                    <div class="tool-item secondary">
+                        <div class="tool-header">
+                            <span class="tool-name">GitHub Copilot <span class="free-badge">FREE (Student Pack)</span></span>
+                            <span class="priority-badge secondary">Secondary</span>
+                        </div>
+                        <div class="tool-reason">
+                            <strong>Why Copilot:</strong> Copilot's inline suggestions can catch simple improvements as you code.
+                            Good for quick fixes and identifying common patterns, but not as thorough as Claude for deep analysis.
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background: var(--bg-tertiary); padding: 1rem; border-radius: 8px; margin-top: 1rem; border-left: 3px solid var(--warning);">
+                    <strong style="color: var(--primary);">Best Practice:</strong> Before submitting any assignment, paste your code into Claude and ask:
+                    "Review this code for quality, design patterns, and potential bugs. What could be improved?"
+                    This catches issues before your professor sees them.
+                </div>
+            </div>
+
+            <!-- Testing & Debugging -->
+            <div class="phase-card">
+                <div class="phase-header">
+                    <div class="phase-icon" aria-hidden="true">🐛</div>
+                    <div class="phase-title">
+                        <h3>Testing & Debugging</h3>
+                        <p class="phase-duration">Duration: Continuous during sprint</p>
+                    </div>
+                </div>
+
+                <div class="task-description">
+                    <strong>Task:</strong> Write unit tests, debug failures, fix logic errors, handle edge cases
+                </div>
+
+                <div class="tool-recommendation">
+                    <div class="tool-item primary">
+                        <div class="tool-header">
+                            <span class="tool-name">ChatGPT <span class="free-badge">FREE</span></span>
+                            <span class="priority-badge primary">Primary</span>
+                        </div>
+                        <div class="tool-reason">
+                            <strong>Why ChatGPT:</strong> Excellent at generating test cases and debugging logic.
+                            Fast responses make it ideal for iterative debugging. Can explain why bugs occur and suggest multiple fixes.
+                            Good at edge case generation.
+                        </div>
+                    </div>
+
+                    <div class="tool-item secondary">
+                        <div class="tool-header">
+                            <span class="tool-name">Claude <span class="free-badge">FREE</span></span>
+                            <span class="priority-badge secondary">Secondary</span>
+                        </div>
+                        <div class="tool-reason">
+                            <strong>Why Claude:</strong> Use for complex, multi-file bugs where you need deep analysis.
+                            Claude can trace through your entire system logic and identify subtle issues.
+                            Better for architectural-level debugging.
+                        </div>
+                    </div>
+
+                    <div class="tool-item tertiary">
+                        <div class="tool-header">
+                            <span class="tool-name">GitHub Copilot <span class="free-badge">FREE (Student Pack)</span></span>
+                            <span class="priority-badge tertiary">Tertiary</span>
+                        </div>
+                        <div class="tool-reason">
+                            <strong>Why Copilot:</strong> Quick fixes for simple bugs. Copilot can suggest corrections as you type,
+                            but isn't as effective for complex debugging or test generation.
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background: var(--bg-tertiary); padding: 1rem; border-radius: 8px; margin-top: 1rem; border-left: 3px solid var(--danger);">
+                    <strong style="color: var(--primary);">Debugging Strategy:</strong>
+                    <ol style="margin: 0.5rem 0 0 1.5rem; color: var(--text-secondary);">
+                        <li>Try to debug yourself first (build your skills!)</li>
+                        <li>If stuck after 15 minutes, ask ChatGPT with error message and relevant code</li>
+                        <li>For persistent bugs, escalate to Claude with full context</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Deployment -->
+            <div class="phase-card">
+                <div class="phase-header">
+                    <div class="phase-icon" aria-hidden="true">🚀</div>
+                    <div class="phase-title">
+                        <h3>Deployment & Integration</h3>
+                        <p class="phase-duration">Duration: End of sprint or continuous</p>
+                    </div>
+                </div>
+
+                <div class="task-description">
+                    <strong>Task:</strong> Package application, create deployment scripts, set up CI/CD, write documentation
+                </div>
+
+                <div class="tool-recommendation">
+                    <div class="tool-item primary">
+                        <div class="tool-header">
+                            <span class="tool-name">Claude <span class="free-badge">FREE</span></span>
+                            <span class="priority-badge primary">Primary</span>
+                        </div>
+                        <div class="tool-reason">
+                            <strong>Why Claude:</strong> Best for infrastructure planning and deployment strategy.
+                            Can help with build scripts, dependency management, and deployment documentation.
+                            Understands the full context of your project structure.
+                        </div>
+                    </div>
+
+                    <div class="tool-item secondary">
+                        <div class="tool-header">
+                            <span class="tool-name">GitHub Copilot <span class="free-badge">FREE (Student Pack)</span></span>
+                            <span class="priority-badge secondary">Secondary</span>
+                        </div>
+                        <div class="tool-reason">
+                            <strong>Why Copilot:</strong> Useful for generating deployment scripts, Docker files, and CI/CD configurations.
+                            Good at autocompleting common deployment patterns.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Retrospective -->
+            <div class="phase-card">
+                <div class="phase-header">
+                    <div class="phase-icon" aria-hidden="true">📚</div>
+                    <div class="phase-title">
+                        <h3>Sprint Retrospective & Learning</h3>
+                        <p class="phase-duration">Duration: End of sprint, 1-2 hours</p>
+                    </div>
+                </div>
+
+                <div class="task-description">
+                    <strong>Task:</strong> Reflect on what worked, document learnings, understand concepts deeply, prepare for next sprint
+                </div>
+
+                <div class="tool-recommendation">
+                    <div class="tool-item primary">
+                        <div class="tool-header">
+                            <span class="tool-name">Claude <span class="free-badge">FREE</span></span>
+                            <span class="priority-badge primary">Primary</span>
+                        </div>
+                        <div class="tool-reason">
+                            <strong>Why Claude:</strong> Exceptional at deep explanations and conceptual understanding.
+                            Perfect for exam prep - ask Claude to explain design patterns you used, why certain approaches worked,
+                            and how concepts connect. Generates comprehensive study guides.
+                        </div>
+                    </div>
+
+                    <div class="tool-item secondary">
+                        <div class="tool-header">
+                            <span class="tool-name">ChatGPT <span class="free-badge">FREE</span></span>
+                            <span class="priority-badge secondary">Secondary</span>
+                        </div>
+                        <div class="tool-reason">
+                            <strong>Why ChatGPT:</strong> Great for quick concept clarification and generating practice problems.
+                            More conversational for teaching - good for students who learn better through dialogue.
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background: var(--bg-tertiary); padding: 1rem; border-radius: 8px; margin-top: 1rem; border-left: 3px solid var(--success);">
+                    <strong style="color: var(--primary);">Learning Tip:</strong> After each assignment, ask Claude:
+                    "Explain the design patterns I used in this project. What are the key concepts I should remember for exams?"
+                    This solidifies learning and prepares you for tests.
+                </div>
+            </div>
+        </section>
+
+        <!-- Tool Switching Workflow -->
+        <section class="workflow-diagram">
+            <h2>When to Switch Tools During Development</h2>
+            <p style="text-align: center; color: var(--text-secondary); margin-bottom: 2rem;">
+                Use this decision tree to know which tool to reach for in real-time
+            </p>
+
+            <div class="workflow-steps">
+                <div class="workflow-step">
+                    <div class="workflow-step-icon">🤔</div>
+                    <div class="workflow-step-title">Need to Plan?</div>
+                    <div class="workflow-step-tool">→ Use <strong>Claude</strong></div>
+                    <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.5rem;">
+                        Architecture, task breakdown, design decisions
+                    </div>
+                </div>
+
+                <div class="workflow-step">
+                    <div class="workflow-step-icon">⚡</div>
+                    <div class="workflow-step-title">Coding Fast?</div>
+                    <div class="workflow-step-tool">→ Use <strong>Copilot</strong></div>
+                    <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.5rem;">
+                        Implementation, boilerplate, autocomplete
+                    </div>
+                </div>
+
+                <div class="workflow-step">
+                    <div class="workflow-step-icon">🐛</div>
+                    <div class="workflow-step-title">Debugging?</div>
+                    <div class="workflow-step-tool">→ Use <strong>ChatGPT</strong></div>
+                    <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.5rem;">
+                        Quick bug fixes, error messages
+                    </div>
+                </div>
+
+                <div class="workflow-step">
+                    <div class="workflow-step-icon">🔍</div>
+                    <div class="workflow-step-title">Complex Bug?</div>
+                    <div class="workflow-step-tool">→ Use <strong>Claude</strong></div>
+                    <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.5rem;">
+                        Multi-file issues, logic problems
+                    </div>
+                </div>
+
+                <div class="workflow-step">
+                    <div class="workflow-step-icon">✅</div>
+                    <div class="workflow-step-title">Testing?</div>
+                    <div class="workflow-step-tool">→ Use <strong>ChatGPT</strong></div>
+                    <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.5rem;">
+                        Test cases, edge cases
+                    </div>
+                </div>
+
+                <div class="workflow-step">
+                    <div class="workflow-step-icon">👀</div>
+                    <div class="workflow-step-title">Code Review?</div>
+                    <div class="workflow-step-tool">→ Use <strong>Claude</strong></div>
+                    <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.5rem;">
+                        Quality check, refactoring
+                    </div>
+                </div>
+
+                <div class="workflow-step">
+                    <div class="workflow-step-icon">📖</div>
+                    <div class="workflow-step-title">Learning?</div>
+                    <div class="workflow-step-tool">→ Use <strong>Claude</strong></div>
+                    <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.5rem;">
+                        Deep understanding, exam prep
+                    </div>
+                </div>
+
+                <div class="workflow-step">
+                    <div class="workflow-step-icon">❓</div>
+                    <div class="workflow-step-title">Quick Question?</div>
+                    <div class="workflow-step-tool">→ Use <strong>ChatGPT</strong></div>
+                    <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.5rem;">
+                        Fast answers, syntax help
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SCRUM Checklist -->
+        <section class="scrum-checklist">
+            <h2>📋 Downloadable Sprint Checklist</h2>
+            <p style="text-align: center; color: var(--text-secondary); margin-bottom: 1.5rem;">
+                Print this checklist and use it for every sprint in CSC-113/114
+            </p>
+
+            <div class="checklist-grid">
+                <div class="checklist-section">
+                    <h3>🎯 Sprint Planning</h3>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check1">
+                        <label for="check1">Review user stories/requirements with Claude</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check2">
+                        <label for="check2">Break down into tasks (Claude)</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check3">
+                        <label for="check3">Estimate effort for each task</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check4">
+                        <label for="check4">Identify technical risks</label>
+                    </div>
+                </div>
+
+                <div class="checklist-section">
+                    <h3>🏗️ Design Phase</h3>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check5">
+                        <label for="check5">Design class structure (Claude)</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check6">
+                        <label for="check6">Choose design patterns (Claude)</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check7">
+                        <label for="check7">Plan data models and relationships</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check8">
+                        <label for="check8">Create UML diagrams if needed</label>
+                    </div>
+                </div>
+
+                <div class="checklist-section">
+                    <h3>⚙️ Development</h3>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check9">
+                        <label for="check9">Set up project structure</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check10">
+                        <label for="check10">Implement classes with Copilot</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check11">
+                        <label for="check11">Follow design patterns consistently</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check12">
+                        <label for="check12">Add meaningful comments</label>
+                    </div>
+                </div>
+
+                <div class="checklist-section">
+                    <h3>🐛 Testing</h3>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check13">
+                        <label for="check13">Write unit tests (ChatGPT)</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check14">
+                        <label for="check14">Test edge cases</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check15">
+                        <label for="check15">Debug failures (ChatGPT/Claude)</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check16">
+                        <label for="check16">Verify all requirements met</label>
+                    </div>
+                </div>
+
+                <div class="checklist-section">
+                    <h3>👀 Code Review</h3>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check17">
+                        <label for="check17">Self-review with Claude</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check18">
+                        <label for="check18">Check code quality and style</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check19">
+                        <label for="check19">Refactor as needed</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check20">
+                        <label for="check20">Verify design patterns correct</label>
+                    </div>
+                </div>
+
+                <div class="checklist-section">
+                    <h3>📚 Retrospective</h3>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check21">
+                        <label for="check21">Document learnings (Claude)</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check22">
+                        <label for="check22">Create study notes for exam</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check23">
+                        <label for="check23">Identify improvement areas</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="check24">
+                        <label for="check24">Update skills learned list</label>
+                    </div>
+                </div>
+            </div>
+
+            <button class="print-button" onclick="window.print()">🖨️ Print Checklist</button>
+        </section>
+
+        <!-- Course Differences -->
+        <section class="course-differences">
+            <h2>CSC-113 vs CSC-114: Workflow Differences</h2>
+
+            <div class="course-grid">
+                <div class="course-card">
+                    <h3>CSC-113: Intro to OOP (C++)</h3>
+
+                    <div class="course-focus">
+                        <strong>Focus:</strong> Learning fundamentals, understanding concepts, building foundation
+                    </div>
+
+                    <p style="margin: 1rem 0; color: var(--text-secondary);">
+                        <strong>Recommended Tool Priority:</strong>
+                    </p>
+                    <ul class="tool-priority-list">
+                        <li><strong>1. Claude</strong> - Deep concept explanations, learning design patterns</li>
+                        <li><strong>2. ChatGPT</strong> - Quick syntax help, debugging simple errors</li>
+                        <li><strong>3. Copilot</strong> - Use sparingly, only for boilerplate after you understand</li>
+                    </ul>
+
+                    <div style="background: var(--bg-tertiary); padding: 1rem; border-radius: 8px; margin-top: 1rem;">
+                        <strong style="color: var(--primary);">Strategy:</strong>
+                        <p style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 0.5rem;">
+                            Focus on understanding over speed. Use AI to explain concepts, not just write code.
+                            Try solving problems yourself first, then verify with Claude.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="course-card">
+                    <h3>CSC-114: Advanced OOP (C++/Java)</h3>
+
+                    <div class="course-focus">
+                        <strong>Focus:</strong> Complex systems, design patterns, professional practices, speed
+                    </div>
+
+                    <p style="margin: 1rem 0; color: var(--text-secondary);">
+                        <strong>Recommended Tool Priority:</strong>
+                    </p>
+                    <ul class="tool-priority-list">
+                        <li><strong>1. Copilot</strong> - Fast implementation, you know what to build</li>
+                        <li><strong>2. Claude</strong> - Architecture decisions, design pattern selection</li>
+                        <li><strong>3. ChatGPT</strong> - Debugging, testing, quick problem-solving</li>
+                    </ul>
+
+                    <div style="background: var(--bg-tertiary); padding: 1rem; border-radius: 8px; margin-top: 1rem;">
+                        <strong style="color: var(--primary);">Strategy:</strong>
+                        <p style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 0.5rem;">
+                            Maximize productivity. Use Copilot heavily for implementation, Claude for architecture.
+                            You should understand the fundamentals by now, so focus on building complex systems efficiently.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="background: var(--bg-secondary); padding: 1.5rem; border-radius: 8px; margin-top: 2rem; border-left: 4px solid var(--warning);">
+                <strong style="color: var(--primary);">Key Difference:</strong>
+                <p style="color: var(--text-secondary); margin-top: 0.5rem;">
+                    In CSC-113, AI is primarily a teaching assistant. In CSC-114, AI becomes a productivity multiplier.
+                    The shift happens because you've built foundational understanding in 113, so 114 is about applying
+                    those concepts at scale and speed.
+                </p>
+            </div>
+        </section>
+
+        <!-- Best Practices -->
+        <section class="best-practices">
+            <h2>Best Practices for AI in Agile Workflow</h2>
+
+            <div class="practice-grid">
+                <div class="practice-card">
+                    <div class="practice-icon">🎯</div>
+                    <h3>Start with Planning</h3>
+                    <p>
+                        Never jump straight to coding. Use Claude to plan your approach first.
+                        5 minutes of planning saves hours of refactoring.
+                    </p>
+                </div>
+
+                <div class="practice-card">
+                    <div class="practice-icon">🔄</div>
+                    <h3>Switch Tools Intentionally</h3>
+                    <p>
+                        Don't stick with one tool out of habit. Each tool has strengths -
+                        use the decision tree above to choose the right tool for each task.
+                    </p>
+                </div>
+
+                <div class="practice-card">
+                    <div class="practice-icon">📝</div>
+                    <h3>Document Your Workflow</h3>
+                    <p>
+                        Keep notes on what worked and what didn't. After each sprint,
+                        reflect on your tool usage and adjust for the next sprint.
+                    </p>
+                </div>
+
+                <div class="practice-card">
+                    <div class="practice-icon">🧠</div>
+                    <h3>Understand Before Using</h3>
+                    <p>
+                        Never paste AI-generated code without understanding it.
+                        Ask the AI to explain any code you don't fully comprehend.
+                    </p>
+                </div>
+
+                <div class="practice-card">
+                    <div class="practice-icon">🔍</div>
+                    <h3>Review AI Suggestions</h3>
+                    <p>
+                        AI can make mistakes. Always review suggestions critically.
+                        Use Claude to review code from Copilot or ChatGPT.
+                    </p>
+                </div>
+
+                <div class="practice-card">
+                    <div class="practice-icon">⚡</div>
+                    <h3>Copilot for Speed, Claude for Depth</h3>
+                    <p>
+                        Use Copilot when you know exactly what to build.
+                        Use Claude when you need to figure out what to build or why.
+                    </p>
+                </div>
+
+                <div class="practice-card">
+                    <div class="practice-icon">🎓</div>
+                    <h3>Learn from AI</h3>
+                    <p>
+                        After each task, ask AI to explain the concepts involved.
+                        This builds understanding for exams and future projects.
+                    </p>
+                </div>
+
+                <div class="practice-card">
+                    <div class="practice-icon">✅</div>
+                    <h3>Test Everything</h3>
+                    <p>
+                        AI-generated code needs testing just like human code.
+                        Use ChatGPT to generate comprehensive test cases.
+                    </p>
+                </div>
+
+                <div class="practice-card">
+                    <div class="practice-icon">🤝</div>
+                    <h3>Collaborate with AI</h3>
+                    <p>
+                        Treat AI as a junior developer. Give it clear instructions,
+                        review its work, and provide feedback to get better results.
+                    </p>
+                </div>
+
+                <div class="practice-card">
+                    <div class="practice-icon">🚫</div>
+                    <h3>Know When NOT to Use AI</h3>
+                    <p>
+                        Simple problems you can solve in 2 minutes? Do it yourself.
+                        Build your skills first, use AI for acceleration, not replacement.
+                    </p>
+                </div>
+
+                <div class="practice-card">
+                    <div class="practice-icon">💾</div>
+                    <h3>Save Useful Conversations</h3>
+                    <p>
+                        When AI generates great explanations or code, save them.
+                        Build a personal knowledge base for future reference.
+                    </p>
+                </div>
+
+                <div class="practice-card">
+                    <div class="practice-icon">🔄</div>
+                    <h3>Iterate on Prompts</h3>
+                    <p>
+                        First AI response not quite right? Refine your prompt.
+                        Good prompting is a skill - practice makes perfect.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final Tips -->
+        <section class="intro-section" style="margin-top: 3rem;">
+            <h2>Remember: You're the Developer</h2>
+            <p>
+                AI tools are incredible productivity multipliers, but they're <strong>assistants, not replacements</strong>.
+                Your job is to:
+            </p>
+            <ul style="color: var(--text-secondary); margin: 1rem 0 1rem 2rem; line-height: 1.8;">
+                <li>Make architectural decisions</li>
+                <li>Understand the code you're writing</li>
+                <li>Verify AI suggestions are correct</li>
+                <li>Learn concepts deeply for exams</li>
+                <li>Think critically about design trade-offs</li>
+            </ul>
+            <p>
+                <strong>The best developers use AI to handle repetitive tasks so they can focus on creative problem-solving,
+                architecture, and learning.</strong> That's exactly what this workflow helps you do.
+            </p>
+            <p style="margin-top: 1rem;">
+                <strong>Questions?</strong> Reach out to Professor Norris during office hours or use the
+                <a href="index.html" style="color: var(--primary); text-decoration: none; font-weight: 600;">AI Tools Guide</a>
+                for more resources.
+            </p>
+        </section>
+    </div>
+
+    <script>
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const htmlElement = document.documentElement;
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        htmlElement.setAttribute('data-theme', savedTheme);
+        updateThemeIcon(savedTheme);
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+            htmlElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        });
+
+        function updateThemeIcon(theme) {
+            if (theme === 'dark') {
+                themeIcon.textContent = '☀️';
+                themeToggle.innerHTML = '<span id="themeIcon">☀️</span> Light Mode';
+            } else {
+                themeIcon.textContent = '🌙';
+                themeToggle.innerHTML = '<span id="themeIcon">🌙</span> Dark Mode';
+            }
+        }
+
+        // Persist checklist state
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+
+        // Load saved state
+        checkboxes.forEach(checkbox => {
+            const saved = localStorage.getItem(checkbox.id);
+            if (saved === 'true') {
+                checkbox.checked = true;
+            }
+        });
+
+        // Save state on change
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                localStorage.setItem(checkbox.id, checkbox.checked);
+            });
+        });
+
+        // Reset checklist button (optional - could add to UI)
+        function resetChecklist() {
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = false;
+                localStorage.removeItem(checkbox.id);
+            });
+        }
+
+        // Smooth scroll for any internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add keyboard navigation support
+        document.addEventListener('keydown', (e) => {
+            // Ctrl/Cmd + P for print
+            if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
+                e.preventDefault();
+                window.print();
+            }
+            // Ctrl/Cmd + D for dark mode toggle
+            if ((e.ctrlKey || e.metaKey) && e.key === 'd') {
+                e.preventDefault();
+                themeToggle.click();
+            }
+        });
+
+        // Analytics: Track which phases users spend most time on (optional)
+        // Could be enhanced with actual analytics if needed
+        const phaseCards = document.querySelectorAll('.phase-card');
+        phaseCards.forEach((card, index) => {
+            card.addEventListener('click', () => {
+                // Could send analytics here
+                console.log(`User clicked phase ${index + 1}`);
+            });
+        });
+    </script>
+</body>
+</html>

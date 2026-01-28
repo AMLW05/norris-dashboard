@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Tool Decision Tree | CIT</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #667eea;
+            --primary-dark: #764ba2;
+            --navy: #1a1a2e;
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --danger: #d63031;
+            --info: #3498db;
+            --gray-light: #f5f7fa;
+            --text-dark: #2c3e50;
+            --border: #e1e8ed;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+
+        body.dark-mode {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        }
+
+        body.dark-mode .container { background: #2c3e50; color: #ecf0f1; }
+        body.dark-mode .header { background: linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 100%); }
+        body.dark-mode .question-card { background: #34495e; }
+        body.dark-mode .option-btn { background: #2c3e50; border-color: #1e2a38; color: #ecf0f1; }
+        body.dark-mode .option-btn:hover { background: #3d566e; }
+        body.dark-mode .option-btn.selected { background: #3498db; border-color: #2980b9; }
+        body.dark-mode .result-card { background: #34495e; }
+        body.dark-mode .score-bar { background: #1e2a38; }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--navy) 0%, #16213e 100%);
+            color: white;
+            padding: 30px 40px;
+            position: relative;
+        }
+
+        .header h1 { font-size: 2em; margin-bottom: 8px; }
+        .header p { font-size: 1em; opacity: 0.9; }
+
+        .dark-mode-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.3s;
+        }
+
+        .dark-mode-toggle:hover { background: rgba(255,255,255,0.3); }
+
+        .content {
+            padding: 40px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .back-link:hover { text-decoration: underline; }
+
+        .intro-section {
+            background: #e3f2fd;
+            border-left: 4px solid var(--info);
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+        }
+
+        body.dark-mode .intro-section { background: #34495e; border-left-color: #3498db; }
+
+        .intro-section h2 {
+            color: var(--info);
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        .intro-section p {
+            line-height: 1.8;
+            margin: 8px 0;
+        }
+
+        .progress-bar {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .progress-bar::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--border);
+            z-index: 0;
+        }
+
+        .progress-step {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9em;
+            z-index: 1;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .progress-step.active {
+            background: var(--primary);
+            color: white;
+            transform: scale(1.2);
+        }
+
+        .progress-step.completed {
+            background: var(--success);
+            color: white;
+        }
+
+        .question-card {
+            background: var(--gray-light);
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .question-card h3 {
+            color: var(--primary);
+            font-size: 1.4em;
+            margin-bottom: 20px;
+        }
+
+        .options-grid {
+            display: grid;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .option-btn {
+            background: white;
+            border: 2px solid var(--border);
+            padding: 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: left;
+        }
+
+        .option-btn:hover {
+            border-color: var(--primary);
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+        }
+
+        .option-btn.selected {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .option-btn h4 {
+            font-size: 1.1em;
+            margin-bottom: 8px;
+        }
+
+        .option-btn p {
+            font-size: 0.95em;
+            opacity: 0.85;
+            line-height: 1.5;
+        }
+
+        .option-btn.selected p {
+            opacity: 1;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--border);
+            color: var(--text-dark);
+        }
+
+        .btn-secondary:hover {
+            background: #d0d7de;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn:disabled:hover {
+            transform: none;
+            box-shadow: none;
+        }
+
+        .result-section {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        .result-section.active {
+            display: block;
+        }
+
+        .result-card {
+            background: var(--gray-light);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .result-card h3 {
+            color: var(--primary);
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .tool-recommendation {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 5px solid var(--success);
+        }
+
+        body.dark-mode .tool-recommendation { background: #34495e; }
+
+        .tool-recommendation.secondary {
+            border-left-color: var(--info);
+        }
+
+        .tool-recommendation.not-recommended {
+            border-left-color: var(--danger);
+            opacity: 0.8;
+        }
+
+        .tool-recommendation h4 {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+
+        .tool-recommendation .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin: 5px 5px 10px 0;
+        }
+
+        .badge-primary { background: var(--primary); color: white; }
+        .badge-secondary { background: var(--info); color: white; }
+        .badge-danger { background: var(--danger); color: white; }
+        .badge-free { background: var(--success); color: white; }
+
+        .tool-recommendation p {
+            line-height: 1.7;
+            margin: 8px 0;
+        }
+
+        .action-steps {
+            background: #d4edda;
+            border-left: 4px solid var(--success);
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+        }
+
+        body.dark-mode .action-steps { background: #34495e; }
+
+        .action-steps h5 {
+            color: var(--success);
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .action-steps ol {
+            margin-left: 20px;
+        }
+
+        .action-steps li {
+            margin: 8px 0;
+            line-height: 1.6;
+        }
+
+        .scoring-breakdown {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        body.dark-mode .scoring-breakdown { background: #34495e; }
+
+        .scoring-breakdown h4 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .score-item {
+            margin: 15px 0;
+        }
+
+        .score-item-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .score-bar {
+            width: 100%;
+            height: 25px;
+            background: var(--gray-light);
+            border-radius: 5px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .score-fill {
+            height: 100%;
+            background: var(--primary);
+            transition: width 1s ease;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 10px;
+            color: white;
+            font-size: 0.85em;
+            font-weight: 700;
+        }
+
+        .ml-explanation {
+            background: #fff3cd;
+            border-left: 4px solid var(--warning);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        body.dark-mode .ml-explanation { background: #34495e; }
+
+        .ml-explanation h5 {
+            color: #d4a106;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        body.dark-mode .ml-explanation h5 { color: var(--warning); }
+
+        .what-if {
+            background: #e3f2fd;
+            border: 2px dashed var(--info);
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        body.dark-mode .what-if { background: #34495e; }
+
+        .what-if h5 {
+            color: var(--info);
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .content { padding: 20px; }
+            .header h1 { font-size: 1.5em; }
+            .question-card { padding: 20px; }
+            .question-card h3 { font-size: 1.2em; }
+            .nav-buttons { flex-direction: column; }
+            .btn { width: 100%; }
+            .progress-bar { margin-bottom: 20px; }
+            .progress-step { width: 25px; height: 25px; font-size: 0.8em; }
+        }
+
+        @media print {
+            body { background: white; }
+            .container { box-shadow: none; }
+            .dark-mode-toggle, .nav-buttons, .back-link { display: none; }
+            .question-card { display: none; }
+            .result-section { display: block !important; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <button class="dark-mode-toggle" onclick="toggleDarkMode()" aria-label="Toggle dark mode">🌓 Dark Mode</button>
+            <h1>🤖 AI Tool Decision Tree</h1>
+            <p>Machine Learning-Based Recommendation System</p>
+        </header>
+
+        <div class="content">
+            <a href="index.html" class="back-link">← Back to AI Tools Guide</a>
+
+            <div class="intro-section">
+                <h2>How This Works: Machine Learning Decision-Making</h2>
+                <p>This tool uses a <strong>weighted scoring algorithm</strong> to recommend the best AI tool for your specific needs. This is the same approach used in machine learning for classification tasks.</p>
+                <p><strong>The Process:</strong> You answer 5 questions → Each answer has weighted factors → Algorithm calculates scores for each tool → You get personalized recommendations with reasoning.</p>
+                <p><strong>Educational Note:</strong> This demonstrates how businesses use AI for decision-making. In real ML systems, these weights would be learned from training data rather than manually set.</p>
+            </div>
+
+            <div class="progress-bar">
+                <div class="progress-step active" id="step1">1</div>
+                <div class="progress-step" id="step2">2</div>
+                <div class="progress-step" id="step3">3</div>
+                <div class="progress-step" id="step4">4</div>
+                <div class="progress-step" id="step5">5</div>
+            </div>
+
+            <!-- QUESTIONS SECTION -->
+            <div id="questions-section">
+                <!-- Question 1 -->
+                <div class="question-card" id="q1">
+                    <h3>Question 1: What's your primary goal?</h3>
+                    <div class="options-grid">
+                        <button class="option-btn" onclick="selectOption(1, 'learning')" data-value="learning">
+                            <h4>📚 Learning to Code</h4>
+                            <p>I'm building foundational programming skills and need tools that help me learn, not just complete tasks.</p>
+                        </button>
+                        <button class="option-btn" onclick="selectOption(1, 'portfolio')" data-value="portfolio">
+                            <h4>💼 Building a Portfolio Project</h4>
+                            <p>I'm creating a project to showcase my skills to potential employers.</p>
+                        </button>
+                        <button class="option-btn" onclick="selectOption(1, 'interview')" data-value="interview">
+                            <h4>🎯 Job Interview Prep</h4>
+                            <p>I'm preparing for technical interviews and need practice with industry-standard tools.</p>
+                        </button>
+                        <button class="option-btn" onclick="selectOption(1, 'assignment')" data-value="assignment">
+                            <h4>✏️ Class Assignment</h4>
+                            <p>I need help completing coursework for CSC-113 or CSC-114.</p>
+                        </button>
+                        <button class="option-btn" onclick="selectOption(1, 'production')" data-value="production">
+                            <h4>🚀 Production Code / Freelance</h4>
+                            <p>I'm building real-world applications for clients or personal use.</p>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="question-card" id="q2" style="display: none;">
+                    <h3>Question 2: What type of task?</h3>
+                    <div class="options-grid" id="q2-options">
+                        <!-- Dynamic based on Q1 -->
+                    </div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="question-card" id="q3" style="display: none;">
+                    <h3>Question 3: How much code context do you need?</h3>
+                    <div class="options-grid">
+                        <button class="option-btn" onclick="selectOption(3, 'single-function')" data-value="single-function">
+                            <h4>📄 Single Function (under 100 lines)</h4>
+                            <p>Working on a specific function or method in isolation.</p>
+                        </button>
+                        <button class="option-btn" onclick="selectOption(3, 'single-file')" data-value="single-file">
+                            <h4>📃 Single File (100-500 lines)</h4>
+                            <p>Working within one class or module.</p>
+                        </button>
+                        <button class="option-btn" onclick="selectOption(3, 'related-files')" data-value="related-files">
+                            <h4>📚 Related Files (up to 1000 lines)</h4>
+                            <p>Working across multiple related files.</p>
+                        </button>
+                        <button class="option-btn" onclick="selectOption(3, 'entire-project')" data-value="entire-project">
+                            <h4>🗂️ Entire Project (1000+ lines)</h4>
+                            <p>Need to understand or modify the full codebase.</p>
+                        </button>
+                        <button class="option-btn" onclick="selectOption(3, 'external-deps')" data-value="external-deps">
+                            <h4>🌐 External Dependencies</h4>
+                            <p>Working with APIs, libraries, or frameworks that require documentation.</p>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="question-card" id="q4" style="display: none;">
+                    <h3>Question 4: What's your main constraint?</h3>
+                    <div class="options-grid">
+                        <button class="option-btn" onclick="selectOption(4, 'budget')" data-value="budget">
+                            <h4>💰 Budget (FREE only)</h4>
+                            <p>I can only use free tools - no paid subscriptions.</p>
+                        </button>
+                        <button class="option-btn" onclick="selectOption(4, 'ide-integration')" data-value="ide-integration">
+                            <h4>🔧 IDE Integration Required</h4>
+                            <p>I need the tool to work directly in my code editor without switching.</p>
+                        </button>
+                        <button class="option-btn" onclick="selectOption(4, 'collaboration')" data-value="collaboration">
+                            <h4>👥 Team Collaboration</h4>
+                            <p>I need to share and collaborate with teammates.</p>
+                        </button>
+                        <button class="option-btn" onclick="selectOption(4, 'speed')" data-value="speed">
+                            <h4>⚡ Speed (Real-time assistance)</h4>
+                            <p>I need instant suggestions while coding.</p>
+                        </button>
+                        <button class="option-btn" onclick="selectOption(4, 'accuracy')" data-value="accuracy">
+                            <h4>🎯 Accuracy (Deep analysis)</h4>
+                            <p>I need thorough, thoughtful responses even if slower.</p>
+                        </button>
+                        <button class="option-btn" onclick="selectOption(4, 'learning')" data-value="learning">
+                            <h4>📖 Learning Depth</h4>
+                            <p>I want detailed explanations to understand concepts deeply.</p>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Question 5 -->
+                <div class="question-card" id="q5" style="display: none;">
+                    <h3>Question 5: What's your programming level?</h3>
+                    <div class="options-grid">
+                        <button class="option-btn" onclick="selectOption(5, 'beginner')" data-value="beginner">
+                            <h4>🌱 Absolute Beginner</h4>
+                            <p>New to programming, need lots of explanations and hand-holding.</p>
+                        </button>
+                        <button class="option-btn" onclick="selectOption(5, 'intermediate')" data-value="intermediate">
+                            <h4>🌿 Intermediate</h4>
+                            <p>Understand basics, need guidance on best practices and patterns.</p>
+                        </button>
+                        <button class="option-btn" onclick="selectOption(5, 'advanced')" data-value="advanced">
+                            <h4>🌳 Advanced</h4>
+                            <p>Experienced programmer, need efficiency tools and expert insights.</p>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-buttons">
+                <button class="btn btn-secondary" id="back-btn" onclick="goBack()" style="display: none;">← Back</button>
+                <button class="btn btn-primary" id="next-btn" onclick="goNext()" disabled>Next →</button>
+            </div>
+
+            <!-- RESULTS SECTION -->
+            <div class="result-section" id="results">
+                <div class="result-card">
+                    <h3>🎯 Your Personalized Recommendation</h3>
+                    <div id="primary-recommendation"></div>
+                </div>
+
+                <div class="result-card">
+                    <h3>📊 Scoring Breakdown</h3>
+                    <p>This recommendation was based on a weighted scoring algorithm that analyzed your answers:</p>
+                    <div class="scoring-breakdown" id="scoring-details"></div>
+                </div>
+
+                <div class="ml-explanation">
+                    <h5>🤖 Machine Learning Concept: Decision Trees</h5>
+                    <p id="ml-explanation-text"></p>
+                </div>
+
+                <div class="result-card">
+                    <h3>🔄 Alternative Recommendations</h3>
+                    <div id="secondary-recommendations"></div>
+                </div>
+
+                <div class="result-card">
+                    <h3>❌ Not Recommended</h3>
+                    <div id="not-recommended"></div>
+                </div>
+
+                <div class="what-if">
+                    <h5>💭 What If Scenarios</h5>
+                    <div id="what-if-scenarios"></div>
+                </div>
+
+                <div class="nav-buttons">
+                    <button class="btn btn-secondary" onclick="restart()">🔄 Start Over</button>
+                    <button class="btn btn-primary" onclick="window.print()">🖨️ Print Results</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // State management
+        let currentQuestion = 1;
+        let answers = {
+            q1: null,
+            q2: null,
+            q3: null,
+            q4: null,
+            q5: null
+        };
+
+        // Question 2 options (dynamic based on Q1)
+        const q2Options = {
+            learning: [
+                { value: 'new-feature', title: '🆕 Building Something New', desc: 'Starting a new project or feature from scratch.' },
+                { value: 'debugging', title: '🐛 Debugging Code', desc: 'Fixing bugs or understanding errors.' },
+                { value: 'understanding', title: '🔍 Understanding Concepts', desc: 'Learning how programming concepts work.' },
+                { value: 'practice', title: '💪 Practice Exercises', desc: 'Working through coding exercises and challenges.' }
+            ],
+            portfolio: [
+                { value: 'architecture', title: '🏗️ Architecture Design', desc: 'Planning the overall structure and design patterns.' },
+                { value: 'implementation', title: '⚙️ Implementation', desc: 'Writing the core functionality.' },
+                { value: 'optimization', title: '🚀 Optimization', desc: 'Improving performance and code quality.' },
+                { value: 'documentation', title: '📝 Documentation', desc: 'Writing README, comments, and guides.' }
+            ],
+            interview: [
+                { value: 'algorithm-practice', title: '🧮 Algorithm Practice', desc: 'Working on LeetCode-style problems.' },
+                { value: 'tool-familiarity', title: '🔧 Tool Familiarity', desc: 'Learning industry-standard tools and workflows.' },
+                { value: 'code-review', title: '👀 Mock Code Review', desc: 'Practicing explaining and defending code choices.' }
+            ],
+            assignment: [
+                { value: 'understanding-requirements', title: '📋 Understanding Requirements', desc: 'Breaking down assignment instructions.' },
+                { value: 'implementation', title: '⚙️ Implementation', desc: 'Writing the code for the assignment.' },
+                { value: 'debugging', title: '🐛 Debugging', desc: 'Fixing errors and testing.' },
+                { value: 'learning-concept', title: '📚 Learning Required Concept', desc: 'Understanding a concept needed for the assignment.' }
+            ],
+            production: [
+                { value: 'architecture', title: '🏗️ System Architecture', desc: 'Designing scalable, maintainable systems.' },
+                { value: 'feature-implementation', title: '🆕 Feature Implementation', desc: 'Building new features for production.' },
+                { value: 'refactoring', title: '🔄 Refactoring', desc: 'Improving existing code structure.' },
+                { value: 'debugging-production', title: '🚨 Debugging Production Issues', desc: 'Fixing critical bugs in live systems.' }
+            ]
+        };
+
+        // Scoring weights (Machine Learning-style feature weights)
+        const weights = {
+            copilot: { learning: 8, ide: 10, speed: 10, beginner: 7, intermediate: 8, 'single-function': 9, 'single-file': 9 },
+            chatgpt: { learning: 10, understanding: 10, debugging: 7, beginner: 10, intermediate: 8, 'learning-concept': 10 },
+            claude: { architecture: 10, 'entire-project': 10, accuracy: 10, advanced: 9, refactoring: 10, production: 8 },
+            gemini: { 'external-deps': 10, research: 9, collaboration: 7, 'related-files': 8, 'entire-project': 8 }
+        };
+
+        // Select option
+        function selectOption(question, value) {
+            // Remove selection from siblings
+            const buttons = document.querySelectorAll(`#q${question} .option-btn`);
+            buttons.forEach(btn => btn.classList.remove('selected'));
+
+            // Add selection to clicked button
+            event.target.closest('.option-btn').classList.add('selected');
+
+            // Save answer
+            answers[`q${question}`] = value;
+
+            // Enable next button
+            document.getElementById('next-btn').disabled = false;
+
+            // Dynamically populate Q2 if this is Q1
+            if (question === 1) {
+                populateQ2(value);
+            }
+        }
+
+        // Populate Q2 based on Q1 answer
+        function populateQ2(goal) {
+            const q2OptionsContainer = document.getElementById('q2-options');
+            q2OptionsContainer.innerHTML = '';
+
+            q2Options[goal].forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.setAttribute('data-value', opt.value);
+                btn.onclick = () => selectOption(2, opt.value);
+                btn.innerHTML = `<h4>${opt.title}</h4><p>${opt.desc}</p>`;
+                q2OptionsContainer.appendChild(btn);
+            });
+        }
+
+        // Navigate to next question
+        function goNext() {
+            if (currentQuestion < 5) {
+                // Hide current question
+                document.getElementById(`q${currentQuestion}`).style.display = 'none';
+
+                // Update progress
+                document.getElementById(`step${currentQuestion}`).classList.remove('active');
+                document.getElementById(`step${currentQuestion}`).classList.add('completed');
+
+                currentQuestion++;
+
+                // Show next question
+                document.getElementById(`q${currentQuestion}`).style.display = 'block';
+                document.getElementById(`step${currentQuestion}`).classList.add('active');
+
+                // Update buttons
+                document.getElementById('back-btn').style.display = 'block';
+                document.getElementById('next-btn').disabled = true;
+
+                if (currentQuestion === 5) {
+                    document.getElementById('next-btn').textContent = 'Get Recommendation 🎯';
+                }
+            } else {
+                // Show results
+                calculateRecommendation();
+            }
+        }
+
+        // Navigate back
+        function goBack() {
+            if (currentQuestion > 1) {
+                // Hide current question
+                document.getElementById(`q${currentQuestion}`).style.display = 'none';
+                document.getElementById(`step${currentQuestion}`).classList.remove('active');
+
+                currentQuestion--;
+
+                // Show previous question
+                document.getElementById(`q${currentQuestion}`).style.display = 'block';
+                document.getElementById(`step${currentQuestion}`).classList.remove('completed');
+                document.getElementById(`step${currentQuestion}`).classList.add('active');
+
+                // Update buttons
+                if (currentQuestion === 1) {
+                    document.getElementById('back-btn').style.display = 'none';
+                }
+
+                document.getElementById('next-btn').disabled = false;
+                document.getElementById('next-btn').textContent = 'Next →';
+            }
+        }
+
+        // Calculate recommendation
+        function calculateRecommendation() {
+            const scores = {
+                copilot: 0,
+                chatgpt: 0,
+                claude: 0,
+                gemini: 0
+            };
+
+            // Calculate scores based on answers
+            Object.values(answers).forEach(answer => {
+                if (answer) {
+                    Object.keys(scores).forEach(tool => {
+                        if (weights[tool][answer]) {
+                            scores[tool] += weights[tool][answer];
+                        }
+                    });
+                }
+            });
+
+            // Add baseline scores
+            scores.copilot += 5; // Always useful for IDE work
+            scores.chatgpt += 3; // Always good for learning
+            scores.claude += 2;
+            scores.gemini += 2;
+
+            // Sort tools by score
+            const ranked = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+
+            // Hide questions, show results
+            document.getElementById('questions-section').style.display = 'none';
+            document.getElementById('results').classList.add('active');
+            document.getElementById('back-btn').style.display = 'none';
+            document.getElementById('next-btn').style.display = 'none';
+
+            // Generate recommendations
+            displayResults(ranked, scores);
+        }
+
+        // Display results
+        function displayResults(ranked, scores) {
+            const tools = {
+                copilot: {
+                    name: 'GitHub Copilot',
+                    icon: '🤖',
+                    free: true,
+                    reason: 'IDE-integrated, real-time suggestions, low learning curve',
+                    setup: ['Sign up for GitHub Student Developer Pack', 'Install Copilot extension in VS Code', 'Sign in and start coding']
+                },
+                chatgpt: {
+                    name: 'ChatGPT',
+                    icon: '💬',
+                    free: true,
+                    reason: 'Excellent explanations, broad knowledge, multimodal',
+                    setup: ['Go to chat.openai.com', 'Create free account', 'Start asking questions']
+                },
+                claude: {
+                    name: 'Claude',
+                    icon: '🧠',
+                    free: true,
+                    reason: '200K context window, deep analysis, architecture expertise',
+                    setup: ['Go to claude.ai', 'Create free account', 'Upload your project files']
+                },
+                gemini: {
+                    name: 'Google Gemini',
+                    icon: '💎',
+                    free: true,
+                    reason: '1M token context, Deep Research, web search',
+                    setup: ['Go to gemini.google.com', 'Sign in with Google account', 'Start researching']
+                }
+            };
+
+            // Primary recommendation
+            const primary = ranked[0];
+            const primaryTool = tools[primary[0]];
+            document.getElementById('primary-recommendation').innerHTML = `
+                <div class="tool-recommendation">
+                    <h4>${primaryTool.icon} ${primaryTool.name} <span class="badge badge-primary">PRIMARY</span> <span class="badge badge-free">FREE</span></h4>
+                    <p><strong>Why this tool?</strong> ${primaryTool.reason}</p>
+                    <div class="action-steps">
+                        <h5>🚀 How to Get Started:</h5>
+                        <ol>
+                            ${primaryTool.setup.map(step => `<li>${step}</li>`).join('')}
+                        </ol>
+                    </div>
+                </div>
+            `;
+
+            // Scoring breakdown
+            const maxScore = Math.max(...Object.values(scores));
+            document.getElementById('scoring-details').innerHTML = Object.entries(scores)
+                .sort((a, b) => b[1] - a[1])
+                .map(([tool, score]) => `
+                    <div class="score-item">
+                        <div class="score-item-header">
+                            <span>${tools[tool].icon} ${tools[tool].name}</span>
+                            <span>${score} points</span>
+                        </div>
+                        <div class="score-bar">
+                            <div class="score-fill" style="width: ${(score / maxScore) * 100}%;">${Math.round((score / maxScore) * 100)}%</div>
+                        </div>
+                    </div>
+                `).join('');
+
+            // ML Explanation
+            const factors = [];
+            if (answers.q1 === 'learning') factors.push('learning focus');
+            if (answers.q3 === 'entire-project') factors.push('large context needs');
+            if (answers.q4 === 'speed') factors.push('speed priority');
+            if (answers.q4 === 'ide-integration') factors.push('IDE integration requirement');
+            if (answers.q5 === 'beginner') factors.push('beginner-friendly interface');
+
+            document.getElementById('ml-explanation-text').innerHTML = `
+                This recommendation was generated using a <strong>weighted scoring algorithm</strong>, where each of your answers contributed points to different tools based on their strengths.
+                The algorithm prioritized: <strong>${factors.join(', ')}</strong>.
+                In real machine learning, these weights would be learned from thousands of user interactions, but this simplified model demonstrates the same decision-making logic.
+            `;
+
+            // Secondary recommendations
+            const secondary = ranked.slice(1, 3);
+            document.getElementById('secondary-recommendations').innerHTML = secondary.map(([tool, score]) => {
+                const t = tools[tool];
+                return `
+                    <div class="tool-recommendation secondary">
+                        <h4>${t.icon} ${t.name} <span class="badge badge-secondary">ALTERNATIVE</span> <span class="badge badge-free">FREE</span></h4>
+                        <p><strong>Score:</strong> ${score} points (${Math.round((score / maxScore) * 100)}% match)</p>
+                        <p><strong>Use this when:</strong> ${getAlternativeUseCase(tool, answers)}</p>
+                    </div>
+                `;
+            }).join('');
+
+            // Not recommended
+            const notRecommended = ranked[3];
+            const nrTool = tools[notRecommended[0]];
+            document.getElementById('not-recommended').innerHTML = `
+                <div class="tool-recommendation not-recommended">
+                    <h4>${nrTool.icon} ${nrTool.name} <span class="badge badge-danger">NOT RECOMMENDED</span></h4>
+                    <p><strong>Score:</strong> ${notRecommended[1]} points (${Math.round((notRecommended[1] / maxScore) * 100)}% match)</p>
+                    <p><strong>Why not?</strong> ${getNotRecommendedReason(notRecommended[0], answers)}</p>
+                </div>
+            `;
+
+            // What-if scenarios
+            document.getElementById('what-if-scenarios').innerHTML = `
+                <p>Try changing your answers to see different recommendations:</p>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>If you chose <strong>"Entire Project"</strong> instead of "${answers.q3}", <strong>Claude</strong> would score higher (200K context).</li>
+                    <li>If you chose <strong>"Speed"</strong> as your constraint, <strong>Copilot</strong> would be the clear winner (instant suggestions).</li>
+                    <li>If you chose <strong>"Learning Depth"</strong>, <strong>ChatGPT</strong> or <strong>Claude</strong> would rank higher (better explanations).</li>
+                </ul>
+            `;
+        }
+
+        // Helper functions
+        function getAlternativeUseCase(tool, answers) {
+            const cases = {
+                copilot: 'You need real-time coding assistance in your IDE',
+                chatgpt: 'You get stuck and need a concept explained',
+                claude: 'You need to analyze or refactor your entire project',
+                gemini: 'You need to research documentation or external resources'
+            };
+            return cases[tool] || 'You need a different approach';
+        }
+
+        function getNotRecommendedReason(tool, answers) {
+            const reasons = {
+                copilot: 'You need deeper analysis or explanations that go beyond code completion',
+                chatgpt: 'You need IDE integration or massive context windows',
+                claude: 'You\'re working on small, single-file tasks where Claude\'s large context isn\'t needed',
+                gemini: 'Your task doesn\'t require research or extremely large context'
+            };
+            return reasons[tool] || 'It doesn\'t match your current needs as well as other options';
+        }
+
+        // Restart quiz
+        function restart() {
+            currentQuestion = 1;
+            answers = { q1: null, q2: null, q3: null, q4: null, q5: null };
+
+            // Reset UI
+            document.getElementById('questions-section').style.display = 'block';
+            document.getElementById('results').classList.remove('active');
+            document.getElementById('q1').style.display = 'block';
+            for (let i = 2; i <= 5; i++) {
+                document.getElementById(`q${i}`).style.display = 'none';
+            }
+
+            // Reset progress
+            for (let i = 1; i <= 5; i++) {
+                document.getElementById(`step${i}`).classList.remove('active', 'completed');
+            }
+            document.getElementById('step1').classList.add('active');
+
+            // Reset buttons
+            document.querySelectorAll('.option-btn').forEach(btn => btn.classList.remove('selected'));
+            document.getElementById('back-btn').style.display = 'none';
+            document.getElementById('next-btn').style.display = 'block';
+            document.getElementById('next-btn').textContent = 'Next →';
+            document.getElementById('next-btn').disabled = true;
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Dark mode
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            localStorage.setItem('darkMode', isDark);
+            document.querySelector('.dark-mode-toggle').textContent = isDark ? '☀️ Light Mode' : '🌓 Dark Mode';
+        }
+
+        // Load dark mode preference
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedMode = localStorage.getItem('darkMode');
+            if (savedMode === 'true') {
+                document.body.classList.add('dark-mode');
+                document.querySelector('.dark-mode-toggle').textContent = '☀️ Light Mode';
+            }
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'd' && e.ctrlKey) {
+                e.preventDefault();
+                toggleDarkMode();
+            }
+        });
+    </script>
+</body>
+</html>
