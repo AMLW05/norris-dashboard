@@ -1,0 +1,43 @@
+{
+  "last_updated": "2026-01-28",
+  "tools": {
+    "copilot": {
+      "student_price": 0,
+      "regular_price": 10,
+      "models": ["GPT-4o Turbo"],
+      "context_tokens": 8000,
+      "student_access": "GitHub Student Developer Pack",
+      "free_tier": false,
+      "free_model": null
+    },
+    "chatgpt": {
+      "free_tier": true,
+      "free_model": "GPT-4o mini",
+      "plus_price": 20,
+      "plus_model": "GPT-4o, GPT-5.2, o1",
+      "context_tokens": 128000
+    },
+    "claude": {
+      "free_tier": true,
+      "free_model": "Claude 3.5 Sonnet",
+      "pro_price": 20,
+      "pro_model": "Claude 3.5 Opus",
+      "context_tokens": 200000
+    },
+    "gemini": {
+      "free_tier": true,
+      "free_model": "Gemini 2.5 Flash",
+      "pro_price": 20,
+      "pro_model": "Gemini 2.5 Pro",
+      "context_tokens": 1000000
+    }
+  },
+  "professional_cost": {
+    "monthly": 70,
+    "annual": 820
+  },
+  "student_savings": {
+    "monthly": 70,
+    "annual": 820
+  }
+}

@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual AI Tool Coach | CIT</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #667eea;
+            --primary-dark: #764ba2;
+            --navy: #1a1a2e;
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --danger: #d63031;
+            --info: #3498db;
+            --gray-light: #f5f7fa;
+            --text-dark: #2c3e50;
+            --border: #e1e8ed;
+            --coach-bg: #e3f2fd;
+            --user-bg: #f0e6ff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+
+        body.dark-mode {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        }
+
+        body.dark-mode .container { background: #2c3e50; color: #ecf0f1; }
+        body.dark-mode .header { background: linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 100%); }
+        body.dark-mode .chat-container { background: #34495e; }
+        body.dark-mode .coach-message { background: #1e2a38; color: #ecf0f1; }
+        body.dark-mode .user-message { background: #4a5568; color: #ecf0f1; }
+        body.dark-mode .input-area { background: #2c3e50; border-top-color: #1e2a38; }
+        body.dark-mode .input-box { background: #1e2a38; border-color: #4a5568; color: #ecf0f1; }
+        body.dark-mode .chip { background: #1e2a38; color: #3498db; }
+        body.dark-mode .quick-action-btn { background: #1e2a38; color: #ecf0f1; }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 90vh;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--navy) 0%, #16213e 100%);
+            color: white;
+            padding: 20px 30px;
+            position: relative;
+        }
+
+        .header h1 { font-size: 1.8em; margin-bottom: 5px; }
+        .header p { font-size: 0.95em; opacity: 0.9; }
+
+        .dark-mode-toggle {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.3s;
+        }
+
+        .dark-mode-toggle:hover { background: rgba(255,255,255,0.3); }
+
+        .chat-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            background: var(--gray-light);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .message {
+            display: flex;
+            gap: 12px;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.coach { align-self: flex-start; }
+        .message.user { align-self: flex-end; flex-direction: row-reverse; }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+            flex-shrink: 0;
+        }
+
+        .user .avatar { background: var(--success); }
+
+        .message-content {
+            max-width: 70%;
+            padding: 12px 16px;
+            border-radius: 16px;
+            line-height: 1.5;
+        }
+
+        .coach-message {
+            background: var(--coach-bg);
+            border-bottom-left-radius: 4px;
+        }
+
+        .user-message {
+            background: var(--user-bg);
+            border-bottom-right-radius: 4px;
+            text-align: right;
+        }
+
+        .message-name {
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-bottom: 4px;
+            opacity: 0.8;
+        }
+
+        .message-text {
+            font-size: 0.95em;
+        }
+
+        .message-text strong {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .suggestion-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .chip {
+            background: white;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .chip:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .quick-actions {
+            display: flex;
+            gap: 10px;
+            padding: 15px 20px;
+            background: white;
+            border-bottom: 1px solid var(--border);
+            overflow-x: auto;
+        }
+
+        body.dark-mode .quick-actions { background: #2c3e50; border-bottom-color: #1e2a38; }
+
+        .quick-action-btn {
+            background: var(--gray-light);
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: 600;
+            white-space: nowrap;
+            transition: all 0.3s;
+        }
+
+        .quick-action-btn:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .input-area {
+            padding: 20px;
+            background: white;
+            border-top: 2px solid var(--border);
+        }
+
+        .input-form {
+            display: flex;
+            gap: 10px;
+        }
+
+        .input-box {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid var(--border);
+            border-radius: 24px;
+            font-size: 0.95em;
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+
+        .input-box:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .send-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 24px;
+            cursor: pointer;
+            font-size: 0.95em;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .send-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .send-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .welcome-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .welcome-screen h2 {
+            color: var(--primary);
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+
+        .welcome-screen p {
+            font-size: 1.1em;
+            color: var(--text-dark);
+            margin-bottom: 30px;
+            max-width: 500px;
+        }
+
+        body.dark-mode .welcome-screen p { color: #ecf0f1; }
+
+        .sample-questions {
+            display: grid;
+            gap: 10px;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .sample-question {
+            background: white;
+            border: 2px solid var(--primary);
+            color: var(--text-dark);
+            padding: 15px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: left;
+        }
+
+        body.dark-mode .sample-question { background: #34495e; color: #ecf0f1; }
+
+        .sample-question:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateX(10px);
+        }
+
+        .sample-question strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .typing-indicator {
+            display: flex;
+            gap: 4px;
+            padding: 10px;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--primary);
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); opacity: 0.7; }
+            30% { transform: translateY(-10px); opacity: 1; }
+        }
+
+        .back-link {
+            display: inline-block;
+            margin: 15px 20px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        body.dark-mode .back-link { color: #3498db; }
+
+        .back-link:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .container { height: 95vh; }
+            .header h1 { font-size: 1.4em; }
+            .message-content { max-width: 85%; }
+            .quick-actions { flex-wrap: nowrap; }
+            .welcome-screen { padding: 20px; }
+            .welcome-screen h2 { font-size: 1.5em; }
+            .input-form { flex-direction: column; }
+            .send-btn { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <button class="dark-mode-toggle" onclick="toggleDarkMode()" aria-label="Toggle dark mode">🌓 Dark Mode</button>
+            <h1>🎓 Virtual AI Tool Coach</h1>
+            <p>Get personalized recommendations for your coding needs</p>
+        </header>
+
+        <a href="index.html" class="back-link">← Back to AI Tools Guide</a>
+
+        <div class="quick-actions">
+            <button class="quick-action-btn" onclick="quickAction('newTopic')">🆕 Start New Topic</button>
+            <button class="quick-action-btn" onclick="quickAction('recommend')">🎯 Get Recommendation</button>
+            <button class="quick-action-btn" onclick="quickAction('explain')">💡 Explain a Tool</button>
+            <button class="quick-action-btn" onclick="quickAction('clear')">🗑️ Clear History</button>
+        </div>
+
+        <div class="chat-container" id="chatContainer">
+            <div class="welcome-screen" id="welcomeScreen">
+                <h2>👋 Hi! I'm your AI Tool Coach</h2>
+                <p>I'm here to help you choose the right AI tool for your programming tasks. Ask me anything about GitHub Copilot, ChatGPT, Claude, or Google Gemini!</p>
+
+                <div class="sample-questions">
+                    <div class="sample-question" onclick="askQuestion('Which tool should I use for debugging my Java code?')">
+                        <strong>🐛 Debugging Help</strong>
+                        Which tool should I use for debugging my Java code?
+                    </div>
+                    <div class="sample-question" onclick="askQuestion('I need to understand inheritance in Java. Which tool is best?')">
+                        <strong>📚 Learning Concepts</strong>
+                        I need to understand inheritance in Java. Which tool is best?
+                    </div>
+                    <div class="sample-question" onclick="askQuestion('What tool should I use for a large project with many files?')">
+                        <strong>🏗️ Project Architecture</strong>
+                        What tool should I use for a large project with many files?
+                    </div>
+                    <div class="sample-question" onclick="askQuestion('I want real-time coding suggestions. Which tool?')">
+                        <strong>⚡ Real-time Coding</strong>
+                        I want real-time coding suggestions. Which tool?
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="input-area">
+            <form class="input-form" onsubmit="sendMessage(event)">
+                <input
+                    type="text"
+                    class="input-box"
+                    id="messageInput"
+                    placeholder="Ask me about AI tools... (e.g., 'Which tool for debugging?')"
+                    autocomplete="off"
+                >
+                <button type="submit" class="send-btn" id="sendBtn">Send 📤</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // State management
+        let conversationHistory = [];
+        let userName = null;
+        let isTyping = false;
+
+        // Load conversation history from localStorage
+        function loadHistory() {
+            const saved = localStorage.getItem('aiCoachHistory');
+            if (saved) {
+                conversationHistory = JSON.parse(saved);
+                userName = localStorage.getItem('aiCoachUserName');
+                renderHistory();
+            }
+        }
+
+        // Save conversation to localStorage
+        function saveHistory() {
+            localStorage.setItem('aiCoachHistory', JSON.stringify(conversationHistory));
+            if (userName) {
+                localStorage.setItem('aiCoachUserName', userName);
+            }
+        }
+
+        // Render conversation history
+        function renderHistory() {
+            const container = document.getElementById('chatContainer');
+            const welcome = document.getElementById('welcomeScreen');
+
+            if (conversationHistory.length > 0) {
+                welcome.style.display = 'none';
+            }
+
+            conversationHistory.forEach(msg => {
+                addMessageToDOM(msg.role, msg.content, false);
+            });
+        }
+
+        // Add message to DOM
+        function addMessageToDOM(role, content, animate = true) {
+            const container = document.getElementById('chatContainer');
+            const welcome = document.getElementById('welcomeScreen');
+            welcome.style.display = 'none';
+
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${role}`;
+            if (!animate) messageDiv.style.animation = 'none';
+
+            const avatar = document.createElement('div');
+            avatar.className = 'avatar';
+            avatar.textContent = role === 'coach' ? '🎓' : '👤';
+
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'message-content ' + (role === 'coach' ? 'coach-message' : 'user-message');
+
+            const nameDiv = document.createElement('div');
+            nameDiv.className = 'message-name';
+            nameDiv.textContent = role === 'coach' ? 'AI Coach' : (userName || 'You');
+
+            const textDiv = document.createElement('div');
+            textDiv.className = 'message-text';
+            textDiv.innerHTML = content;
+
+            contentDiv.appendChild(nameDiv);
+            contentDiv.appendChild(textDiv);
+            messageDiv.appendChild(avatar);
+            messageDiv.appendChild(contentDiv);
+
+            container.appendChild(messageDiv);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        // Show typing indicator
+        function showTyping() {
+            const container = document.getElementById('chatContainer');
+            const typingDiv = document.createElement('div');
+            typingDiv.id = 'typingIndicator';
+            typingDiv.className = 'message coach';
+            typingDiv.innerHTML = `
+                <div class="avatar">🎓</div>
+                <div class="message-content coach-message">
+                    <div class="typing-indicator">
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                    </div>
+                </div>
+            `;
+            container.appendChild(typingDiv);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        // Hide typing indicator
+        function hideTyping() {
+            const typing = document.getElementById('typingIndicator');
+            if (typing) typing.remove();
+        }
+
+        // Decision tree logic for bot responses
+        function getBotResponse(userMessage) {
+            const msg = userMessage.toLowerCase();
+
+            // Check for name introduction
+            if (!userName && (msg.includes('my name is') || msg.includes("i'm ") || msg.includes("i am "))) {
+                const nameMatch = msg.match(/(?:my name is|i'm|i am)\s+(\w+)/i);
+                if (nameMatch) {
+                    userName = nameMatch[1].charAt(0).toUpperCase() + nameMatch[1].slice(1);
+                    return `Nice to meet you, <strong>${userName}</strong>! 🎉 I'm excited to help you choose the perfect AI tool for your coding journey. What would you like to work on today?`;
+                }
+            }
+
+            // Debugging queries
+            if (msg.includes('debug') || msg.includes('fix') || msg.includes('error') || msg.includes('bug')) {
+                if (msg.includes('complex') || msg.includes('large') || msg.includes('multiple')) {
+                    return `For <strong>complex debugging</strong>, I recommend <strong>Claude (FREE)</strong>! Here's why:<br><br>
+                        ✅ <strong>200K context window</strong> - can read your entire project at once<br>
+                        ✅ <strong>Deep analysis</strong> - understands complex code relationships<br>
+                        ✅ <strong>Thoughtful explanations</strong> - helps you learn from mistakes<br><br>
+                        Upload your files to <a href="https://claude.ai" target="_blank">claude.ai</a> and ask for a comprehensive review!<br><br>
+                        <div class="suggestion-chips">
+                            <span class="chip" onclick="askQuestion('How do I upload files to Claude?')">How to use Claude?</span>
+                            <span class="chip" onclick="askQuestion('What about simple bugs?')">Simple bugs?</span>
+                        </div>`;
+                } else {
+                    return `For <strong>debugging</strong>, I have two great options:<br><br>
+                        🥇 <strong>GitHub Copilot (FREE)</strong> - Best for quick, inline fixes while coding<br>
+                        🥈 <strong>ChatGPT (FREE)</strong> - Best for understanding error messages and logic issues<br><br>
+                        What type of issue are you facing?<br>
+                        <div class="suggestion-chips">
+                            <span class="chip" onclick="askQuestion('Syntax error')">Syntax error</span>
+                            <span class="chip" onclick="askQuestion('Logic error')">Logic error</span>
+                            <span class="chip" onclick="askQuestion('Complex bug')">Complex bug</span>
+                        </div>`;
+                }
+            }
+
+            // Real-time coding
+            if (msg.includes('real-time') || msg.includes('while coding') || msg.includes('as i type') || msg.includes('autocomplete')) {
+                return `For <strong>real-time coding assistance</strong>, the clear winner is <strong>GitHub Copilot (FREE with Student Pack)</strong>! 🏆<br><br>
+                    ✅ <strong>IDE-integrated</strong> - works right in VS Code<br>
+                    ✅ <strong>Instant suggestions</strong> - appears as you type<br>
+                    ✅ <strong>Autocomplete style</strong> - low learning curve<br>
+                    ✅ <strong>100% FREE</strong> for FTCC students with GitHub Student Developer Pack<br><br>
+                    Get it at <a href="https://education.github.com/pack" target="_blank">education.github.com/pack</a><br><br>
+                    <div class="suggestion-chips">
+                        <span class="chip" onclick="askQuestion('How do I set up Copilot?')">Setup guide</span>
+                        <span class="chip" onclick="askQuestion('Other tools?')">Other options</span>
+                    </div>`;
+            }
+
+            // Learning concepts
+            if (msg.includes('learn') || msg.includes('understand') || msg.includes('explain') || msg.includes('concept')) {
+                return `For <strong>learning programming concepts</strong>, I recommend <strong>ChatGPT (FREE)</strong>! 🎓<br><br>
+                    ✅ <strong>Excellent explanations</strong> - breaks down complex topics<br>
+                    ✅ <strong>Interactive</strong> - ask follow-up questions<br>
+                    ✅ <strong>Multimodal</strong> - can view images and diagrams<br>
+                    ✅ <strong>Patient tutor</strong> - explains at your pace<br><br>
+                    Visit <a href="https://chat.openai.com" target="_blank">chat.openai.com</a> and start learning!<br><br>
+                    <div class="suggestion-chips">
+                        <span class="chip" onclick="askQuestion('What can I ask ChatGPT?')">Example questions</span>
+                        <span class="chip" onclick="askQuestion('Alternatives to ChatGPT?')">Alternatives</span>
+                    </div>`;
+            }
+
+            // Architecture and design
+            if (msg.includes('architecture') || msg.includes('design pattern') || msg.includes('solid') || msg.includes('class structure') || msg.includes('oop')) {
+                return `For <strong>architecture and design decisions</strong>, <strong>Claude (FREE)</strong> is your best friend! 🏗️<br><br>
+                    ✅ <strong>Architectural thinking</strong> - excels at design patterns<br>
+                    ✅ <strong>200K context</strong> - analyzes entire project structure<br>
+                    ✅ <strong>SOLID principles</strong> - guides you to clean code<br>
+                    ✅ <strong>CSC-114 focused</strong> - perfect for advanced OOP<br><br>
+                    This is THE tool for CSC-114 projects!<br><br>
+                    <div class="suggestion-chips">
+                        <span class="chip" onclick="askQuestion('How to use Claude for CSC-114?')">CSC-114 workflow</span>
+                        <span class="chip" onclick="askQuestion('Design pattern examples?')">Design patterns</span>
+                    </div>`;
+            }
+
+            // Large projects
+            if (msg.includes('large project') || msg.includes('many files') || msg.includes('entire codebase') || msg.includes('whole project')) {
+                return `For <strong>large projects with many files</strong>, you have two excellent options:<br><br>
+                    🥇 <strong>Claude (FREE)</strong> - 200K tokens, reads ~400 pages of code<br>
+                    🥈 <strong>Google Gemini (FREE)</strong> - 1M tokens, reads ~1500 pages!<br><br>
+                    <strong>Choose Claude if:</strong> You need deep analysis and refactoring<br>
+                    <strong>Choose Gemini if:</strong> You're analyzing massive codebases or doing research<br><br>
+                    <div class="suggestion-chips">
+                        <span class="chip" onclick="askQuestion('Tell me more about Claude')">Claude details</span>
+                        <span class="chip" onclick="askQuestion('Tell me more about Gemini')">Gemini details</span>
+                    </div>`;
+            }
+
+            // Research
+            if (msg.includes('research') || msg.includes('documentation') || msg.includes('web search')) {
+                return `For <strong>research-heavy projects</strong>, <strong>Google Gemini (FREE)</strong> is perfect! 🔍<br><br>
+                    ✅ <strong>1M token context</strong> - reads entire documentation sets<br>
+                    ✅ <strong>Deep Research mode</strong> - compiles info from multiple sources<br>
+                    ✅ <strong>Web search</strong> - accesses current information<br>
+                    ✅ <strong>Multimodal</strong> - handles images, videos, audio<br><br>
+                    Visit <a href="https://gemini.google.com" target="_blank">gemini.google.com</a> to start!<br><br>
+                    <div class="suggestion-chips">
+                        <span class="chip" onclick="askQuestion('What is Deep Research?')">Deep Research</span>
+                        <span class="chip" onclick="askQuestion('Other tools?')">Other options</span>
+                    </div>`;
+            }
+
+            // CSC-113 specific
+            if (msg.includes('csc-113') || msg.includes('csc 113') || msg.includes('intro to programming')) {
+                return `For <strong>CSC-113 (Intro to Programming)</strong>, here's my recommended setup:<br><br>
+                    🥇 <strong>Primary:</strong> GitHub Copilot (FREE) - Daily coding companion<br>
+                    🥈 <strong>Secondary:</strong> ChatGPT (FREE) - When you're stuck or confused<br>
+                    🥉 <strong>Tertiary:</strong> Claude (FREE) - Complex debugging only<br><br>
+                    <strong>Key tip:</strong> Focus on UNDERSTANDING every line of code. Don't just copy suggestions!<br><br>
+                    <div class="suggestion-chips">
+                        <span class="chip" onclick="askQuestion('CSC-113 workflow example?')">Example workflow</span>
+                        <span class="chip" onclick="askQuestion('Academic integrity tips?')">Ethics guide</span>
+                    </div>`;
+            }
+
+            // CSC-114 specific
+            if (msg.includes('csc-114') || msg.includes('csc 114') || msg.includes('object-oriented') || msg.includes('advanced java')) {
+                return `For <strong>CSC-114 (Object-Oriented Programming)</strong>, here's the winning combo:<br><br>
+                    🥇 <strong>Primary:</strong> Claude (FREE) - Architecture and design patterns<br>
+                    🥈 <strong>Secondary:</strong> Copilot (FREE) - Implementation speed<br>
+                    🥉 <strong>Tertiary:</strong> ChatGPT (FREE) - Learning OOP concepts<br><br>
+                    <strong>CSC-114 is about DESIGN thinking!</strong> Use Claude to validate your architecture before implementing.<br><br>
+                    <div class="suggestion-chips">
+                        <span class="chip" onclick="askQuestion('CSC-114 workflow example?')">Example workflow</span>
+                        <span class="chip" onclick="askQuestion('Design patterns help?')">Design patterns</span>
+                    </div>`;
+            }
+
+            // Tool comparison
+            if (msg.includes('compare') || msg.includes('difference') || msg.includes('vs') || msg.includes('versus')) {
+                return `Great question! Here's a quick comparison:<br><br>
+                    <strong>GitHub Copilot:</strong> Real-time IDE integration, best for coding speed<br>
+                    <strong>ChatGPT:</strong> Conversational learning, best for explanations<br>
+                    <strong>Claude:</strong> Deep analysis, best for architecture (200K context)<br>
+                    <strong>Google Gemini:</strong> Research powerhouse, best for massive projects (1M context)<br><br>
+                    What specific task are you trying to accomplish?<br><br>
+                    <div class="suggestion-chips">
+                        <span class="chip" onclick="askQuestion('I need to code quickly')">Fast coding</span>
+                        <span class="chip" onclick="askQuestion('I need to learn')">Learning</span>
+                        <span class="chip" onclick="askQuestion('I need architecture help')">Architecture</span>
+                    </div>`;
+            }
+
+            // Cost/pricing
+            if (msg.includes('cost') || msg.includes('price') || msg.includes('free') || msg.includes('pay')) {
+                return `Great news! <strong>All four tools have FREE tiers perfect for students!</strong> 💰<br><br>
+                    ✅ <strong>GitHub Copilot:</strong> 100% FREE with Student Pack<br>
+                    ✅ <strong>ChatGPT:</strong> FREE tier (GPT-4o mini)<br>
+                    ✅ <strong>Claude:</strong> FREE tier (Claude 3.5 Sonnet)<br>
+                    ✅ <strong>Google Gemini:</strong> FREE tier (Gemini 2.5 Flash)<br><br>
+                    <strong>Total cost: $0!</strong> You're saving $820/year compared to professional developers!<br><br>
+                    <div class="suggestion-chips">
+                        <span class="chip" onclick="askQuestion('How to get Student Pack?')">Student Pack</span>
+                        <span class="chip" onclick="window.open('comparison-guide.html#cost', '_blank')">See cost details</span>
+                    </div>`;
+            }
+
+            // Greetings
+            if (msg.includes('hello') || msg.includes('hi ') || msg === 'hi' || msg.includes('hey')) {
+                const greeting = userName ? `Hello again, <strong>${userName}</strong>!` : 'Hello!';
+                return `${greeting} 👋 I'm your AI Tool Coach. I can help you choose the perfect AI tool for:<br><br>
+                    🐛 Debugging code<br>
+                    📚 Learning concepts<br>
+                    ⚡ Real-time coding<br>
+                    🏗️ Architecture decisions<br>
+                    🔍 Research projects<br><br>
+                    What would you like help with today?`;
+            }
+
+            // Default response with contextual follow-up
+            return `I'm here to help you choose the right AI tool! To give you the best recommendation, could you tell me more about:<br><br>
+                📝 <strong>What task are you working on?</strong> (debugging, learning, coding, etc.)<br>
+                💻 <strong>What course?</strong> (CSC-113 or CSC-114)<br>
+                🎯 <strong>What's your goal?</strong> (understand concepts, fix bugs, design architecture)<br><br>
+                Or try one of these:<br>
+                <div class="suggestion-chips">
+                    <span class="chip" onclick="askQuestion('Which tool for debugging?')">Debugging</span>
+                    <span class="chip" onclick="askQuestion('Which tool for learning?')">Learning</span>
+                    <span class="chip" onclick="askQuestion('Which tool for CSC-114?')">CSC-114</span>
+                    <span class="chip" onclick="askQuestion('Compare all tools')">Compare tools</span>
+                </div>`;
+        }
+
+        // Send message
+        async function sendMessage(event) {
+            if (event) event.preventDefault();
+
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+
+            if (!message || isTyping) return;
+
+            // Add user message
+            conversationHistory.push({ role: 'user', content: message });
+            addMessageToDOM('user', message);
+            saveHistory();
+            input.value = '';
+
+            // Show typing indicator
+            isTyping = true;
+            document.getElementById('sendBtn').disabled = true;
+            showTyping();
+
+            // Simulate thinking time (300-800ms for realism)
+            await new Promise(resolve => setTimeout(resolve, Math.random() * 500 + 300));
+
+            // Get bot response
+            const response = getBotResponse(message);
+            conversationHistory.push({ role: 'coach', content: response });
+
+            hideTyping();
+            addMessageToDOM('coach', response);
+            saveHistory();
+            isTyping = false;
+            document.getElementById('sendBtn').disabled = false;
+            input.focus();
+        }
+
+        // Ask predefined question
+        function askQuestion(question) {
+            document.getElementById('messageInput').value = question;
+            sendMessage();
+        }
+
+        // Quick actions
+        function quickAction(action) {
+            switch(action) {
+                case 'newTopic':
+                    askQuestion('I want to start a new topic. What can you help me with?');
+                    break;
+                case 'recommend':
+                    askQuestion('I need a tool recommendation. Can you ask me some questions?');
+                    break;
+                case 'explain':
+                    askQuestion('Can you explain the differences between all four tools?');
+                    break;
+                case 'clear':
+                    if (confirm('Are you sure you want to clear your conversation history?')) {
+                        conversationHistory = [];
+                        userName = null;
+                        localStorage.removeItem('aiCoachHistory');
+                        localStorage.removeItem('aiCoachUserName');
+                        location.reload();
+                    }
+                    break;
+            }
+        }
+
+        // Dark mode
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            localStorage.setItem('aiCoachDarkMode', isDark);
+            updateToggleButton();
+        }
+
+        function updateToggleButton() {
+            const btn = document.querySelector('.dark-mode-toggle');
+            const isDark = document.body.classList.contains('dark-mode');
+            btn.textContent = isDark ? '☀️ Light Mode' : '🌓 Dark Mode';
+        }
+
+        // Initialize
+        window.addEventListener('DOMContentLoaded', () => {
+            loadHistory();
+
+            // Load dark mode preference
+            const savedMode = localStorage.getItem('aiCoachDarkMode');
+            if (savedMode === 'true') {
+                document.body.classList.add('dark-mode');
+            }
+            updateToggleButton();
+
+            // Focus input
+            document.getElementById('messageInput').focus();
+        });
+
+        // Enter to send
+        document.getElementById('messageInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+</html>

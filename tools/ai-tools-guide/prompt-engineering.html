@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompt Engineering for AI Tools | CIT</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #667eea;
+            --primary-dark: #764ba2;
+            --navy: #1a1a2e;
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --danger: #d63031;
+            --info: #3498db;
+            --gray-light: #f5f7fa;
+            --text-dark: #2c3e50;
+            --border: #e1e8ed;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+
+        body.dark-mode {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        }
+
+        body.dark-mode .container { background: #2c3e50; color: #ecf0f1; }
+        body.dark-mode .header { background: linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 100%); }
+        body.dark-mode .section-card { background: #34495e; }
+        body.dark-mode .example-card { background: #2c3e50; border-color: #1e2a38; }
+        body.dark-mode .prompt-builder { background: #34495e; }
+        body.dark-mode .template-card { background: #2c3e50; border-color: #1e2a38; }
+        body.dark-mode .template-card:hover { background: #3d566e; }
+        body.dark-mode .quality-meter { background: #1e2a38; }
+        body.dark-mode textarea, body.dark-mode input { background: #2c3e50; color: #ecf0f1; border-color: #1e2a38; }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--navy) 0%, #16213e 100%);
+            color: white;
+            padding: 30px 40px;
+            position: relative;
+        }
+
+        .header h1 { font-size: 2em; margin-bottom: 8px; }
+        .header p { font-size: 1em; opacity: 0.9; }
+
+        .dark-mode-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.3s;
+        }
+
+        .dark-mode-toggle:hover { background: rgba(255,255,255,0.3); }
+
+        .content { padding: 40px; }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .back-link:hover { text-decoration: underline; }
+
+        .intro-section {
+            background: #e3f2fd;
+            border-left: 4px solid var(--info);
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+        }
+
+        body.dark-mode .intro-section { background: #34495e; }
+
+        .intro-section h2 {
+            color: var(--info);
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        .section-card {
+            background: var(--gray-light);
+            padding: 30px;
+            border-radius: 12px;
+            margin: 25px 0;
+        }
+
+        .section-card h3 {
+            color: var(--primary);
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .examples-grid {
+            display: grid;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .example-card {
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+        .example-bad {
+            background: #ffebee;
+            border-left: 5px solid var(--danger);
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .example-good {
+            background: #e8f5e9;
+            border-left: 5px solid var(--success);
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        body.dark-mode .example-bad { background: #5a2a2e; }
+        body.dark-mode .example-good { background: #2a4a2e; }
+
+        .example-bad h4 { color: var(--danger); margin-bottom: 8px; }
+        .example-good h4 { color: var(--success); margin-bottom: 8px; }
+
+        .example-bad pre, .example-good pre {
+            background: rgba(0,0,0,0.05);
+            padding: 12px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-size: 0.95em;
+            line-height: 1.5;
+            white-space: pre-wrap;
+        }
+
+        body.dark-mode .example-bad pre, body.dark-mode .example-good pre {
+            background: rgba(0,0,0,0.3);
+        }
+
+        .why-box {
+            background: #fff3cd;
+            border-left: 4px solid var(--warning);
+            padding: 12px;
+            margin-top: 10px;
+            border-radius: 6px;
+        }
+
+        body.dark-mode .why-box { background: #4a4020; }
+
+        .why-box strong { color: #d4a106; }
+        body.dark-mode .why-box strong { color: var(--warning); }
+
+        .prompt-builder {
+            background: var(--gray-light);
+            padding: 25px;
+            border-radius: 12px;
+            margin: 25px 0;
+        }
+
+        .prompt-builder h3 {
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .builder-field {
+            margin: 15px 0;
+        }
+
+        .builder-field label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-dark);
+        }
+
+        body.dark-mode .builder-field label { color: #ecf0f1; }
+
+        .builder-field input,
+        .builder-field select,
+        .builder-field textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 1em;
+            font-family: inherit;
+        }
+
+        .builder-field textarea {
+            resize: vertical;
+            min-height: 100px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .generated-prompt {
+            background: white;
+            border: 2px solid var(--primary);
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            position: relative;
+        }
+
+        body.dark-mode .generated-prompt { background: #2c3e50; }
+
+        .generated-prompt h4 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .generated-prompt pre {
+            background: var(--gray-light);
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            line-height: 1.6;
+        }
+
+        body.dark-mode .generated-prompt pre { background: #1e2a38; color: #ecf0f1; }
+
+        .quality-meter {
+            background: var(--gray-light);
+            height: 30px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 15px 0;
+            position: relative;
+        }
+
+        .quality-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--danger), var(--warning), var(--success));
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 15px;
+            color: white;
+            font-weight: 700;
+            font-size: 0.9em;
+        }
+
+        .quality-tips {
+            background: #e3f2fd;
+            border-left: 4px solid var(--info);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        body.dark-mode .quality-tips { background: #34495e; }
+
+        .quality-tips h5 {
+            color: var(--info);
+            margin-bottom: 8px;
+        }
+
+        .quality-tips ul {
+            margin-left: 20px;
+        }
+
+        .template-library {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .template-card {
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .template-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+        }
+
+        .template-card h4 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .template-card .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: 600;
+            margin: 5px 5px 10px 0;
+        }
+
+        .badge-copilot { background: #333; color: white; }
+        .badge-chatgpt { background: #10a37f; color: white; }
+        .badge-claude { background: #cc785c; color: white; }
+        .badge-gemini { background: #4285f4; color: white; }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 5px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #00936e;
+        }
+
+        .copy-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--success);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+
+        .copy-notification.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .content { padding: 20px; }
+            .header h1 { font-size: 1.5em; }
+            .template-library { grid-template-columns: 1fr; }
+            .example-card { grid-template-columns: 1fr; }
+        }
+
+        @media print {
+            body { background: white; }
+            .container { box-shadow: none; }
+            .dark-mode-toggle, .btn, .back-link { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <button class="dark-mode-toggle" onclick="toggleDarkMode()" aria-label="Toggle dark mode">🌓 Dark Mode</button>
+            <h1>💬 Prompt Engineering for AI Tools</h1>
+            <p>Master the art of asking AI tools the right questions</p>
+        </header>
+
+        <div class="content">
+            <a href="index.html" class="back-link">← Back to AI Tools Guide</a>
+
+            <div class="intro-section">
+                <h2>Why Prompt Engineering Matters</h2>
+                <p>The quality of AI responses depends heavily on how you ask questions. A well-crafted prompt can mean the difference between getting useless output and a detailed, helpful solution. This mini-course teaches you how to write effective prompts for GitHub Copilot, ChatGPT, Claude, and Google Gemini.</p>
+                <p><strong>Key Principle:</strong> Be specific, provide context, and explain your learning level.</p>
+            </div>
+
+            <!-- SECTION 1: BEFORE/AFTER EXAMPLES -->
+            <div class="section-card">
+                <h3>📚 Common Mistakes & How to Fix Them</h3>
+
+                <div class="examples-grid">
+                    <!-- Example 1: Debugging -->
+                    <div class="example-card">
+                        <h4 style="margin-bottom: 15px;">Scenario: Debugging Code</h4>
+
+                        <div class="example-bad">
+                            <h4>❌ Weak Prompt</h4>
+                            <pre>"Fix my code"</pre>
+                        </div>
+
+                        <div class="example-good">
+                            <h4>✅ Strong Prompt</h4>
+                            <pre>"I'm getting a NullPointerException on line 42 in my Java program for CSC-113. Here's my code:
+
+[paste code here]
+
+The error occurs when I try to call myObject.getName(). I've initialized myObject in the constructor. Can you:
+1. Explain why this NullPointerException is happening
+2. Show me how to fix it
+3. Explain how to prevent this in the future"</pre>
+                        </div>
+
+                        <div class="why-box">
+                            <strong>Why this works:</strong> Specific error, code context, line number, what you've tried, and what you want to learn.
+                        </div>
+                    </div>
+
+                    <!-- Example 2: Learning Concepts -->
+                    <div class="example-card">
+                        <h4 style="margin-bottom: 15px;">Scenario: Learning New Concepts</h4>
+
+                        <div class="example-bad">
+                            <h4>❌ Weak Prompt</h4>
+                            <pre>"Explain inheritance"</pre>
+                        </div>
+
+                        <div class="example-good">
+                            <h4>✅ Strong Prompt</h4>
+                            <pre>"I'm learning Java inheritance in CSC-114 (Object-Oriented Programming). I understand that classes can extend other classes, but I'm confused about:
+
+1. The difference between 'extends' and 'implements'
+2. When to use inheritance vs. composition
+3. How method overriding works
+
+Can you explain these concepts using a practical example with Animal as the parent class and Dog/Cat as child classes? I learn best with code examples and visual diagrams."</pre>
+                        </div>
+
+                        <div class="why-box">
+                            <strong>Why this works:</strong> Context (CSC-114), specific confusion points, preferred learning style, and concrete example request.
+                        </div>
+                    </div>
+
+                    <!-- Example 3: Code Generation -->
+                    <div class="example-card">
+                        <h4 style="margin-bottom: 15px;">Scenario: Generating Code</h4>
+
+                        <div class="example-bad">
+                            <h4>❌ Weak Prompt</h4>
+                            <pre>"Write a function to sort an array"</pre>
+                        </div>
+
+                        <div class="example-good">
+                            <h4>✅ Strong Prompt</h4>
+                            <pre>"I need a Java method for my CSC-113 assignment that:
+
+- Takes an ArrayList of integers as input
+- Sorts it in ascending order using bubble sort (required by assignment)
+- Returns the sorted ArrayList
+- Includes comments explaining each step
+- Follows Java naming conventions
+
+Please write the method and explain:
+1. How bubble sort works
+2. The time complexity (Big O notation)
+3. When I should use this vs. built-in sort methods"</pre>
+                        </div>
+
+                        <div class="why-box">
+                            <strong>Why this works:</strong> Language specified, exact requirements, learning goals clear, asks for explanation not just code.
+                        </div>
+                    </div>
+
+                    <!-- Example 4: Architecture/Design -->
+                    <div class="example-card">
+                        <h4 style="margin-bottom: 15px;">Scenario: Design Decisions (CSC-114)</h4>
+
+                        <div class="example-bad">
+                            <h4>❌ Weak Prompt</h4>
+                            <pre>"How should I structure my program?"</pre>
+                        </div>
+
+                        <div class="example-good">
+                            <h4>✅ Strong Prompt</h4>
+                            <pre>"I'm building a library management system for my CSC-114 final project. The system needs to:
+
+- Manage books (add, remove, search)
+- Track borrowers
+- Handle due dates and fines
+- Generate reports
+
+Current approach: I have one big LibrarySystem class with 20+ methods.
+
+Questions:
+1. Should I use multiple classes? If so, which ones and why?
+2. What design patterns would fit this problem? (We've learned Factory, Observer, Strategy)
+3. How should these classes interact?
+
+Please suggest a class structure with UML diagram or text representation, and explain your reasoning using SOLID principles."</pre>
+                        </div>
+
+                        <div class="why-box">
+                            <strong>Why this works:</strong> Project context, current approach, specific design patterns studied, asks for reasoning not just solution.
+                        </div>
+                    </div>
+
+                    <!-- Example 5: Understanding Error Messages -->
+                    <div class="example-card">
+                        <h4 style="margin-bottom: 15px;">Scenario: Understanding Errors</h4>
+
+                        <div class="example-bad">
+                            <h4>❌ Weak Prompt</h4>
+                            <pre>"What does this error mean?"</pre>
+                        </div>
+
+                        <div class="example-good">
+                            <h4>✅ Strong Prompt</h4>
+                            <pre>"I'm getting this error in my Java program:
+
+Error: incompatible types: String cannot be converted to int
+  at line 23: int age = userInput;
+
+Context:
+- I'm reading user input using Scanner in CSC-113
+- userInput is declared as: String userInput = scanner.nextLine();
+- I need to convert the String to an integer
+
+Questions:
+1. Why can't Java automatically convert String to int?
+2. What's the correct way to do this conversion?
+3. How should I handle cases where the user enters non-numeric input?
+
+I'm a beginner, so please explain like I'm learning this for the first time."</pre>
+                        </div>
+
+                        <div class="why-box">
+                            <strong>Why this works:</strong> Full error message, surrounding code context, specific follow-up questions, learning level stated.
+                        </div>
+                    </div>
+
+                    <!-- Example 6: Code Review -->
+                    <div class="example-card">
+                        <h4 style="margin-bottom: 15px;">Scenario: Code Review Request</h4>
+
+                        <div class="example-bad">
+                            <h4>❌ Weak Prompt</h4>
+                            <pre>"Is this code good?"</pre>
+                        </div>
+
+                        <div class="example-good">
+                            <h4>✅ Strong Prompt</h4>
+                            <pre>"I've written this Calculator class for CSC-114. Can you review it for:
+
+1. Code quality and best practices
+2. Proper use of OOP principles
+3. Edge case handling
+4. Naming conventions
+5. Whether it follows SOLID principles
+
+Here's my code:
+[paste code]
+
+Specific concerns:
+- I'm not sure if I should make all methods static
+- Is my error handling sufficient?
+- Should I use inheritance or interfaces for extensibility?
+
+Please point out what's good AND what needs improvement. I want to learn, not just get it working."</pre>
+                        </div>
+
+                        <div class="why-box">
+                            <strong>Why this works:</strong> Specific review criteria, concrete concerns, explicitly asks for learning feedback.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 2: INTERACTIVE PROMPT BUILDER -->
+            <div class="prompt-builder">
+                <h3>🛠️ Interactive Prompt Builder</h3>
+                <p style="margin-bottom: 20px;">Fill in the fields below to generate an optimized prompt for your AI tool:</p>
+
+                <div class="builder-field">
+                    <label for="promptType">What do you need help with?</label>
+                    <select id="promptType" onchange="updatePromptBuilder()">
+                        <option value="">-- Select Task Type --</option>
+                        <option value="debugging">Debugging Code</option>
+                        <option value="learning">Learning a Concept</option>
+                        <option value="generating">Generating Code</option>
+                        <option value="refactoring">Refactoring Code</option>
+                        <option value="architecture">Architecture/Design</option>
+                        <option value="testing">Writing Tests</option>
+                        <option value="error">Understanding Error Messages</option>
+                    </select>
+                </div>
+
+                <div class="builder-field">
+                    <label for="course">Course Context</label>
+                    <select id="course" onchange="updatePromptBuilder()">
+                        <option value="CSC-113">CSC-113 (Intro to Programming)</option>
+                        <option value="CSC-114">CSC-114 (OOP)</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="builder-field">
+                    <label for="language">Programming Language</label>
+                    <select id="language" onchange="updatePromptBuilder()">
+                        <option value="Java">Java</option>
+                        <option value="Python">Python</option>
+                        <option value="JavaScript">JavaScript</option>
+                        <option value="C++">C++</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="builder-field">
+                    <label for="specificIssue">What specifically are you working on? (Be detailed!)</label>
+                    <textarea id="specificIssue" placeholder="Example: I'm trying to implement a binary search tree, but my insert method isn't working correctly. When I insert 5, then 3, then 7, only 5 appears in the tree." oninput="updatePromptBuilder()"></textarea>
+                </div>
+
+                <div class="builder-field">
+                    <label for="codeContext">Paste your code here (optional but recommended):</label>
+                    <textarea id="codeContext" placeholder="Paste your code here..." oninput="updatePromptBuilder()" style="min-height: 150px; font-family: 'Courier New', monospace;"></textarea>
+                </div>
+
+                <div class="builder-field">
+                    <label for="whatYouTried">What have you already tried?</label>
+                    <textarea id="whatYouTried" placeholder="Example: I tried changing the if condition to check for null, but that caused a different error." oninput="updatePromptBuilder()"></textarea>
+                </div>
+
+                <div class="builder-field">
+                    <label for="learningGoal">What do you want to learn from this? (Not just the solution!)</label>
+                    <textarea id="learningGoal" placeholder="Example: I want to understand WHY this is happening, not just how to fix it. Also, how can I prevent this type of error in the future?" oninput="updatePromptBuilder()"></textarea>
+                </div>
+
+                <button class="btn btn-primary" onclick="generatePrompt()">✨ Generate Optimized Prompt</button>
+
+                <div class="generated-prompt" id="generatedPrompt" style="display: none;">
+                    <h4>Your Optimized Prompt:</h4>
+                    <pre id="promptOutput"></pre>
+                    <button class="btn btn-success" onclick="copyPrompt()">📋 Copy to Clipboard</button>
+
+                    <div style="margin-top: 20px;">
+                        <h5 style="color: var(--primary); margin-bottom: 10px;">Quality Score:</h5>
+                        <div class="quality-meter">
+                            <div class="quality-fill" id="qualityFill" style="width: 0%;">0%</div>
+                        </div>
+                        <div class="quality-tips" id="qualityTips"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 3: TEMPLATE LIBRARY -->
+            <div class="section-card">
+                <h3>📚 Prompt Template Library</h3>
+                <p style="margin-bottom: 20px;">Click any template to copy it to your clipboard:</p>
+
+                <div class="template-library">
+                    <!-- Template 1 -->
+                    <div class="template-card" onclick="copyTemplate('debugging-general')">
+                        <h4>🐛 General Debugging</h4>
+                        <span class="badge badge-chatgpt">ChatGPT</span>
+                        <span class="badge badge-claude">Claude</span>
+                        <p style="margin-top: 10px; font-size: 0.95em; line-height: 1.5;">
+                            "I'm getting [ERROR NAME] on line [LINE NUMBER] in my [LANGUAGE] program for [COURSE]. Here's my code: [CODE]. The error occurs when [SCENARIO]. Can you: 1) Explain why this is happening, 2) Show me how to fix it, 3) Explain how to prevent this in the future."
+                        </p>
+                    </div>
+
+                    <!-- Template 2 -->
+                    <div class="template-card" onclick="copyTemplate('concept-learning')">
+                        <h4>📖 Learning Concepts</h4>
+                        <span class="badge badge-chatgpt">ChatGPT</span>
+                        <p style="margin-top: 10px; font-size: 0.95em; line-height: 1.5;">
+                            "I'm learning [CONCEPT] in [COURSE]. I understand [WHAT YOU KNOW], but I'm confused about [SPECIFIC CONFUSION]. Can you explain using a practical example? I learn best with [code examples/diagrams/analogies]."
+                        </p>
+                    </div>
+
+                    <!-- Template 3 -->
+                    <div class="template-card" onclick="copyTemplate('code-gen-assignment')">
+                        <h4>⚙️ Code Generation (Assignment)</h4>
+                        <span class="badge badge-copilot">Copilot</span>
+                        <span class="badge badge-chatgpt">ChatGPT</span>
+                        <p style="margin-top: 10px; font-size: 0.95em; line-height: 1.5;">
+                            "I need a [LANGUAGE] method for my [COURSE] assignment that: - [REQUIREMENT 1] - [REQUIREMENT 2] - [REQUIREMENT 3]. Please write the method AND explain: 1) How it works, 2) Time/space complexity, 3) When to use this approach."
+                        </p>
+                    </div>
+
+                    <!-- Template 4 -->
+                    <div class="template-card" onclick="copyTemplate('architecture-design')">
+                        <h4>🏗️ Architecture & Design</h4>
+                        <span class="badge badge-claude">Claude</span>
+                        <p style="margin-top: 10px; font-size: 0.95em; line-height: 1.5;">
+                            "I'm building [PROJECT DESCRIPTION] for CSC-114. The system needs to: [REQUIREMENTS]. Current approach: [YOUR CURRENT DESIGN]. Questions: 1) Should I use multiple classes? 2) What design patterns fit? 3) How should classes interact? Please suggest a structure and explain using SOLID principles."
+                        </p>
+                    </div>
+
+                    <!-- Template 5 -->
+                    <div class="template-card" onclick="copyTemplate('refactoring')">
+                        <h4>🔄 Refactoring Code</h4>
+                        <span class="badge badge-claude">Claude</span>
+                        <span class="badge badge-copilot">Copilot</span>
+                        <p style="margin-top: 10px; font-size: 0.95em; line-height: 1.5;">
+                            "I have this working code for [PURPOSE], but it's [PROBLEM: messy/slow/hard to read]. Here's the code: [CODE]. Can you help me refactor it to: 1) Improve readability, 2) Follow best practices, 3) Make it more maintainable? Please explain each change."
+                        </p>
+                    </div>
+
+                    <!-- Template 6 -->
+                    <div class="template-card" onclick="copyTemplate('testing')">
+                        <h4>✅ Writing Unit Tests</h4>
+                        <span class="badge badge-copilot">Copilot</span>
+                        <span class="badge badge-chatgpt">ChatGPT</span>
+                        <p style="margin-top: 10px; font-size: 0.95em; line-height: 1.5;">
+                            "I need to write JUnit tests for this [LANGUAGE] class: [CODE]. Please generate test cases that cover: 1) Normal inputs, 2) Edge cases, 3) Error conditions. Explain what each test is checking and why it's important."
+                        </p>
+                    </div>
+
+                    <!-- Template 7 -->
+                    <div class="template-card" onclick="copyTemplate('error-explanation')">
+                        <h4>❗ Understanding Errors</h4>
+                        <span class="badge badge-chatgpt">ChatGPT</span>
+                        <p style="margin-top: 10px; font-size: 0.95em; line-height: 1.5;">
+                            "I'm getting this error: [FULL ERROR MESSAGE]. Context: [WHAT YOU'RE TRYING TO DO]. Here's the relevant code: [CODE]. Questions: 1) Why is this happening? 2) How do I fix it? 3) How do I handle edge cases? I'm a [beginner/intermediate/advanced] programmer."
+                        </p>
+                    </div>
+
+                    <!-- Template 8 -->
+                    <div class="template-card" onclick="copyTemplate('algorithm-explanation')">
+                        <h4>🧮 Algorithm Explanation</h4>
+                        <span class="badge badge-chatgpt">ChatGPT</span>
+                        <span class="badge badge-gemini">Gemini</span>
+                        <p style="margin-top: 10px; font-size: 0.95em; line-height: 1.5;">
+                            "I need to understand [ALGORITHM NAME] for my [COURSE] exam. Can you: 1) Explain how it works step-by-step, 2) Show a code implementation in [LANGUAGE], 3) Explain time/space complexity, 4) Give real-world use cases? Use simple examples."
+                        </p>
+                    </div>
+
+                    <!-- Template 9 -->
+                    <div class="template-card" onclick="copyTemplate('code-review')">
+                        <h4>👀 Code Review</h4>
+                        <span class="badge badge-claude">Claude</span>
+                        <p style="margin-top: 10px; font-size: 0.95em; line-height: 1.5;">
+                            "I've written this [CLASS/METHOD] for CSC-114. Can you review it for: 1) Code quality, 2) OOP principles, 3) Edge cases, 4) SOLID principles? Here's my code: [CODE]. Specific concerns: [YOUR CONCERNS]. Please point out what's good AND what needs improvement."
+                        </p>
+                    </div>
+
+                    <!-- Template 10 -->
+                    <div class="template-card" onclick="copyTemplate('optimization')">
+                        <h4>⚡ Performance Optimization</h4>
+                        <span class="badge badge-claude">Claude</span>
+                        <span class="badge badge-chatgpt">ChatGPT</span>
+                        <p style="margin-top: 10px; font-size: 0.95em; line-height: 1.5;">
+                            "This code works but runs slowly with large inputs: [CODE]. Input size: [SIZE]. Current performance: [TIME/ISSUE]. Can you: 1) Identify bottlenecks, 2) Suggest optimizations, 3) Explain trade-offs? Target: [PERFORMANCE GOAL]."
+                        </p>
+                    </div>
+
+                    <!-- Template 11 -->
+                    <div class="template-card" onclick="copyTemplate('interview-prep')">
+                        <h4>🎯 Interview Practice</h4>
+                        <span class="badge badge-chatgpt">ChatGPT</span>
+                        <span class="badge badge-gemini">Gemini</span>
+                        <p style="margin-top: 10px; font-size: 0.95em; line-height: 1.5;">
+                            "I'm preparing for technical interviews. Can you give me a [DIFFICULTY] coding problem about [TOPIC]? After I solve it, please: 1) Review my solution, 2) Suggest optimizations, 3) Ask follow-up questions like a real interviewer would."
+                        </p>
+                    </div>
+
+                    <!-- Template 12 -->
+                    <div class="template-card" onclick="copyTemplate('documentation')">
+                        <h4>📝 Writing Documentation</h4>
+                        <span class="badge badge-copilot">Copilot</span>
+                        <span class="badge badge-chatgpt">ChatGPT</span>
+                        <p style="margin-top: 10px; font-size: 0.95em; line-height: 1.5;">
+                            "I need to document this [CLASS/METHOD]: [CODE]. Please generate: 1) Javadoc comments, 2) README section, 3) Usage examples. Make it clear for someone who hasn't seen this code before."
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 4: TOOL-SPECIFIC TIPS -->
+            <div class="section-card">
+                <h3>🎯 Tool-Specific Prompting Tips</h3>
+
+                <div class="examples-grid">
+                    <div class="example-card">
+                        <h4 style="color: #333; margin-bottom: 10px;">🤖 GitHub Copilot</h4>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li><strong>Use comments to guide:</strong> Write detailed comments describing what you want, then let Copilot generate</li>
+                            <li><strong>Context matters:</strong> Name variables/methods descriptively - Copilot learns from your naming</li>
+                            <li><strong>Iterate:</strong> Accept suggestion, then refine with more comments</li>
+                            <li><strong>Example:</strong> <code>// Create a method that validates email addresses using regex and returns true if valid</code></li>
+                        </ul>
+                    </div>
+
+                    <div class="example-card">
+                        <h4 style="color: #10a37f; margin-bottom: 10px;">💬 ChatGPT</h4>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li><strong>Conversational:</strong> Treat it like talking to a tutor - ask follow-ups</li>
+                            <li><strong>Request format:</strong> "Explain like I'm 5" or "Give me code examples" or "Show me a diagram"</li>
+                            <li><strong>Iterate on responses:</strong> "Can you simplify that?" or "Show me a different approach"</li>
+                            <li><strong>State your level:</strong> "I'm a beginner" vs "I'm familiar with OOP but not design patterns"</li>
+                        </ul>
+                    </div>
+
+                    <div class="example-card">
+                        <h4 style="color: #cc785c; margin-bottom: 10px;">🧠 Claude</h4>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li><strong>Upload full projects:</strong> Claude's 200K context means you can upload multiple files at once</li>
+                            <li><strong>Ask for deep analysis:</strong> "Analyze my entire codebase for design pattern opportunities"</li>
+                            <li><strong>Request structured output:</strong> "Give me a step-by-step refactoring plan with before/after code"</li>
+                            <li><strong>Architecture questions:</strong> Claude excels at high-level design discussions</li>
+                        </ul>
+                    </div>
+
+                    <div class="example-card">
+                        <h4 style="color: #4285f4; margin-bottom: 10px;">💎 Google Gemini</h4>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li><strong>Use Deep Research:</strong> "Research the best practices for [TOPIC] in 2026"</li>
+                            <li><strong>Documentation questions:</strong> "Find and summarize the official [LIBRARY] documentation for [FEATURE]"</li>
+                            <li><strong>Multimodal:</strong> Upload screenshots of errors or diagrams for analysis</li>
+                            <li><strong>Large context:</strong> Paste entire documentation pages for summarization</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 5: BEST PRACTICES -->
+            <div class="section-card">
+                <h3>✨ Universal Best Practices</h3>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 20px;">
+                    <div style="background: #e8f5e9; padding: 20px; border-radius: 8px; border-left: 4px solid var(--success);">
+                        <h4 style="color: var(--success); margin-bottom: 10px;">✅ DO</h4>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li>Be specific about your context</li>
+                            <li>Include your course/level</li>
+                            <li>Paste relevant code</li>
+                            <li>Ask for explanations, not just solutions</li>
+                            <li>Iterate and ask follow-ups</li>
+                            <li>State what you've tried</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: #ffebee; padding: 20px; border-radius: 8px; border-left: 4px solid var(--danger);">
+                        <h4 style="color: var(--danger); margin-bottom: 10px;">❌ DON'T</h4>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li>Ask vague questions</li>
+                            <li>Expect AI to read your mind</li>
+                            <li>Accept answers without understanding</li>
+                            <li>Copy-paste without learning</li>
+                            <li>Skip providing context</li>
+                            <li>Ask "fix this" without details</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div style="background: #d4edda; border-left: 4px solid var(--success); padding: 20px; margin-top: 30px; border-radius: 8px;">
+                <h3 style="color: var(--success); margin-bottom: 10px;">🎓 Remember: AI is a Learning Tool</h3>
+                <p style="line-height: 1.8;">
+                    The goal isn't to get AI to do your work - it's to help you learn faster and deeper.
+                    <strong>Always ask "why"</strong> when you get a solution.
+                    <strong>Always test and verify</strong> what AI suggests.
+                    <strong>Always make sure you can explain</strong> every line of code you submit.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="copy-notification" id="copyNotification">✅ Copied to clipboard!</div>
+
+    <script>
+        // Template storage
+        const templates = {
+            'debugging-general': `I'm getting [ERROR NAME] on line [LINE NUMBER] in my [LANGUAGE] program for [COURSE]. Here's my code:
+
+[PASTE CODE HERE]
+
+The error occurs when [DESCRIBE SCENARIO].
+
+Can you:
+1. Explain why this is happening
+2. Show me how to fix it
+3. Explain how to prevent this in the future
+
+I'm a [beginner/intermediate/advanced] programmer.`,
+
+            'concept-learning': `I'm learning [CONCEPT NAME] in [COURSE]. I understand [WHAT YOU ALREADY KNOW], but I'm confused about:
+
+1. [SPECIFIC CONFUSION POINT 1]
+2. [SPECIFIC CONFUSION POINT 2]
+
+Can you explain using a practical example? I learn best with [code examples/diagrams/analogies].`,
+
+            'code-gen-assignment': `I need a [LANGUAGE] method for my [COURSE] assignment that:
+
+- [REQUIREMENT 1]
+- [REQUIREMENT 2]
+- [REQUIREMENT 3]
+- Includes comments explaining each step
+- Follows [LANGUAGE] naming conventions
+
+Please write the method AND explain:
+1. How it works step-by-step
+2. Time and space complexity
+3. When I should use this approach vs. alternatives`,
+
+            'architecture-design': `I'm building [PROJECT DESCRIPTION] for CSC-114. The system needs to:
+
+- [REQUIREMENT 1]
+- [REQUIREMENT 2]
+- [REQUIREMENT 3]
+
+Current approach: [DESCRIBE YOUR CURRENT DESIGN]
+
+Questions:
+1. Should I use multiple classes? If so, which ones and why?
+2. What design patterns would fit this problem?
+3. How should these classes interact?
+
+Please suggest a class structure and explain your reasoning using SOLID principles.`,
+
+            'refactoring': `I have this working code for [PURPOSE], but it's [PROBLEM: messy/slow/hard to read/etc.].
+
+Here's the code:
+[PASTE CODE]
+
+Can you help me refactor it to:
+1. Improve readability
+2. Follow best practices
+3. Make it more maintainable
+
+Please explain each change and why it's better.`,
+
+            'testing': `I need to write JUnit tests for this [LANGUAGE] class:
+
+[PASTE CODE]
+
+Please generate test cases that cover:
+1. Normal/expected inputs
+2. Edge cases (empty, null, boundary values)
+3. Error conditions
+
+Explain what each test is checking and why it's important to test that case.`,
+
+            'error-explanation': `I'm getting this error in my [LANGUAGE] program:
+
+Error: [FULL ERROR MESSAGE]
+
+Context:
+- I'm trying to [WHAT YOU'RE DOING]
+- [RELEVANT CODE SNIPPET]
+- This happens when [TRIGGER CONDITION]
+
+Questions:
+1. Why is this error happening?
+2. What's the correct way to fix it?
+3. How should I handle edge cases?
+
+I'm a [beginner/intermediate/advanced] programmer, so please explain accordingly.`,
+
+            'algorithm-explanation': `I need to understand [ALGORITHM NAME] for my [COURSE] exam.
+
+Can you:
+1. Explain how the algorithm works step-by-step
+2. Show a code implementation in [LANGUAGE]
+3. Explain the time and space complexity
+4. Give real-world use cases for when to use this algorithm
+
+Please use simple examples and avoid overly technical jargon.`,
+
+            'code-review': `I've written this [CLASS/METHOD] for CSC-114. Can you review it for:
+
+1. Code quality and best practices
+2. Proper use of OOP principles
+3. Edge case handling
+4. Whether it follows SOLID principles
+
+Here's my code:
+[PASTE CODE]
+
+Specific concerns:
+- [YOUR CONCERN 1]
+- [YOUR CONCERN 2]
+
+Please point out what's good AND what needs improvement. I want to learn, not just get it working.`,
+
+            'optimization': `This code works but runs slowly with large inputs:
+
+[PASTE CODE]
+
+Input size: [DESCRIBE SIZE]
+Current performance: [DESCRIBE ISSUE]
+
+Can you:
+1. Identify performance bottlenecks
+2. Suggest optimizations
+3. Explain trade-offs between approaches
+
+Target performance: [YOUR GOAL]`,
+
+            'interview-prep': `I'm preparing for technical interviews. Can you give me a [easy/medium/hard] coding problem about [TOPIC]?
+
+After I attempt to solve it, please:
+1. Review my solution for correctness
+2. Suggest optimizations
+3. Ask follow-up questions like a real interviewer would
+4. Discuss time/space complexity
+
+I want to practice explaining my thought process.`,
+
+            'documentation': `I need to document this [CLASS/METHOD]:
+
+[PASTE CODE]
+
+Please generate:
+1. Javadoc/docstring comments for all methods
+2. A README section explaining what this does
+3. Usage examples showing how to use it
+
+Make it clear for someone who hasn't seen this code before.`
+        };
+
+        // Copy template to clipboard
+        function copyTemplate(templateId) {
+            const text = templates[templateId];
+            navigator.clipboard.writeText(text).then(() => {
+                showNotification();
+            });
+        }
+
+        // Copy generated prompt
+        function copyPrompt() {
+            const text = document.getElementById('promptOutput').textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                showNotification();
+            });
+        }
+
+        // Show copy notification
+        function showNotification() {
+            const notification = document.getElementById('copyNotification');
+            notification.classList.add('show');
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 2000);
+        }
+
+        // Generate prompt from builder
+        function generatePrompt() {
+            const type = document.getElementById('promptType').value;
+            const course = document.getElementById('course').value;
+            const language = document.getElementById('language').value;
+            const issue = document.getElementById('specificIssue').value;
+            const code = document.getElementById('codeContext').value;
+            const tried = document.getElementById('whatYouTried').value;
+            const goal = document.getElementById('learningGoal').value;
+
+            if (!type || !issue) {
+                alert('Please select a task type and describe your specific issue!');
+                return;
+            }
+
+            let prompt = `I'm working on ${type} for ${course} in ${language}.\n\n`;
+            prompt += `**What I'm working on:**\n${issue}\n\n`;
+
+            if (code) {
+                prompt += `**Here's my code:**\n\`\`\`${language.toLowerCase()}\n${code}\n\`\`\`\n\n`;
+            }
+
+            if (tried) {
+                prompt += `**What I've already tried:**\n${tried}\n\n`;
+            }
+
+            if (goal) {
+                prompt += `**What I want to learn:**\n${goal}\n`;
+            } else {
+                prompt += `**What I want to learn:**\nI want to understand the underlying concepts, not just get a quick fix.\n`;
+            }
+
+            document.getElementById('promptOutput').textContent = prompt;
+            document.getElementById('generatedPrompt').style.display = 'block';
+
+            // Calculate quality score
+            calculateQuality(prompt, issue, code, tried, goal);
+
+            // Scroll to result
+            document.getElementById('generatedPrompt').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // Calculate prompt quality
+        function calculateQuality(prompt, issue, code, tried, goal) {
+            let score = 0;
+            const tips = [];
+
+            // Check length and detail
+            if (issue.length > 50) score += 20; else tips.push('Add more detail about your specific issue');
+            if (code.length > 0) score += 20; else tips.push('Include your code for better context');
+            if (tried.length > 0) score += 20; else tips.push('Mention what you\'ve already tried');
+            if (goal.length > 0) score += 20; else tips.push('Specify what you want to learn');
+
+            // Check for specificity
+            if (issue.includes('line') || issue.includes('error')) score += 10;
+            if (prompt.toLowerCase().includes('explain')) score += 10;
+
+            // Update UI
+            const fill = document.getElementById('qualityFill');
+            fill.style.width = score + '%';
+            fill.textContent = score + '%';
+
+            const tipsContainer = document.getElementById('qualityTips');
+            if (tips.length > 0) {
+                tipsContainer.innerHTML = `
+                    <h5>💡 Tips to Improve:</h5>
+                    <ul style="margin-left: 20px; margin-top: 8px;">
+                        ${tips.map(tip => `<li>${tip}</li>`).join('')}
+                    </ul>
+                `;
+            } else {
+                tipsContainer.innerHTML = `
+                    <h5>✅ Excellent Prompt!</h5>
+                    <p style="margin-top: 8px;">Your prompt is detailed, specific, and learning-focused. This should get you high-quality responses from AI tools.</p>
+                `;
+            }
+        }
+
+        // Update builder (live preview could be added here)
+        function updatePromptBuilder() {
+            // Could add live preview functionality here
+        }
+
+        // Dark mode
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            localStorage.setItem('darkMode', isDark);
+            document.querySelector('.dark-mode-toggle').textContent = isDark ? '☀️ Light Mode' : '🌓 Dark Mode';
+        }
+
+        // Load dark mode preference
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedMode = localStorage.getItem('darkMode');
+            if (savedMode === 'true') {
+                document.body.classList.add('dark-mode');
+                document.querySelector('.dark-mode-toggle').textContent = '☀️ Light Mode';
+            }
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'd' && e.ctrlKey) {
+                e.preventDefault();
+                toggleDarkMode();
+            }
+        });
+    </script>
+</body>
+</html>

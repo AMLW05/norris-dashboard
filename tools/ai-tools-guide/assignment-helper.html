@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment Helper | CIT AI Tools Guide</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #667eea;
+            --primary-dark: #764ba2;
+            --navy: #1a1a2e;
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --danger: #d63031;
+            --gray-light: #f5f7fa;
+            --text-dark: #2c3e50;
+            --border: #e1e8ed;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+
+        body.dark-mode {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        }
+
+        body.dark-mode .container { background: #2c3e50; color: #ecf0f1; }
+        body.dark-mode .header { background: linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 100%); }
+        body.dark-mode .input-section, body.dark-mode .results-section {
+            background: #34495e;
+            color: #ecf0f1;
+        }
+        body.dark-mode textarea, body.dark-mode input {
+            background: #2c3e50;
+            color: #ecf0f1;
+            border-color: #4a5f7f;
+        }
+        body.dark-mode .step-card, body.dark-mode .recommendation-card, body.dark-mode .prompt-card {
+            background: #2c3e50;
+            border-color: #4a5f7f;
+        }
+        body.dark-mode .tool-tag { background: #1e2a38; }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--navy) 0%, #16213e 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .header p { font-size: 1.1em; opacity: 0.95; }
+
+        .dark-mode-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .dark-mode-toggle:hover { background: rgba(255,255,255,0.3); }
+
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover { background: rgba(255,255,255,0.3); }
+
+        .content {
+            padding: 40px;
+        }
+
+        .input-section {
+            background: var(--gray-light);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .input-section h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 200px;
+            padding: 15px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 14px;
+            line-height: 1.6;
+            resize: vertical;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #95a5a6;
+            margin-left: 10px;
+        }
+
+        .examples {
+            margin-top: 20px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            border: 2px solid var(--border);
+        }
+
+        body.dark-mode .examples { background: #2c3e50; border-color: #4a5f7f; }
+
+        .examples h4 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .example-btn {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 8px 15px;
+            margin: 5px 5px 5px 0;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            border: none;
+            transition: all 0.3s;
+        }
+
+        .example-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .results-section {
+            background: var(--gray-light);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            display: none;
+        }
+
+        .results-section.active {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .results-section h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .recommendation-card {
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .recommendation-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        body.dark-mode .recommendation-header { border-color: #4a5f7f; }
+
+        .rec-icon {
+            font-size: 2.5em;
+        }
+
+        .rec-info h3 {
+            color: var(--primary);
+            font-size: 1.5em;
+            margin-bottom: 5px;
+        }
+
+        .rec-meta {
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+
+        body.dark-mode .rec-meta { color: #bdc3c7; }
+
+        .tool-tags {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+
+        .tool-tag {
+            background: var(--gray-light);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .tool-tag.primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+        }
+
+        .tool-tag.secondary {
+            background: #95a5a6;
+            color: white;
+        }
+
+        .workflow {
+            margin-top: 30px;
+        }
+
+        .workflow h3 {
+            color: var(--primary);
+            font-size: 1.3em;
+            margin-bottom: 20px;
+        }
+
+        .step-card {
+            background: white;
+            border: 2px solid var(--border);
+            border-left: 5px solid var(--primary);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .step-number {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2em;
+            flex-shrink: 0;
+        }
+
+        .step-title {
+            flex: 1;
+        }
+
+        .step-title h4 {
+            color: var(--primary);
+            font-size: 1.2em;
+            margin-bottom: 3px;
+        }
+
+        .step-tool {
+            font-size: 0.85em;
+            color: #7f8c8d;
+            font-weight: 600;
+        }
+
+        body.dark-mode .step-tool { color: #bdc3c7; }
+
+        .step-description {
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+
+        .prompt-card {
+            background: var(--gray-light);
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 10px;
+            position: relative;
+        }
+
+        .prompt-label {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .prompt-text {
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 5px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s;
+        }
+
+        .copy-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .time-estimate {
+            background: var(--warning);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1.1em;
+            font-weight: 600;
+            margin-top: 30px;
+        }
+
+        .keywords-detected {
+            background: #e8f5e9;
+            border-left: 4px solid var(--success);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        body.dark-mode .keywords-detected {
+            background: #1e3a28;
+            color: #ecf0f1;
+        }
+
+        .keywords-detected h4 {
+            color: var(--success);
+            margin-bottom: 10px;
+        }
+
+        .keyword-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .keyword {
+            background: var(--success);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.8em; }
+            .content { padding: 20px; }
+            .dark-mode-toggle, .back-btn {
+                position: static;
+                display: block;
+                margin: 10px auto;
+            }
+        }
+
+        @media print {
+            body { background: white; }
+            .container { box-shadow: none; }
+            .dark-mode-toggle, .back-btn, .btn, .copy-btn { display: none; }
+            .input-section { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <a href="index.html" class="back-btn">← Back to Guide</a>
+            <button class="dark-mode-toggle" onclick="toggleDarkMode()" aria-label="Toggle dark mode">🌓 Dark Mode</button>
+            <h1>📝 Assignment Helper</h1>
+            <p>Get personalized AI tool recommendations for your assignments</p>
+        </header>
+
+        <div class="content">
+            <section class="input-section">
+                <h2>Paste Your Assignment</h2>
+                <textarea id="assignmentInput" placeholder="Paste your assignment description here...
+
+Example:
+'Create a Java program that implements a student management system. Your program should use inheritance to create a base Person class and a Student subclass. Include proper error handling for invalid inputs. The system should store student data in an ArrayList and provide methods to add, remove, and search for students. Write unit tests for all major functionality and provide UML diagrams showing your class design.'"></textarea>
+
+                <button class="btn" onclick="analyzeAssignment()">🔍 Analyze Assignment</button>
+                <button class="btn btn-secondary" onclick="clearInput()">Clear</button>
+
+                <div class="examples">
+                    <h4>Try these examples:</h4>
+                    <button class="example-btn" onclick="loadExample('debugging')">Debugging Assignment</button>
+                    <button class="example-btn" onclick="loadExample('design')">Design Assignment</button>
+                    <button class="example-btn" onclick="loadExample('implementation')">Implementation Assignment</button>
+                    <button class="example-btn" onclick="loadExample('research')">Research Assignment</button>
+                </div>
+            </section>
+
+            <section class="results-section" id="results">
+                <h2>📊 Analysis Results</h2>
+
+                <div id="keywordsSection"></div>
+
+                <div class="recommendation-card">
+                    <div class="recommendation-header">
+                        <div class="rec-icon">🎯</div>
+                        <div class="rec-info">
+                            <h3>Recommended Tools</h3>
+                            <div class="rec-meta">Based on your assignment requirements</div>
+                        </div>
+                    </div>
+                    <div class="tool-tags" id="toolTags"></div>
+                    <div id="toolReasoning"></div>
+                </div>
+
+                <div class="workflow">
+                    <h3>📋 Step-by-Step Workflow</h3>
+                    <div id="workflowSteps"></div>
+                </div>
+
+                <div class="time-estimate" id="timeEstimate"></div>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        // Example assignments
+        const examples = {
+            debugging: `Debug the following Java program that's supposed to calculate student GPAs but keeps throwing NullPointerException. The program should read student data from a file, calculate each student's GPA, and display the results. Find and fix all bugs, then explain what was wrong and why your fixes work.`,
+
+            design: `Design a library management system using object-oriented principles. Create UML class diagrams showing the relationships between Book, Member, Librarian, and Transaction classes. Your design should demonstrate proper use of inheritance, encapsulation, and polymorphism. Explain your design decisions and discuss alternative approaches.`,
+
+            implementation: `Implement a binary search tree in Java with the following methods: insert, delete, search, and inOrder traversal. Your implementation should handle edge cases properly and include comments explaining the algorithm. Test your implementation with at least 5 different test cases.`,
+
+            research: `Research and compare different sorting algorithms (bubble sort, merge sort, quicksort, and heap sort). For each algorithm, explain the time complexity, space complexity, and when it's most appropriate to use. Provide working code examples in Java and discuss real-world applications.`
+        };
+
+        // Keyword patterns and tool recommendations
+        const patterns = {
+            copilot: ['implement', 'write code', 'create method', 'function', 'algorithm', 'coding', 'program'],
+            chatgpt: ['debug', 'fix error', 'not working', 'explain', 'help understand', 'what does', 'how does'],
+            claude: ['design', 'architecture', 'uml', 'class diagram', 'refactor', 'improve', 'best practices', 'code review', 'pattern'],
+            gemini: ['research', 'compare', 'documentation', 'analyze', 'investigate', 'explore', 'study', 'examine']
+        };
+
+        // Analysis function
+        function analyzeAssignment() {
+            const input = document.getElementById('assignmentInput').value.trim();
+
+            if (!input) {
+                alert('Please paste your assignment description first!');
+                return;
+            }
+
+            const analysis = performAnalysis(input);
+            displayResults(analysis);
+
+            // Show results section
+            document.getElementById('results').classList.add('active');
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Perform analysis
+        function performAnalysis(text) {
+            const lowerText = text.toLowerCase();
+            const detectedKeywords = {};
+            const toolScores = { copilot: 0, chatgpt: 0, claude: 0, gemini: 0 };
+
+            // Detect keywords
+            Object.entries(patterns).forEach(([tool, keywords]) => {
+                keywords.forEach(keyword => {
+                    if (lowerText.includes(keyword)) {
+                        toolScores[tool]++;
+                        if (!detectedKeywords[tool]) detectedKeywords[tool] = [];
+                        detectedKeywords[tool].push(keyword);
+                    }
+                });
+            });
+
+            // Additional heuristics
+            if (lowerText.includes('test')) toolScores.copilot++;
+            if (lowerText.includes('unit test')) toolScores.chatgpt++;
+            if (lowerText.includes('error handling')) toolScores.claude++;
+            if (lowerText.includes('documentation')) toolScores.gemini++;
+
+            // Determine primary and secondary tools
+            const sortedTools = Object.entries(toolScores)
+                .sort((a, b) => b[1] - a[1])
+                .map(([tool, score]) => ({ tool, score }));
+
+            const primary = sortedTools[0];
+            const secondary = sortedTools[1];
+
+            // Generate workflow
+            const workflow = generateWorkflow(lowerText, primary.tool, secondary.tool);
+
+            // Estimate time
+            const timeEstimate = estimateTime(text);
+
+            return {
+                keywords: detectedKeywords,
+                primary,
+                secondary,
+                workflow,
+                timeEstimate
+            };
+        }
+
+        // Generate workflow
+        function generateWorkflow(text, primary, secondary) {
+            const steps = [];
+
+            // Step 1: Understanding
+            if (text.includes('research') || text.includes('understand') || text.includes('explain')) {
+                steps.push({
+                    tool: 'Gemini',
+                    title: 'Research & Understanding',
+                    description: 'Start by researching concepts and gathering information about the requirements.',
+                    prompt: 'Explain [CONCEPT] in detail. What are the key principles I need to understand? Provide examples and real-world applications.'
+                });
+            } else {
+                steps.push({
+                    tool: 'ChatGPT',
+                    title: 'Understand Requirements',
+                    description: 'Break down the assignment requirements and clarify any unclear points.',
+                    prompt: 'Help me understand these assignment requirements: [PASTE ASSIGNMENT]. What are the key deliverables and constraints?'
+                });
+            }
+
+            // Step 2: Design (if applicable)
+            if (text.includes('design') || text.includes('uml') || text.includes('architecture') || text.includes('class diagram')) {
+                steps.push({
+                    tool: 'Claude',
+                    title: 'Design Architecture',
+                    description: 'Design the system architecture and create class diagrams.',
+                    prompt: 'Help me design a [SYSTEM TYPE] with these requirements: [REQUIREMENTS]. Suggest appropriate design patterns and create a class hierarchy. Consider best practices for maintainability and extensibility.'
+                });
+            }
+
+            // Step 3: Implementation
+            if (text.includes('implement') || text.includes('write') || text.includes('create') || text.includes('program')) {
+                steps.push({
+                    tool: 'Copilot',
+                    title: 'Write Code',
+                    description: 'Implement the functionality using GitHub Copilot for autocomplete assistance.',
+                    prompt: 'In your IDE with Copilot enabled, start writing comments describing what you need, then let Copilot suggest implementations. Example comment: // Create a method that inserts a node into the binary search tree'
+                });
+            }
+
+            // Step 4: Debugging (if applicable)
+            if (text.includes('debug') || text.includes('fix') || text.includes('error')) {
+                steps.push({
+                    tool: 'ChatGPT',
+                    title: 'Debug Issues',
+                    description: 'Identify and fix any bugs or errors in the code.',
+                    prompt: 'I\'m getting this error: [ERROR MESSAGE]. Here\'s my code: [CODE]. What\'s wrong and how do I fix it?'
+                });
+            }
+
+            // Step 5: Testing (if applicable)
+            if (text.includes('test')) {
+                steps.push({
+                    tool: 'Copilot',
+                    title: 'Write Tests',
+                    description: 'Create comprehensive test cases for your code.',
+                    prompt: 'In your IDE, write a comment like: // Test case for edge case where input is null, then let Copilot generate the test method'
+                });
+            }
+
+            // Step 6: Refactoring/Review
+            if (text.includes('refactor') || text.includes('improve') || steps.length >= 3) {
+                steps.push({
+                    tool: 'Claude',
+                    title: 'Code Review & Refactoring',
+                    description: 'Review your code for improvements, best practices, and potential optimizations.',
+                    prompt: 'Review this code and suggest improvements: [CODE]. Focus on readability, performance, and best practices. Are there any design patterns I should apply?'
+                });
+            }
+
+            // Step 7: Documentation
+            if (text.includes('document') || text.includes('explain') || steps.length >= 4) {
+                steps.push({
+                    tool: 'Gemini',
+                    title: 'Documentation & Explanation',
+                    description: 'Write comprehensive documentation and explanations.',
+                    prompt: 'Help me write documentation for this code: [CODE]. Include method descriptions, usage examples, and explanations of any complex algorithms.'
+                });
+            }
+
+            // Ensure we have at least 5 steps
+            if (steps.length < 5) {
+                steps.push({
+                    tool: 'ChatGPT',
+                    title: 'Final Review',
+                    description: 'Conduct a final review of all components.',
+                    prompt: 'Review my complete assignment: [DESCRIPTION]. Does it meet all requirements? Are there any gaps or improvements needed?'
+                });
+            }
+
+            return steps.slice(0, 5); // Return max 5 steps
+        }
+
+        // Estimate time
+        function estimateTime(text) {
+            const wordCount = text.split(/\s+/).length;
+            let hours = 2; // Base time
+
+            // Adjust based on keywords
+            if (text.toLowerCase().includes('design')) hours += 1;
+            if (text.toLowerCase().includes('implement')) hours += 2;
+            if (text.toLowerCase().includes('test')) hours += 1;
+            if (text.toLowerCase().includes('research')) hours += 1;
+            if (text.toLowerCase().includes('uml') || text.toLowerCase().includes('diagram')) hours += 0.5;
+
+            // Adjust based on complexity indicators
+            if (wordCount > 200) hours += 1;
+            if (text.toLowerCase().includes('multiple') || text.toLowerCase().includes('several')) hours += 0.5;
+
+            return Math.round(hours * 2) / 2; // Round to nearest 0.5
+        }
+
+        // Display results
+        function displayResults(analysis) {
+            // Keywords
+            const keywordsHtml = Object.keys(analysis.keywords).length > 0 ? `
+                <div class="keywords-detected">
+                    <h4>🔍 Keywords Detected</h4>
+                    <div class="keyword-list">
+                        ${Object.entries(analysis.keywords).map(([tool, keywords]) =>
+                            keywords.map(k => `<span class="keyword">${k}</span>`).join('')
+                        ).join('')}
+                    </div>
+                </div>
+            ` : '';
+            document.getElementById('keywordsSection').innerHTML = keywordsHtml;
+
+            // Tool recommendations
+            const toolNames = {
+                copilot: 'GitHub Copilot',
+                chatgpt: 'ChatGPT',
+                claude: 'Claude',
+                gemini: 'Google Gemini'
+            };
+
+            const toolReasons = {
+                copilot: 'Excellent for code implementation and autocomplete',
+                chatgpt: 'Great for debugging and explanations',
+                claude: 'Best for design and architectural decisions',
+                gemini: 'Ideal for research and documentation'
+            };
+
+            document.getElementById('toolTags').innerHTML = `
+                <span class="tool-tag primary">Primary: ${toolNames[analysis.primary.tool]}</span>
+                <span class="tool-tag secondary">Secondary: ${toolNames[analysis.secondary.tool]}</span>
+            `;
+
+            document.getElementById('toolReasoning').innerHTML = `
+                <p><strong>Primary Tool:</strong> ${toolReasons[analysis.primary.tool]}</p>
+                <p><strong>Secondary Tool:</strong> ${toolReasons[analysis.secondary.tool]}</p>
+            `;
+
+            // Workflow
+            document.getElementById('workflowSteps').innerHTML = analysis.workflow.map((step, index) => `
+                <div class="step-card">
+                    <div class="step-header">
+                        <div class="step-number">${index + 1}</div>
+                        <div class="step-title">
+                            <h4>${step.title}</h4>
+                            <div class="step-tool">Tool: ${step.tool}</div>
+                        </div>
+                    </div>
+                    <div class="step-description">${step.description}</div>
+                    <div class="prompt-card">
+                        <span class="prompt-label">📋 Copy-Ready Prompt:</span>
+                        <button class="copy-btn" onclick="copyPrompt(this, \`${step.prompt.replace(/`/g, '\\`')}\`)">Copy</button>
+                        <div class="prompt-text">${step.prompt}</div>
+                    </div>
+                </div>
+            `).join('');
+
+            // Time estimate
+            document.getElementById('timeEstimate').innerHTML = `
+                ⏱️ Estimated Time: ${analysis.timeEstimate} hours
+            `;
+        }
+
+        // Copy prompt
+        function copyPrompt(button, text) {
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = button.textContent;
+                button.textContent = '✓ Copied!';
+                button.style.background = 'var(--success)';
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.style.background = 'var(--primary)';
+                }, 2000);
+            });
+        }
+
+        // Load example
+        function loadExample(type) {
+            document.getElementById('assignmentInput').value = examples[type];
+        }
+
+        // Clear input
+        function clearInput() {
+            document.getElementById('assignmentInput').value = '';
+            document.getElementById('results').classList.remove('active');
+        }
+
+        // Dark mode
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            localStorage.setItem('darkMode', isDark);
+            updateToggleButton();
+        }
+
+        function updateToggleButton() {
+            const btn = document.querySelector('.dark-mode-toggle');
+            const isDark = document.body.classList.contains('dark-mode');
+            btn.textContent = isDark ? '☀️ Light Mode' : '🌓 Dark Mode';
+        }
+
+        function loadDarkMode() {
+            const savedMode = localStorage.getItem('darkMode');
+            if (savedMode === 'true') {
+                document.body.classList.add('dark-mode');
+            }
+            updateToggleButton();
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', loadDarkMode);
+    </script>
+</body>
+</html>

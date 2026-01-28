@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Playground | CIT AI Tools Guide</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #667eea;
+            --primary-dark: #764ba2;
+            --navy: #1a1a2e;
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --danger: #d63031;
+            --gray-light: #f5f7fa;
+            --text-dark: #2c3e50;
+            --border: #e1e8ed;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+
+        body.dark-mode {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        }
+
+        body.dark-mode .container { background: #2c3e50; color: #ecf0f1; }
+        body.dark-mode .header { background: linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 100%); }
+        body.dark-mode .controls { background: #1e2a38; }
+        body.dark-mode .code-editor, body.dark-mode .response-card {
+            background: #34495e;
+            border-color: #4a5f7f;
+            color: #ecf0f1;
+        }
+        body.dark-mode textarea { background: #2c3e50; color: #ecf0f1; }
+        body.dark-mode select { background: #34495e; color: #ecf0f1; border-color: #4a5f7f; }
+        body.dark-mode .callout { background: #2c3e50; border-color: #4a5f7f; }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--navy) 0%, #16213e 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .header p { font-size: 1.1em; opacity: 0.95; }
+
+        .dark-mode-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .dark-mode-toggle:hover { background: rgba(255,255,255,0.3); }
+
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover { background: rgba(255,255,255,0.3); }
+
+        .controls {
+            padding: 30px;
+            background: var(--gray-light);
+            border-bottom: 2px solid var(--border);
+        }
+
+        .control-row {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .control-group label {
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        select {
+            padding: 10px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            min-height: 600px;
+        }
+
+        .editor-panel {
+            padding: 30px;
+            border-right: 2px solid var(--border);
+        }
+
+        body.dark-mode .editor-panel { border-color: #4a5f7f; }
+
+        .responses-panel {
+            padding: 30px;
+            overflow-y: auto;
+            max-height: 800px;
+        }
+
+        .code-editor {
+            background: #f8f9fa;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .code-editor h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 400px;
+            padding: 15px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            resize: vertical;
+            background: white;
+        }
+
+        .response-grid {
+            display: grid;
+            gap: 20px;
+        }
+
+        .response-card {
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 25px;
+            transition: all 0.3s;
+        }
+
+        .response-card:hover {
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+        }
+
+        .response-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        body.dark-mode .response-header { border-color: #4a5f7f; }
+
+        .tool-icon {
+            font-size: 2em;
+        }
+
+        .tool-info h4 {
+            color: var(--primary);
+            font-size: 1.3em;
+            margin-bottom: 3px;
+        }
+
+        .tool-meta {
+            font-size: 0.85em;
+            color: #7f8c8d;
+        }
+
+        body.dark-mode .tool-meta { color: #bdc3c7; }
+
+        .response-content {
+            background: var(--gray-light);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 0.95em;
+            line-height: 1.7;
+        }
+
+        body.dark-mode .response-content { background: #2c3e50; }
+
+        .response-code {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.5;
+            overflow-x: auto;
+            margin-top: 10px;
+        }
+
+        .response-characteristics {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .characteristic {
+            background: var(--primary);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .characteristic.speed { background: var(--success); }
+        .characteristic.depth { background: var(--warning); }
+        .characteristic.style { background: #e74c3c; }
+
+        .callout {
+            background: #fff3cd;
+            border-left: 4px solid var(--warning);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .callout h4 {
+            color: var(--warning);
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+
+        .callout p {
+            color: var(--text-dark);
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        body.dark-mode .callout p { color: #2c3e50; }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #7f8c8d;
+        }
+
+        .empty-state-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        @media (max-width: 1200px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+            .editor-panel {
+                border-right: none;
+                border-bottom: 2px solid var(--border);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.8em; }
+            .controls { padding: 20px; }
+            .editor-panel, .responses-panel { padding: 20px; }
+            .dark-mode-toggle, .back-btn {
+                position: static;
+                display: block;
+                margin: 10px auto;
+            }
+        }
+
+        @media print {
+            body { background: white; }
+            .container { box-shadow: none; }
+            .dark-mode-toggle, .back-btn, .btn, .controls { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <a href="index.html" class="back-btn">← Back to Guide</a>
+            <button class="dark-mode-toggle" onclick="toggleDarkMode()" aria-label="Toggle dark mode">🌓 Dark Mode</button>
+            <h1>💻 Code Playground</h1>
+            <p>Interactive AI tool response simulator</p>
+        </header>
+
+        <div class="controls">
+            <div class="control-row">
+                <div class="control-group">
+                    <label for="taskSelect">Task Type:</label>
+                    <select id="taskSelect">
+                        <option value="debugging">Debugging</option>
+                        <option value="writing">Writing New Code</option>
+                        <option value="refactoring">Refactoring</option>
+                        <option value="learning">Learning/Explanation</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label for="scenarioSelect">Load Sample:</label>
+                    <select id="scenarioSelect" onchange="loadScenario()">
+                        <option value="">Choose a scenario...</option>
+                        <option value="arraylist-bug">ArrayList Bug</option>
+                        <option value="binary-search">Binary Search Implementation</option>
+                        <option value="if-else-chain">Refactor If-Else Chain</option>
+                        <option value="inheritance">Explain Inheritance</option>
+                    </select>
+                </div>
+                <button class="btn" onclick="simulateResponses()">🤖 Simulate All Tools</button>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="editor-panel">
+                <div class="code-editor">
+                    <h3>Your Code</h3>
+                    <textarea id="codeInput" placeholder="Paste your code here or load a sample scenario...">// Write or paste your code here
+// Or select a sample scenario from the dropdown above</textarea>
+                </div>
+
+                <div class="callout">
+                    <h4>💡 How This Works</h4>
+                    <p>This playground simulates how different AI tools would respond to your code. Each tool has a different approach, speed, and style. Use this to understand which tool fits your needs best before using the real thing!</p>
+                </div>
+            </div>
+
+            <div class="responses-panel">
+                <div id="responsesContainer">
+                    <div class="empty-state">
+                        <div class="empty-state-icon">🤖</div>
+                        <p><strong>Ready to simulate!</strong></p>
+                        <p>Enter your code or load a sample scenario, then click "Simulate All Tools" to see how each AI assistant would respond.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample scenarios
+        const scenarios = {
+            'arraylist-bug': {
+                code: `// Bug: IndexOutOfBoundsException
+import java.util.ArrayList;
+
+public class StudentManager {
+    private ArrayList<String> students = new ArrayList<>();
+
+    public void addStudent(String name) {
+        students.add(name);
+    }
+
+    public String getStudent(int index) {
+        return students.get(index + 1); // Bug here!
+    }
+
+    public static void main(String[] args) {
+        StudentManager sm = new StudentManager();
+        sm.addStudent("Alice");
+        System.out.println(sm.getStudent(0)); // Crashes!
+    }
+}`,
+                task: 'debugging'
+            },
+            'binary-search': {
+                code: `// TODO: Implement binary search
+public class BinarySearch {
+
+    // Implement this method to search for target in sorted array
+    public static int binarySearch(int[] arr, int target) {
+        // Your code here
+        return -1;
+    }
+
+    public static void main(String[] args) {
+        int[] numbers = {1, 3, 5, 7, 9, 11, 13};
+        System.out.println(binarySearch(numbers, 7)); // Should return 3
+    }
+}`,
+                task: 'writing'
+            },
+            'if-else-chain': {
+                code: `// Messy grade calculator
+public class GradeCalculator {
+    public String getLetterGrade(int score) {
+        if (score >= 90) {
+            return "A";
+        } else {
+            if (score >= 80) {
+                return "B";
+            } else {
+                if (score >= 70) {
+                    return "C";
+                } else {
+                    if (score >= 60) {
+                        return "D";
+                    } else {
+                        return "F";
+                    }
+                }
+            }
+        }
+    }
+}`,
+                task: 'refactoring'
+            },
+            'inheritance': {
+                code: `// Can someone explain this inheritance code?
+class Animal {
+    protected String name;
+
+    public Animal(String name) {
+        this.name = name;
+    }
+
+    public void makeSound() {
+        System.out.println("Some sound");
+    }
+}
+
+class Dog extends Animal {
+    public Dog(String name) {
+        super(name);
+    }
+
+    @Override
+    public void makeSound() {
+        System.out.println("Woof!");
+    }
+}`,
+                task: 'learning'
+            }
+        };
+
+        // AI tool responses
+        const responses = {
+            debugging: {
+                copilot: {
+                    icon: '🔧',
+                    name: 'GitHub Copilot',
+                    meta: 'Fast inline suggestion',
+                    content: 'I see the issue immediately! Line 11 has an off-by-one error.',
+                    code: `public String getStudent(int index) {
+    return students.get(index); // Fixed: removed + 1
+}`,
+                    explanation: 'Copilot gives you a quick inline fix. It\'s fastest for obvious bugs and works right in your editor.',
+                    characteristics: ['⚡ Fast', '🎯 Direct', '💻 IDE-Integrated']
+                },
+                chatgpt: {
+                    icon: '💬',
+                    name: 'ChatGPT',
+                    meta: 'Detailed explanation with fix',
+                    content: 'You have an IndexOutOfBoundsException on line 11. The problem is you\'re adding 1 to the index, which causes you to access an element beyond the ArrayList size.\n\nWhen you call getStudent(0), it tries to access students.get(1), but there\'s only one element at index 0.',
+                    code: `public String getStudent(int index) {
+    return students.get(index); // Remove the + 1
+}`,
+                    explanation: 'ChatGPT explains WHY the bug exists and helps you understand the root cause. Great for learning.',
+                    characteristics: ['📚 Educational', '🔍 Detailed', '💡 Explains Why']
+                },
+                claude: {
+                    icon: '🎯',
+                    name: 'Claude',
+                    meta: 'Comprehensive analysis with best practices',
+                    content: 'I notice an off-by-one error on line 11. Let me explain the issue and suggest improvements:\n\n1. The immediate problem: Adding 1 to the index causes IndexOutOfBoundsException\n2. Deeper issue: No bounds checking could cause crashes\n3. Best practice: Add validation',
+                    code: `public String getStudent(int index) {
+    if (index < 0 || index >= students.size()) {
+        throw new IllegalArgumentException("Invalid index: " + index);
+    }
+    return students.get(index);
+}`,
+                    explanation: 'Claude not only fixes the bug but suggests defensive programming practices. Best for production-quality code.',
+                    characteristics: ['🛡️ Safety-Focused', '📋 Best Practices', '🎓 Teaches Patterns']
+                },
+                gemini: {
+                    icon: '🔮',
+                    name: 'Google Gemini',
+                    meta: 'Multi-perspective analysis',
+                    content: 'This IndexOutOfBoundsException is a common ArrayList pitfall. Let me show you multiple solutions:\n\nOption 1: Simple fix (remove + 1)\nOption 2: Use Optional for null-safety\nOption 3: Add bounds validation\n\nI also found that ArrayList documentation suggests...',
+                    code: `// Option 1: Simple fix
+public String getStudent(int index) {
+    return students.get(index);
+}
+
+// Option 2: Safer approach
+public Optional<String> getStudent(int index) {
+    return index >= 0 && index < students.size()
+        ? Optional.of(students.get(index))
+        : Optional.empty();
+}`,
+                    explanation: 'Gemini provides multiple solutions and references documentation. Great for research and seeing different approaches.',
+                    characteristics: ['🌐 Research-Oriented', '📊 Multiple Options', '🔗 Context-Aware']
+                }
+            },
+            writing: {
+                copilot: {
+                    icon: '🔧',
+                    name: 'GitHub Copilot',
+                    meta: 'Autocomplete-style implementation',
+                    content: 'Here\'s a binary search implementation:',
+                    code: `public static int binarySearch(int[] arr, int target) {
+    int left = 0, right = arr.length - 1;
+    while (left <= right) {
+        int mid = left + (right - left) / 2;
+        if (arr[mid] == target) return mid;
+        if (arr[mid] < target) left = mid + 1;
+        else right = mid - 1;
+    }
+    return -1;
+}`,
+                    explanation: 'Copilot writes code quickly as you type. Perfect for implementing standard algorithms you already understand.',
+                    characteristics: ['⚡ Instant', '🎯 Code-Focused', '⌨️ Autocomplete']
+                },
+                chatgpt: {
+                    icon: '💬',
+                    name: 'ChatGPT',
+                    meta: 'Step-by-step implementation with explanation',
+                    content: 'I\'ll implement binary search with detailed comments explaining each step:',
+                    code: `public static int binarySearch(int[] arr, int target) {
+    // Initialize search boundaries
+    int left = 0;
+    int right = arr.length - 1;
+
+    // Continue while search space is valid
+    while (left <= right) {
+        // Calculate middle index (prevents overflow)
+        int mid = left + (right - left) / 2;
+
+        // Found target!
+        if (arr[mid] == target) {
+            return mid;
+        }
+
+        // Target in right half
+        if (arr[mid] < target) {
+            left = mid + 1;
+        }
+        // Target in left half
+        else {
+            right = mid - 1;
+        }
+    }
+
+    // Target not found
+    return -1;
+}`,
+                    explanation: 'ChatGPT provides commented code that teaches you the algorithm. Excellent for learning new concepts.',
+                    characteristics: ['📚 Teaching-Focused', '💭 Well-Commented', '🎓 Learning Aid']
+                },
+                claude: {
+                    icon: '🎯',
+                    name: 'Claude',
+                    meta: 'Production-ready with test cases',
+                    content: 'Here\'s a robust binary search implementation with error handling and test cases:',
+                    code: `public static int binarySearch(int[] arr, int target) {
+    if (arr == null || arr.length == 0) {
+        throw new IllegalArgumentException("Array cannot be null or empty");
+    }
+
+    int left = 0;
+    int right = arr.length - 1;
+
+    while (left <= right) {
+        int mid = left + (right - left) / 2;
+
+        if (arr[mid] == target) {
+            return mid;
+        } else if (arr[mid] < target) {
+            left = mid + 1;
+        } else {
+            right = mid - 1;
+        }
+    }
+
+    return -1;
+}
+
+// Test cases
+public static void runTests() {
+    assert binarySearch(new int[]{1,3,5,7,9}, 5) == 2;
+    assert binarySearch(new int[]{1,3,5,7,9}, 1) == 0;
+    assert binarySearch(new int[]{1,3,5,7,9}, 9) == 4;
+    assert binarySearch(new int[]{1,3,5,7,9}, 4) == -1;
+}`,
+                    explanation: 'Claude writes production-quality code with validation and tests. Best for real projects.',
+                    characteristics: ['🛡️ Robust', '✅ Tested', '🏗️ Production-Ready']
+                },
+                gemini: {
+                    icon: '🔮',
+                    name: 'Google Gemini',
+                    meta: 'Algorithmic context and variations',
+                    content: 'Binary search is an O(log n) divide-and-conquer algorithm. Here\'s the implementation with recursive and iterative versions:',
+                    code: `// Iterative version (recommended for efficiency)
+public static int binarySearch(int[] arr, int target) {
+    int left = 0, right = arr.length - 1;
+    while (left <= right) {
+        int mid = left + (right - left) / 2;
+        if (arr[mid] == target) return mid;
+        if (arr[mid] < target) left = mid + 1;
+        else right = mid - 1;
+    }
+    return -1;
+}
+
+// Recursive version (conceptually clearer)
+public static int binarySearchRecursive(int[] arr, int target, int left, int right) {
+    if (left > right) return -1;
+    int mid = left + (right - left) / 2;
+    if (arr[mid] == target) return mid;
+    if (arr[mid] < target) return binarySearchRecursive(arr, target, mid + 1, right);
+    return binarySearchRecursive(arr, target, left, mid - 1);
+}
+
+// Time: O(log n), Space: O(1) iterative, O(log n) recursive`,
+                    explanation: 'Gemini provides algorithmic context and multiple approaches. Great for understanding computer science concepts.',
+                    characteristics: ['📊 Theoretical', '🔬 Multiple Versions', '📈 Complexity Analysis']
+                }
+            },
+            refactoring: {
+                copilot: {
+                    icon: '🔧',
+                    name: 'GitHub Copilot',
+                    meta: 'Quick cleanup',
+                    content: 'Here\'s a cleaner version:',
+                    code: `public String getLetterGrade(int score) {
+    if (score >= 90) return "A";
+    if (score >= 80) return "B";
+    if (score >= 70) return "C";
+    if (score >= 60) return "D";
+    return "F";
+}`,
+                    explanation: 'Copilot gives you a fast refactor. Simple and effective for straightforward cleanups.',
+                    characteristics: ['⚡ Quick', '🎯 Direct', '✨ Clean']
+                },
+                chatgpt: {
+                    icon: '💬',
+                    name: 'ChatGPT',
+                    meta: 'Explained refactoring',
+                    content: 'This nested if-else chain is hard to read. Here\'s a better approach with explanations:',
+                    code: `public String getLetterGrade(int score) {
+    // Use early returns for clarity
+    // Check from highest to lowest grade
+    if (score >= 90) return "A";
+    if (score >= 80) return "B";
+    if (score >= 70) return "C";
+    if (score >= 60) return "D";
+    return "F";
+
+    // Benefits:
+    // 1. Removes deep nesting
+    // 2. Each condition is clear
+    // 3. Easy to add/remove grades
+}`,
+                    explanation: 'ChatGPT explains WHY the refactor improves the code. Helps you learn good patterns.',
+                    characteristics: ['📚 Educational', '💡 Explains Benefits', '🎓 Pattern Teaching']
+                },
+                claude: {
+                    icon: '🎯',
+                    name: 'Claude',
+                    meta: 'Multiple refactoring options',
+                    content: 'Let me show you several refactoring approaches with trade-offs:',
+                    code: `// Option 1: Early returns (recommended)
+public String getLetterGrade(int score) {
+    if (score >= 90) return "A";
+    if (score >= 80) return "B";
+    if (score >= 70) return "C";
+    if (score >= 60) return "D";
+    return "F";
+}
+
+// Option 2: Switch expression (Java 14+)
+public String getLetterGrade(int score) {
+    return switch (score / 10) {
+        case 10, 9 -> "A";
+        case 8 -> "B";
+        case 7 -> "C";
+        case 6 -> "D";
+        default -> "F";
+    };
+}
+
+// Option 3: Array lookup (if grades are sequential)
+private static final String[] GRADES = {"F", "F", "F", "F", "F", "F", "D", "C", "B", "A", "A"};
+public String getLetterGrade(int score) {
+    int index = Math.min(Math.max(score / 10, 0), 10);
+    return GRADES[index];
+}`,
+                    explanation: 'Claude provides multiple refactoring strategies with trade-offs. Best for understanding design decisions.',
+                    characteristics: ['🔄 Multiple Options', '⚖️ Trade-offs', '🏗️ Design-Focused']
+                },
+                gemini: {
+                    icon: '🔮',
+                    name: 'Google Gemini',
+                    meta: 'Pattern-based refactoring',
+                    content: 'This is an example of the "Arrow Anti-Pattern". Here are modern Java approaches:',
+                    code: `// Refactored with early returns
+public String getLetterGrade(int score) {
+    if (score >= 90) return "A";
+    if (score >= 80) return "B";
+    if (score >= 70) return "C";
+    if (score >= 60) return "D";
+    return "F";
+}
+
+// Alternative: Strategy Pattern (for complex grading systems)
+interface GradingStrategy {
+    String getGrade(int score);
+}
+
+// Note: The Arrow Anti-Pattern (deep nesting) makes code:
+// - Hard to read (cognitive overhead)
+// - Difficult to test
+// - Prone to bugs
+//
+// Best practice: Keep cyclomatic complexity low
+// This refactor reduces complexity from 5 to 5 (same branches but cleaner)`,
+                    explanation: 'Gemini identifies the anti-pattern and explains broader software engineering principles.',
+                    characteristics: ['📚 Pattern Recognition', '🔍 Anti-Pattern ID', '🎯 Principle-Based']
+                }
+            },
+            learning: {
+                copilot: {
+                    icon: '🔧',
+                    name: 'GitHub Copilot',
+                    meta: 'Brief comment',
+                    content: 'Copilot adds inline comments:',
+                    code: `// Base class for all animals
+class Animal {
+    protected String name; // Accessible to subclasses
+
+    public Animal(String name) {
+        this.name = name;
+    }
+
+    // Default sound method (can be overridden)
+    public void makeSound() {
+        System.out.println("Some sound");
+    }
+}
+
+// Dog inherits from Animal
+class Dog extends Animal {
+    public Dog(String name) {
+        super(name); // Call parent constructor
+    }
+
+    // Override parent method with dog-specific behavior
+    @Override
+    public void makeSound() {
+        System.out.println("Woof!");
+    }
+}`,
+                    explanation: 'Copilot adds quick comments to existing code. Good for fast annotations.',
+                    characteristics: ['⚡ Quick', '💬 Brief', '📝 Annotates']
+                },
+                chatgpt: {
+                    icon: '💬',
+                    name: 'ChatGPT',
+                    meta: 'Detailed explanation',
+                    content: 'Great question! Let me explain inheritance step by step:\n\n1. **Base Class (Animal)**: This is the parent class that defines common properties (name) and behaviors (makeSound) that all animals share.\n\n2. **Inheritance (extends)**: The Dog class inherits from Animal, meaning it automatically gets all of Animal\'s properties and methods.\n\n3. **Constructor Chain (super)**: When creating a Dog, we call super(name) to initialize the parent Animal part first.\n\n4. **Method Overriding (@Override)**: Dog provides its own implementation of makeSound(). This is polymorphism - the Dog version replaces the Animal version.\n\n5. **Protected Keyword**: The name field is protected, meaning subclasses can access it but external classes cannot.\n\nThink of it like this: All dogs ARE animals, but they have their own specific behaviors. Inheritance lets us model this "is-a" relationship!',
+                    code: `// Usage example:
+Animal myAnimal = new Animal("Generic");
+myAnimal.makeSound(); // Prints: "Some sound"
+
+Dog myDog = new Dog("Buddy");
+myDog.makeSound(); // Prints: "Woof!"
+
+// Polymorphism in action:
+Animal polymorphicDog = new Dog("Max");
+polymorphicDog.makeSound(); // Prints: "Woof!" (uses Dog's version)`,
+                    explanation: 'ChatGPT excels at teaching. It breaks down concepts with analogies and examples.',
+                    characteristics: ['🎓 Teaching', '📚 Detailed', '💡 Analogies']
+                },
+                claude: {
+                    icon: '🎯',
+                    name: 'Claude',
+                    meta: 'Comprehensive explanation with best practices',
+                    content: 'This code demonstrates object-oriented inheritance. Let me explain the key concepts and some important considerations:\n\n**Core Concepts:**\n1. Inheritance creates an "is-a" relationship (Dog is-a Animal)\n2. Code reuse: Dog gets name and Animal constructor for free\n3. Polymorphism: Dog can override Animal behaviors\n\n**Best Practices Shown:**\n- Using @Override annotation (catches typos, improves readability)\n- Protected vs private fields (controlled access for subclasses)\n- Calling super() to initialize parent state\n\n**Things to Consider:**\n- Composition over inheritance: Sometimes "has-a" is better than "is-a"\n- Liskov Substitution Principle: A Dog should work anywhere an Animal does\n- Sealed classes (Java 17+): Control which classes can inherit',
+                    code: `// Extended example with best practices:
+abstract class Animal {
+    protected final String name; // Immutable after construction
+
+    protected Animal(String name) {
+        if (name == null || name.isEmpty()) {
+            throw new IllegalArgumentException("Name required");
+        }
+        this.name = name;
+    }
+
+    public abstract void makeSound(); // Force subclasses to implement
+
+    public final String getName() { // Prevent override
+        return name;
+    }
+}
+
+class Dog extends Animal {
+    private final String breed; // Dog-specific property
+
+    public Dog(String name, String breed) {
+        super(name);
+        this.breed = breed;
+    }
+
+    @Override
+    public void makeSound() {
+        System.out.println(name + " the " + breed + " says: Woof!");
+    }
+}`,
+                    explanation: 'Claude provides comprehensive explanations with design principles and best practices.',
+                    characteristics: ['🏗️ Architecture', '📋 Best Practices', '⚖️ Trade-offs']
+                },
+                gemini: {
+                    icon: '🔮',
+                    name: 'Google Gemini',
+                    meta: 'Research-backed explanation',
+                    content: 'Inheritance is one of the four pillars of OOP (along with encapsulation, polymorphism, and abstraction). This example demonstrates:\n\n**Historical Context:**\nInheritance comes from Simula (1960s) and was popularized by Smalltalk. Java uses single inheritance (one parent) unlike C++ which allows multiple inheritance.\n\n**Technical Details:**\n- Virtual Method Table (vtable): JVM uses this for dynamic dispatch\n- Method Resolution: JVM searches from subclass up to Object\n- Memory Layout: Dog objects contain Animal fields plus Dog fields\n\n**Modern Alternatives:**\n- Interfaces (behavior contracts)\n- Composition (prefer in many cases)\n- Mixins/Traits (other languages)\n\n**Related Concepts:**\n- SOLID Principles (especially LSP)\n- Design Patterns (Template Method, Strategy)\n- Type hierarchies and polymorphism',
+                    code: `// Your code with type hierarchy visualization:
+Object  // Root of all Java classes
+  └─ Animal (your base class)
+       └─ Dog (your subclass)
+
+// Polymorphism demo:
+Animal[] zoo = new Animal[3];
+zoo[0] = new Animal("Generic");
+zoo[1] = new Dog("Buddy");
+zoo[2] = new Dog("Max");
+
+for (Animal a : zoo) {
+    a.makeSound(); // Different behavior per type!
+}
+
+// Method resolution order:
+// When calling dog.makeSound():
+// 1. Check Dog class - found! Use it.
+// 2. If not found, check Animal
+// 3. If not found, check Object
+// 4. Compile error if never found`,
+                    explanation: 'Gemini provides deep context, historical background, and connects concepts to broader CS knowledge.',
+                    characteristics: ['🔬 Research', '📚 Context', '🌐 Connections']
+                }
+            }
+        };
+
+        // Load scenario
+        function loadScenario() {
+            const scenario = document.getElementById('scenarioSelect').value;
+            if (scenario && scenarios[scenario]) {
+                document.getElementById('codeInput').value = scenarios[scenario].code;
+                document.getElementById('taskSelect').value = scenarios[scenario].task;
+            }
+        }
+
+        // Simulate responses
+        function simulateResponses() {
+            const code = document.getElementById('codeInput').value.trim();
+            const task = document.getElementById('taskSelect').value;
+
+            if (!code || code === '// Write or paste your code here\n// Or select a sample scenario from the dropdown above') {
+                alert('Please enter some code or load a sample scenario first!');
+                return;
+            }
+
+            const container = document.getElementById('responsesContainer');
+            const taskResponses = responses[task];
+
+            container.innerHTML = `
+                <div class="callout">
+                    <h4>🎯 Task: ${task.charAt(0).toUpperCase() + task.slice(1)}</h4>
+                    <p>Each AI tool approaches this ${task} task differently. Compare their responses below:</p>
+                </div>
+                <div class="response-grid">
+                    ${Object.entries(taskResponses).map(([key, tool]) => `
+                        <div class="response-card">
+                            <div class="response-header">
+                                <div class="tool-icon">${tool.icon}</div>
+                                <div class="tool-info">
+                                    <h4>${tool.name}</h4>
+                                    <div class="tool-meta">${tool.meta}</div>
+                                </div>
+                            </div>
+                            <div class="response-content">
+                                ${tool.content}
+                            </div>
+                            ${tool.code ? `<div class="response-code">${escapeHtml(tool.code)}</div>` : ''}
+                            <div class="callout" style="margin-top: 15px;">
+                                <h4>Why this response?</h4>
+                                <p>${tool.explanation}</p>
+                            </div>
+                            <div class="response-characteristics">
+                                ${tool.characteristics.map(c => `<span class="characteristic">${c}</span>`).join('')}
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+
+            // Scroll to responses
+            container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // Helper function
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML.replace(/\n/g, '<br>');
+        }
+
+        // Dark mode
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            localStorage.setItem('darkMode', isDark);
+            updateToggleButton();
+        }
+
+        function updateToggleButton() {
+            const btn = document.querySelector('.dark-mode-toggle');
+            const isDark = document.body.classList.contains('dark-mode');
+            btn.textContent = isDark ? '☀️ Light Mode' : '🌓 Dark Mode';
+        }
+
+        function loadDarkMode() {
+            const savedMode = localStorage.getItem('darkMode');
+            if (savedMode === 'true') {
+                document.body.classList.add('dark-mode');
+            }
+            updateToggleButton();
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', loadDarkMode);
+    </script>
+</body>
+</html>

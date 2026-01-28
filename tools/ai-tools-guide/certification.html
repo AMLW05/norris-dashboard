@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Tool Proficiency Certification | CIT</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #667eea;
+            --primary-dark: #764ba2;
+            --navy: #1a1a2e;
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --bronze: #cd7f32;
+            --silver: #c0c0c0;
+            --gold: #ffd700;
+            --gray-light: #f5f7fa;
+            --text-dark: #2c3e50;
+            --border: #e1e8ed;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+
+        body.dark-mode {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        }
+
+        body.dark-mode .container { background: #2c3e50; color: #ecf0f1; }
+        body.dark-mode .header { background: linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 100%); }
+        body.dark-mode .tier-card { background: #34495e; }
+        body.dark-mode .progress-item { background: #1e2a38; }
+        body.dark-mode .quiz-question { background: #34495e; }
+        body.dark-mode .quiz-option { background: #1e2a38; }
+        body.dark-mode .certificate { background: #34495e; }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--navy) 0%, #16213e 100%);
+            color: white;
+            padding: 30px 40px;
+            position: relative;
+        }
+
+        .header h1 { font-size: 2em; margin-bottom: 8px; }
+        .header p { font-size: 1em; opacity: 0.9; }
+
+        .dark-mode-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.3s;
+        }
+
+        .dark-mode-toggle:hover { background: rgba(255,255,255,0.3); }
+
+        .content {
+            padding: 40px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        body.dark-mode .back-link { color: #3498db; }
+        .back-link:hover { text-decoration: underline; }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section h2 {
+            color: var(--primary);
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+
+        .tiers-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .tier-card {
+            background: var(--gray-light);
+            border-radius: 12px;
+            padding: 25px;
+            border: 3px solid transparent;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .tier-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .tier-card.bronze { border-color: var(--bronze); }
+        .tier-card.silver { border-color: var(--silver); }
+        .tier-card.gold { border-color: var(--gold); }
+
+        .tier-card.earned {
+            background: linear-gradient(135deg, rgba(0, 184, 148, 0.1) 0%, rgba(0, 184, 148, 0.2) 100%);
+        }
+
+        .tier-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .tier-badge {
+            font-size: 3em;
+        }
+
+        .tier-info h3 {
+            font-size: 1.5em;
+            margin-bottom: 5px;
+        }
+
+        .tier-info p {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+
+        .requirements {
+            list-style: none;
+            padding: 0;
+        }
+
+        .requirements li {
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .requirements li:last-child { border-bottom: none; }
+
+        .check {
+            color: var(--success);
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .uncheck {
+            color: #ccc;
+            font-size: 1.2em;
+        }
+
+        .progress-tracker {
+            background: var(--gray-light);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+
+        body.dark-mode .progress-tracker { background: #34495e; }
+
+        .progress-item {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .progress-bar {
+            flex: 1;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            margin: 0 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--success));
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .quiz-container {
+            background: var(--gray-light);
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+
+        body.dark-mode .quiz-container { background: #34495e; }
+
+        .quiz-question {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .quiz-question h4 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .quiz-options {
+            display: grid;
+            gap: 10px;
+        }
+
+        .quiz-option {
+            background: var(--gray-light);
+            padding: 12px 18px;
+            border-radius: 8px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .quiz-option:hover {
+            border-color: var(--primary);
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .quiz-option.selected {
+            border-color: var(--primary);
+            background: rgba(102, 126, 234, 0.2);
+        }
+
+        .quiz-option.correct {
+            border-color: var(--success);
+            background: rgba(0, 184, 148, 0.2);
+        }
+
+        .quiz-option.incorrect {
+            border-color: #d63031;
+            background: rgba(214, 48, 49, 0.2);
+        }
+
+        .quiz-result {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        body.dark-mode .quiz-result { background: #34495e; }
+
+        .quiz-score {
+            font-size: 3em;
+            font-weight: bold;
+            color: var(--success);
+            margin: 20px 0;
+        }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-block;
+            margin: 5px;
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background: var(--success);
+        }
+
+        .btn-success:hover {
+            background: #00a883;
+        }
+
+        .certificate {
+            background: white;
+            border: 10px solid var(--gold);
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+            margin: 30px auto;
+            max-width: 700px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        .certificate-header {
+            font-size: 2.5em;
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .certificate-badge {
+            font-size: 5em;
+            margin: 20px 0;
+        }
+
+        .certificate-title {
+            font-size: 1.8em;
+            margin: 20px 0;
+            color: var(--text-dark);
+        }
+
+        body.dark-mode .certificate-title { color: #ecf0f1; }
+
+        .certificate-name {
+            font-size: 2.5em;
+            color: var(--gold);
+            font-weight: bold;
+            margin: 15px 0;
+            text-transform: uppercase;
+        }
+
+        .certificate-description {
+            font-size: 1.1em;
+            margin: 20px 0;
+            line-height: 1.8;
+        }
+
+        .certificate-date {
+            margin-top: 30px;
+            font-style: italic;
+            opacity: 0.8;
+        }
+
+        .certificate-skills {
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .skill-badge {
+            background: var(--primary);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+
+        .qr-placeholder {
+            width: 100px;
+            height: 100px;
+            border: 2px dashed #ccc;
+            margin: 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8em;
+            color: #999;
+        }
+
+        .hall-of-fame {
+            background: var(--gray-light);
+            padding: 30px;
+            border-radius: 12px;
+        }
+
+        body.dark-mode .hall-of-fame { background: #34495e; }
+
+        .hall-of-fame h3 {
+            color: var(--gold);
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .fame-list {
+            display: grid;
+            gap: 15px;
+        }
+
+        .fame-item {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        body.dark-mode .fame-item { background: #1e2a38; }
+
+        .linkedin-share {
+            background: #0077b5;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+            transition: all 0.3s;
+        }
+
+        .linkedin-share:hover {
+            background: #006399;
+            transform: translateY(-2px);
+        }
+
+        .name-input-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+        }
+
+        body.dark-mode .modal-content { background: #2c3e50; color: #ecf0f1; }
+
+        .modal-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 1em;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            .content { padding: 20px; }
+            .tiers-container { grid-template-columns: 1fr; }
+            .certificate { padding: 20px; border-width: 5px; }
+            .certificate-header { font-size: 1.8em; }
+            .certificate-name { font-size: 1.8em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <button class="dark-mode-toggle" onclick="toggleDarkMode()" aria-label="Toggle dark mode">🌓 Dark Mode</button>
+            <h1>🏆 AI Tool Proficiency Certification</h1>
+            <p>Earn badges by mastering AI tools for programming</p>
+        </header>
+
+        <div class="content">
+            <a href="index.html" class="back-link">← Back to AI Tools Guide</a>
+
+            <section class="section">
+                <h2>Certification Tiers</h2>
+                <div class="tiers-container">
+                    <div class="tier-card bronze" id="bronzeTier">
+                        <div class="tier-header">
+                            <div class="tier-badge">🥉</div>
+                            <div class="tier-info">
+                                <h3>Bronze</h3>
+                                <p>Foundation Level</p>
+                            </div>
+                        </div>
+                        <ul class="requirements" id="bronzeReqs">
+                            <li><span class="uncheck">☐</span> Complete comparison guide</li>
+                            <li><span class="uncheck">☐</span> Use decision tool</li>
+                            <li><span class="uncheck">☐</span> Log 5 tasks (0/5)</li>
+                        </ul>
+                    </div>
+
+                    <div class="tier-card silver" id="silverTier">
+                        <div class="tier-header">
+                            <div class="tier-badge">🥈</div>
+                            <div class="tier-info">
+                                <h3>Silver</h3>
+                                <p>Intermediate Level</p>
+                            </div>
+                        </div>
+                        <ul class="requirements" id="silverReqs">
+                            <li><span class="uncheck">☐</span> Complete all tool guides</li>
+                            <li><span class="uncheck">☐</span> Log 15 tasks (0/15)</li>
+                            <li><span class="uncheck">☐</span> Pass quiz (70%+)</li>
+                        </ul>
+                    </div>
+
+                    <div class="tier-card gold" id="goldTier">
+                        <div class="tier-header">
+                            <div class="tier-badge">🥇</div>
+                            <div class="tier-info">
+                                <h3>Gold</h3>
+                                <p>Expert Level</p>
+                            </div>
+                        </div>
+                        <ul class="requirements" id="goldReqs">
+                            <li><span class="uncheck">☐</span> All Silver requirements</li>
+                            <li><span class="uncheck">☐</span> Log 30 tasks (0/30)</li>
+                            <li><span class="uncheck">☐</span> Pass advanced quiz (80%+)</li>
+                            <li><span class="uncheck">☐</span> Submit testimonial</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>Your Progress</h2>
+                <div class="progress-tracker">
+                    <div class="progress-item">
+                        <strong>Logged Tasks:</strong>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="taskProgress" style="width: 0%"></div>
+                        </div>
+                        <span id="taskCount">0/30</span>
+                    </div>
+                    <div class="progress-item">
+                        <strong>Quiz Score:</strong>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="quizProgress" style="width: 0%"></div>
+                        </div>
+                        <span id="quizScore">Not taken</span>
+                    </div>
+                </div>
+                <button class="btn" onclick="showTaskLogger()">📝 Log a Task</button>
+                <button class="btn" onclick="viewTaskLog()">📊 View Task Log</button>
+            </section>
+
+            <section class="section" id="quizSection">
+                <h2>Proficiency Quiz</h2>
+                <div class="quiz-container" id="quizContainer">
+                    <p style="margin-bottom: 20px;">Test your knowledge of AI tools! Complete the quiz to earn Silver certification.</p>
+                    <button class="btn btn-success" onclick="startQuiz()">Start Quiz 🚀</button>
+                </div>
+            </section>
+
+            <section class="section" id="certificateSection" style="display: none;">
+                <h2>Your Certificate</h2>
+                <div class="certificate" id="certificate">
+                    <div class="certificate-header">FTCC Computer Information Technology</div>
+                    <div class="certificate-badge" id="certBadge">🥉</div>
+                    <div class="certificate-title">Certificate of Proficiency</div>
+                    <div class="certificate-name" id="certName">YOUR NAME</div>
+                    <div class="certificate-description">
+                        has demonstrated proficiency in AI Tool Selection<br>
+                        for Computer Programming and achieved<br>
+                        <strong id="certTier">Bronze</strong> Level Certification
+                    </div>
+                    <div class="certificate-skills">
+                        <span class="skill-badge">GitHub Copilot</span>
+                        <span class="skill-badge">ChatGPT</span>
+                        <span class="skill-badge">Claude AI</span>
+                        <span class="skill-badge">Google Gemini</span>
+                    </div>
+                    <div class="qr-placeholder">QR Code</div>
+                    <div class="certificate-date" id="certDate">Date Earned: TBD</div>
+                </div>
+                <button class="btn btn-success" onclick="downloadCertificate()">Download Certificate 📥</button>
+                <a href="#" class="linkedin-share" onclick="shareLinkedIn()">
+                    💼 Share on LinkedIn
+                </a>
+            </section>
+
+            <section class="section">
+                <div class="hall-of-fame">
+                    <h3>🌟 Hall of Fame - Gold Badge Earners</h3>
+                    <div class="fame-list" id="fameList">
+                        <p style="text-align: center; opacity: 0.7;">Be the first to earn Gold!</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <div class="name-input-modal" id="nameModal">
+        <div class="modal-content">
+            <h2>Generate Your Certificate</h2>
+            <p>Enter your name to create your personalized certificate:</p>
+            <input type="text" class="modal-input" id="nameInput" placeholder="Your Full Name">
+            <button class="btn btn-success" onclick="generateCertificate()">Generate Certificate</button>
+        </div>
+    </div>
+
+    <script>
+        // Quiz questions
+        const quizQuestions = [
+            {
+                question: "You need to analyze an entire codebase with 20+ files. Which tool is best?",
+                options: ["GitHub Copilot", "ChatGPT", "Claude", "Google Gemini"],
+                correct: 2,
+                explanation: "Claude has a 200K token context window, perfect for analyzing entire projects."
+            },
+            {
+                question: "You want real-time coding suggestions in VS Code. Which tool?",
+                options: ["ChatGPT", "Claude", "GitHub Copilot", "Google Gemini"],
+                correct: 2,
+                explanation: "GitHub Copilot is IDE-integrated and provides real-time autocomplete-style suggestions."
+            },
+            {
+                question: "You need to research current best practices. Which tool has web search?",
+                options: ["GitHub Copilot", "ChatGPT", "Claude", "Google Gemini"],
+                correct: 3,
+                explanation: "Google Gemini has full web search and Deep Research mode for comprehensive analysis."
+            },
+            {
+                question: "Which tool is 100% FREE for FTCC students with the Student Developer Pack?",
+                options: ["ChatGPT Plus", "GitHub Copilot", "Claude Pro", "All of them"],
+                correct: 1,
+                explanation: "GitHub Copilot is completely FREE for students with the GitHub Student Developer Pack."
+            },
+            {
+                question: "You're learning Java inheritance concepts. Which tool provides the best explanations?",
+                options: ["GitHub Copilot", "ChatGPT", "Claude", "Google Gemini"],
+                correct: 1,
+                explanation: "ChatGPT excels at providing clear, conversational explanations for learning concepts."
+            },
+            {
+                question: "Which tool has the LARGEST context window for reading code?",
+                options: ["Copilot (8K)", "ChatGPT (128K)", "Claude (200K)", "Gemini (1M)"],
+                correct: 3,
+                explanation: "Google Gemini has a 1M token context window, the largest among all tools."
+            },
+            {
+                question: "For CSC-114 architecture decisions, which is the PRIMARY recommended tool?",
+                options: ["GitHub Copilot", "ChatGPT", "Claude", "Google Gemini"],
+                correct: 2,
+                explanation: "Claude is recommended for CSC-114 architecture due to its deep analysis capabilities."
+            },
+            {
+                question: "You need to debug a simple syntax error while coding. Which tool is fastest?",
+                options: ["GitHub Copilot", "ChatGPT", "Claude", "Google Gemini"],
+                correct: 0,
+                explanation: "GitHub Copilot provides instant, inline suggestions right in your IDE."
+            },
+            {
+                question: "What's the total monthly cost for all four AI tools with student accounts?",
+                options: ["$10", "$20", "$0", "$70"],
+                correct: 2,
+                explanation: "All four tools have FREE tiers sufficient for coursework - total cost is $0!"
+            },
+            {
+                question: "Which tool is best for understanding design patterns in CSC-114?",
+                options: ["GitHub Copilot", "ChatGPT", "Claude", "All equally good"],
+                correct: 2,
+                explanation: "Claude excels at architectural analysis and can explain design patterns in depth."
+            }
+        ];
+
+        // State
+        let userData = {
+            tasks: [],
+            quizScore: null,
+            quizPassed: false,
+            advancedQuizPassed: false,
+            testimonial: null,
+            earnedTier: null,
+            earnedDate: null,
+            userName: null
+        };
+
+        // Load data
+        function loadData() {
+            const saved = localStorage.getItem('aiCertificationData');
+            if (saved) {
+                userData = { ...userData, ...JSON.parse(saved) };
+                updateUI();
+            }
+        }
+
+        // Save data
+        function saveData() {
+            localStorage.setItem('aiCertificationData', JSON.stringify(userData));
+            updateUI();
+        }
+
+        // Update UI
+        function updateUI() {
+            const taskCount = userData.tasks.length;
+
+            // Update progress
+            document.getElementById('taskCount').textContent = `${taskCount}/30`;
+            document.getElementById('taskProgress').style.width = `${(taskCount / 30) * 100}%`;
+
+            if (userData.quizScore !== null) {
+                document.getElementById('quizScore').textContent = `${userData.quizScore}%`;
+                document.getElementById('quizProgress').style.width = `${userData.quizScore}%`;
+            }
+
+            // Update tier requirements
+            updateTierRequirements();
+
+            // Check for earned tiers
+            checkEarnedTiers();
+
+            // Update hall of fame
+            updateHallOfFame();
+        }
+
+        // Update tier requirements display
+        function updateTierRequirements() {
+            const taskCount = userData.tasks.length;
+
+            // Bronze
+            const bronzeReqs = document.getElementById('bronzeReqs');
+            bronzeReqs.innerHTML = `
+                <li><span class="${taskCount >= 1 ? 'check' : 'uncheck'}">${taskCount >= 1 ? '✓' : '☐'}</span> Complete comparison guide</li>
+                <li><span class="${taskCount >= 1 ? 'check' : 'uncheck'}">${taskCount >= 1 ? '✓' : '☐'}</span> Use decision tool</li>
+                <li><span class="${taskCount >= 5 ? 'check' : 'uncheck'}">${taskCount >= 5 ? '✓' : '☐'}</span> Log 5 tasks (${Math.min(taskCount, 5)}/5)</li>
+            `;
+
+            // Silver
+            const silverReqs = document.getElementById('silverReqs');
+            silverReqs.innerHTML = `
+                <li><span class="${taskCount >= 10 ? 'check' : 'uncheck'}">${taskCount >= 10 ? '✓' : '☐'}</span> Complete all tool guides</li>
+                <li><span class="${taskCount >= 15 ? 'check' : 'uncheck'}">${taskCount >= 15 ? '✓' : '☐'}</span> Log 15 tasks (${Math.min(taskCount, 15)}/15)</li>
+                <li><span class="${userData.quizPassed ? 'check' : 'uncheck'}">${userData.quizPassed ? '✓' : '☐'}</span> Pass quiz (70%+)</li>
+            `;
+
+            // Gold
+            const goldReqs = document.getElementById('goldReqs');
+            goldReqs.innerHTML = `
+                <li><span class="${userData.quizPassed && taskCount >= 15 ? 'check' : 'uncheck'}">${userData.quizPassed && taskCount >= 15 ? '✓' : '☐'}</span> All Silver requirements</li>
+                <li><span class="${taskCount >= 30 ? 'check' : 'uncheck'}">${taskCount >= 30 ? '✓' : '☐'}</span> Log 30 tasks (${Math.min(taskCount, 30)}/30)</li>
+                <li><span class="${userData.advancedQuizPassed ? 'check' : 'uncheck'}">${userData.advancedQuizPassed ? '✓' : '☐'}</span> Pass advanced quiz (80%+)</li>
+                <li><span class="${userData.testimonial ? 'check' : 'uncheck'}">${userData.testimonial ? '✓' : '☐'}</span> Submit testimonial</li>
+            `;
+        }
+
+        // Check earned tiers
+        function checkEarnedTiers() {
+            const taskCount = userData.tasks.length;
+
+            // Bronze
+            if (taskCount >= 5 && !userData.earnedTier) {
+                earnTier('Bronze', '🥉');
+            }
+
+            // Silver
+            if (taskCount >= 15 && userData.quizPassed && userData.earnedTier !== 'Silver' && userData.earnedTier !== 'Gold') {
+                earnTier('Silver', '🥈');
+            }
+
+            // Gold
+            if (taskCount >= 30 && userData.quizPassed && userData.advancedQuizPassed && userData.testimonial && userData.earnedTier !== 'Gold') {
+                earnTier('Gold', '🥇');
+            }
+        }
+
+        // Earn tier
+        function earnTier(tier, badge) {
+            userData.earnedTier = tier;
+            userData.earnedDate = new Date().toLocaleDateString();
+            saveData();
+
+            // Mark tier as earned
+            document.getElementById(`${tier.toLowerCase()}Tier`).classList.add('earned');
+
+            // Show certificate modal
+            document.getElementById('nameModal').style.display = 'flex';
+        }
+
+        // Generate certificate
+        function generateCertificate() {
+            const name = document.getElementById('nameInput').value.trim();
+            if (!name) {
+                alert('Please enter your name');
+                return;
+            }
+
+            userData.userName = name;
+            saveData();
+
+            // Update certificate
+            const badges = { Bronze: '🥉', Silver: '🥈', Gold: '🥇' };
+            document.getElementById('certName').textContent = name.toUpperCase();
+            document.getElementById('certTier').textContent = userData.earnedTier;
+            document.getElementById('certBadge').textContent = badges[userData.earnedTier];
+            document.getElementById('certDate').textContent = `Date Earned: ${userData.earnedDate}`;
+
+            // Update certificate border
+            const colors = { Bronze: '#cd7f32', Silver: '#c0c0c0', Gold: '#ffd700' };
+            document.querySelector('.certificate').style.borderColor = colors[userData.earnedTier];
+
+            // Show certificate
+            document.getElementById('nameModal').style.display = 'none';
+            document.getElementById('certificateSection').style.display = 'block';
+            document.getElementById('certificateSection').scrollIntoView({ behavior: 'smooth' });
+
+            // Add to hall of fame if Gold
+            if (userData.earnedTier === 'Gold') {
+                addToHallOfFame(name);
+            }
+        }
+
+        // Task logger
+        function showTaskLogger() {
+            const tool = prompt('Which tool did you use?\n1. GitHub Copilot\n2. ChatGPT\n3. Claude\n4. Google Gemini\n\nEnter number:');
+            if (!tool || tool < 1 || tool > 4) return;
+
+            const tools = ['GitHub Copilot', 'ChatGPT', 'Claude', 'Google Gemini'];
+            const taskDesc = prompt('Describe what you did (brief description):');
+            if (!taskDesc) return;
+
+            const task = {
+                tool: tools[tool - 1],
+                description: taskDesc,
+                date: new Date().toLocaleDateString(),
+                timestamp: Date.now()
+            };
+
+            userData.tasks.push(task);
+            saveData();
+            alert('Task logged successfully! ✅');
+        }
+
+        // View task log
+        function viewTaskLog() {
+            if (userData.tasks.length === 0) {
+                alert('No tasks logged yet. Start logging your AI tool usage!');
+                return;
+            }
+
+            let log = '📊 YOUR TASK LOG:\n\n';
+            userData.tasks.slice(-10).reverse().forEach((task, i) => {
+                log += `${i + 1}. ${task.tool}\n`;
+                log += `   ${task.description}\n`;
+                log += `   Date: ${task.date}\n\n`;
+            });
+
+            log += `\nTotal tasks logged: ${userData.tasks.length}/30`;
+            alert(log);
+        }
+
+        // Start quiz
+        function startQuiz() {
+            let currentQuestion = 0;
+            let score = 0;
+            let answers = [];
+
+            function renderQuestion() {
+                const q = quizQuestions[currentQuestion];
+                const html = `
+                    <div class="quiz-question">
+                        <h4>Question ${currentQuestion + 1} of ${quizQuestions.length}</h4>
+                        <p style="margin-bottom: 15px; font-size: 1.05em;">${q.question}</p>
+                        <div class="quiz-options">
+                            ${q.options.map((opt, i) => `
+                                <div class="quiz-option" onclick="selectAnswer(${i})">
+                                    ${opt}
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+                document.getElementById('quizContainer').innerHTML = html;
+            }
+
+            window.selectAnswer = function(answerIndex) {
+                const q = quizQuestions[currentQuestion];
+                answers[currentQuestion] = answerIndex;
+
+                const options = document.querySelectorAll('.quiz-option');
+                options.forEach((opt, i) => {
+                    opt.classList.remove('selected', 'correct', 'incorrect');
+                    if (i === answerIndex) {
+                        opt.classList.add('selected');
+                        if (i === q.correct) {
+                            opt.classList.add('correct');
+                            score++;
+                        } else {
+                            opt.classList.add('incorrect');
+                        }
+                    }
+                    if (i === q.correct) {
+                        opt.classList.add('correct');
+                    }
+                });
+
+                setTimeout(() => {
+                    currentQuestion++;
+                    if (currentQuestion < quizQuestions.length) {
+                        renderQuestion();
+                    } else {
+                        showResults();
+                    }
+                }, 1500);
+            };
+
+            function showResults() {
+                const percentage = Math.round((score / quizQuestions.length) * 100);
+                const passed = percentage >= 70;
+
+                if (passed) {
+                    userData.quizScore = percentage;
+                    userData.quizPassed = true;
+                    if (percentage >= 80) {
+                        userData.advancedQuizPassed = true;
+                    }
+                    saveData();
+                }
+
+                const html = `
+                    <div class="quiz-result">
+                        <h3>Quiz Complete!</h3>
+                        <div class="quiz-score">${percentage}%</div>
+                        <p style="font-size: 1.2em; margin-bottom: 20px;">
+                            You got ${score} out of ${quizQuestions.length} correct!
+                        </p>
+                        ${passed ? `
+                            <p style="color: var(--success); font-weight: bold; font-size: 1.1em;">
+                                🎉 Congratulations! You passed!
+                                ${percentage >= 80 ? '<br>You also passed the advanced quiz requirement!' : ''}
+                            </p>
+                        ` : `
+                            <p style="color: #d63031; font-weight: bold;">
+                                You need 70% to pass. Try again!
+                            </p>
+                        `}
+                        <button class="btn btn-success" onclick="startQuiz()">Try Again</button>
+                    </div>
+                `;
+                document.getElementById('quizContainer').innerHTML = html;
+            }
+
+            renderQuestion();
+        }
+
+        // Download certificate
+        function downloadCertificate() {
+            alert('Certificate download functionality would connect to a PDF generator.\n\nFor now, take a screenshot of your certificate to share!');
+        }
+
+        // Share on LinkedIn
+        function shareLinkedIn() {
+            const text = `I just earned ${userData.earnedTier} certification in AI Tool Proficiency for Computer Programming from FTCC! 🎓\n\nSkills: GitHub Copilot, ChatGPT, Claude AI, Google Gemini\n\n#FTCC #AITools #CodingSkills #ProfessionalDevelopment`;
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`, '_blank');
+            return false;
+        }
+
+        // Hall of fame
+        function updateHallOfFame() {
+            const fame = JSON.parse(localStorage.getItem('hallOfFame') || '[]');
+            const list = document.getElementById('fameList');
+
+            if (fame.length === 0) {
+                list.innerHTML = '<p style="text-align: center; opacity: 0.7;">Be the first to earn Gold!</p>';
+                return;
+            }
+
+            list.innerHTML = fame.map(person => `
+                <div class="fame-item">
+                    <div style="font-size: 2em;">🥇</div>
+                    <div>
+                        <strong>${person.name}</strong><br>
+                        <small>Earned ${person.date}</small>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function addToHallOfFame(name) {
+            const fame = JSON.parse(localStorage.getItem('hallOfFame') || '[]');
+            if (!fame.find(p => p.name === name)) {
+                fame.push({
+                    name: name,
+                    date: new Date().toLocaleDateString()
+                });
+                localStorage.setItem('hallOfFame', JSON.stringify(fame));
+                updateHallOfFame();
+            }
+        }
+
+        // Dark mode
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            localStorage.setItem('certDarkMode', isDark);
+            updateToggleButton();
+        }
+
+        function updateToggleButton() {
+            const btn = document.querySelector('.dark-mode-toggle');
+            const isDark = document.body.classList.contains('dark-mode');
+            btn.textContent = isDark ? '☀️ Light Mode' : '🌓 Dark Mode';
+        }
+
+        // Initialize
+        window.addEventListener('DOMContentLoaded', () => {
+            loadData();
+
+            // Load dark mode preference
+            const savedMode = localStorage.getItem('certDarkMode');
+            if (savedMode === 'true') {
+                document.body.classList.add('dark-mode');
+            }
+            updateToggleButton();
+        });
+    </script>
+</body>
+</html>

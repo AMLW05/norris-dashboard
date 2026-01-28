@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comparison Simulator | CIT AI Tools Guide</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #667eea;
+            --primary-dark: #764ba2;
+            --navy: #1a1a2e;
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --danger: #d63031;
+            --gray-light: #f5f7fa;
+            --text-dark: #2c3e50;
+            --border: #e1e8ed;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+
+        body.dark-mode {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        }
+
+        body.dark-mode .container { background: #2c3e50; color: #ecf0f1; }
+        body.dark-mode .header { background: linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 100%); }
+        body.dark-mode .prompt-section { background: #34495e; }
+        body.dark-mode textarea { background: #2c3e50; color: #ecf0f1; border-color: #4a5f7f; }
+        body.dark-mode .response-column { background: #34495e; border-color: #4a5f7f; }
+        body.dark-mode .summary-section { background: #34495e; }
+
+        .container {
+            max-width: 1800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--navy) 0%, #16213e 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .header p { font-size: 1.1em; opacity: 0.95; }
+
+        .dark-mode-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .dark-mode-toggle:hover { background: rgba(255,255,255,0.3); }
+
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover { background: rgba(255,255,255,0.3); }
+
+        .content {
+            padding: 40px;
+        }
+
+        .prompt-section {
+            background: var(--gray-light);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .prompt-section h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 15px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 14px;
+            line-height: 1.6;
+            resize: vertical;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .sample-prompts {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .sample-btn {
+            background: white;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        body.dark-mode .sample-btn {
+            background: #2c3e50;
+            color: #ecf0f1;
+        }
+
+        .sample-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .responses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .response-column {
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 25px;
+            transition: all 0.3s;
+        }
+
+        .response-column:hover {
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+        }
+
+        .tool-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        body.dark-mode .tool-header { border-color: #4a5f7f; }
+
+        .tool-icon {
+            font-size: 2.5em;
+        }
+
+        .tool-name {
+            flex: 1;
+        }
+
+        .tool-name h3 {
+            color: var(--primary);
+            font-size: 1.4em;
+            margin-bottom: 3px;
+        }
+
+        .tool-type {
+            font-size: 0.85em;
+            color: #7f8c8d;
+        }
+
+        body.dark-mode .tool-type { color: #bdc3c7; }
+
+        .response-content {
+            background: var(--gray-light);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            min-height: 150px;
+            line-height: 1.7;
+            font-size: 0.95em;
+        }
+
+        body.dark-mode .response-content { background: #2c3e50; }
+
+        .response-characteristics {
+            margin-bottom: 15px;
+        }
+
+        .response-characteristics h4 {
+            font-size: 0.9em;
+            color: var(--primary);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .characteristics-list {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .characteristic-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9em;
+        }
+
+        .char-label {
+            font-weight: 600;
+            width: 80px;
+        }
+
+        .char-bar {
+            flex: 1;
+            height: 8px;
+            background: var(--gray-light);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        body.dark-mode .char-bar { background: #1e2a38; }
+
+        .char-fill {
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            transition: width 0.5s ease;
+        }
+
+        .rating-section {
+            border-top: 2px solid var(--border);
+            padding-top: 15px;
+        }
+
+        body.dark-mode .rating-section { border-color: #4a5f7f; }
+
+        .rating-section h4 {
+            font-size: 0.9em;
+            margin-bottom: 10px;
+            color: var(--text-dark);
+        }
+
+        body.dark-mode .rating-section h4 { color: #ecf0f1; }
+
+        .stars {
+            display: flex;
+            gap: 5px;
+        }
+
+        .star {
+            font-size: 1.5em;
+            cursor: pointer;
+            transition: all 0.2s;
+            user-select: none;
+        }
+
+        .star:hover {
+            transform: scale(1.2);
+        }
+
+        .star.filled {
+            color: #f39c12;
+        }
+
+        .star.empty {
+            color: #ddd;
+        }
+
+        body.dark-mode .star.empty { color: #555; }
+
+        .summary-section {
+            background: var(--gray-light);
+            border-radius: 12px;
+            padding: 30px;
+            margin-top: 30px;
+        }
+
+        .summary-section h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        body.dark-mode .comparison-table { background: #2c3e50; }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        body.dark-mode .comparison-table th,
+        body.dark-mode .comparison-table td {
+            border-color: #4a5f7f;
+        }
+
+        .comparison-table th {
+            background: var(--primary);
+            color: white;
+            font-weight: 600;
+        }
+
+        .comparison-table tr:hover {
+            background: var(--gray-light);
+        }
+
+        body.dark-mode .comparison-table tr:hover { background: #34495e; }
+
+        .winner-badge {
+            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #7f8c8d;
+        }
+
+        .empty-state-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        @media (max-width: 1400px) {
+            .responses-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 900px) {
+            .responses-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.8em; }
+            .content { padding: 20px; }
+            .dark-mode-toggle, .back-btn {
+                position: static;
+                display: block;
+                margin: 10px auto;
+            }
+        }
+
+        @media print {
+            body { background: white; }
+            .container { box-shadow: none; }
+            .dark-mode-toggle, .back-btn, .btn, .sample-prompts, .rating-section { display: none; }
+            .prompt-section { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <a href="index.html" class="back-btn">← Back to Guide</a>
+            <button class="dark-mode-toggle" onclick="toggleDarkMode()" aria-label="Toggle dark mode">🌓 Dark Mode</button>
+            <h1>⚖️ Comparison Simulator</h1>
+            <p>Compare AI tool responses side-by-side with the same prompt</p>
+        </header>
+
+        <div class="content">
+            <section class="prompt-section">
+                <h2>Enter Your Prompt</h2>
+                <textarea id="promptInput" placeholder="Enter your prompt here...
+
+Example: 'Explain how binary search works in Java'"></textarea>
+
+                <button class="btn" onclick="simulateAll()">🚀 Simulate All Tools</button>
+
+                <div class="sample-prompts">
+                    <strong style="margin-right: 10px;">Try these:</strong>
+                    <button class="sample-btn" onclick="loadSample('explain')">Explain a Concept</button>
+                    <button class="sample-btn" onclick="loadSample('debug')">Debug Code</button>
+                    <button class="sample-btn" onclick="loadSample('implement')">Implement Feature</button>
+                    <button class="sample-btn" onclick="loadSample('refactor')">Refactor Code</button>
+                </div>
+            </section>
+
+            <section id="responsesSection">
+                <div class="empty-state">
+                    <div class="empty-state-icon">🤖</div>
+                    <p><strong>Ready to compare!</strong></p>
+                    <p>Enter a prompt above and click "Simulate All Tools" to see how each AI responds.</p>
+                </div>
+            </section>
+
+            <section class="summary-section" id="summarySection" style="display: none;">
+                <h2>📊 Comparison Summary</h2>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Tool</th>
+                            <th>Your Rating</th>
+                            <th>Avg Rating</th>
+                            <th>Speed</th>
+                            <th>Depth</th>
+                            <th>Best For</th>
+                        </tr>
+                    </thead>
+                    <tbody id="summaryTableBody"></tbody>
+                </table>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        // Sample prompts
+        const samples = {
+            explain: "Explain how inheritance works in Java with a real-world example",
+            debug: "Why am I getting a NullPointerException when I try to access array[5] in my code?",
+            implement: "Write a Java method that sorts an ArrayList of integers using bubble sort",
+            refactor: "How can I refactor this nested if-else statement to be more readable?"
+        };
+
+        // Simulated responses for different prompt types
+        const responseTemplates = {
+            explain: {
+                copilot: {
+                    icon: '🔧',
+                    name: 'GitHub Copilot',
+                    type: 'Code-first IDE assistant',
+                    response: 'Inheritance allows a class to inherit properties and methods from another class:\n\n```java\nclass Vehicle {\n    protected String brand;\n    public void honk() { }\n}\n\nclass Car extends Vehicle {\n    private int doors = 4;\n}\n```\n\nThe Car class inherits from Vehicle.',
+                    speed: 95,
+                    depth: 60,
+                    style: 75
+                },
+                chatgpt: {
+                    icon: '💬',
+                    name: 'ChatGPT',
+                    type: 'Conversational AI',
+                    response: 'Inheritance in Java is like a family tree! Think of it this way:\n\nImagine you have a "Vehicle" parent class with properties like wheels and methods like move(). When you create a "Car" class that extends Vehicle, the Car automatically gets all the Vehicle properties and methods, plus it can add its own specific features like numberOfDoors.\n\nReal-world example:\n- Parent: Animal (has name, can eat)\n- Child: Dog extends Animal (has all Animal features + can bark)\n\nThis avoids code duplication and models real relationships!',
+                    speed: 85,
+                    depth: 90,
+                    style: 85
+                },
+                claude: {
+                    icon: '🎯',
+                    name: 'Claude',
+                    type: 'Advanced reasoning AI',
+                    response: 'Inheritance in Java creates an "is-a" relationship between classes, enabling code reuse and polymorphism.\n\n**Key Concepts:**\n1. Parent/Base class defines common attributes\n2. Child/Derived class inherits and can override\n3. Use "extends" keyword\n\n**Real-world Example:**\nConsider an employee management system:\n- Employee (base): name, id, salary, work()\n- Manager extends Employee: adds teamSize, assignTask()\n- Developer extends Employee: adds programmingLanguages, code()\n\nBoth Manager and Developer inherit Employee features but add specialized behavior.\n\n**Best Practices:**\n- Use composition over inheritance when possible\n- Follow Liskov Substitution Principle\n- Keep hierarchies shallow (2-3 levels max)',
+                    speed: 75,
+                    depth: 95,
+                    style: 90
+                },
+                gemini: {
+                    icon: '🔮',
+                    name: 'Google Gemini',
+                    type: 'Multimodal AI',
+                    response: 'Inheritance is one of the four pillars of Object-Oriented Programming (OOP), alongside encapsulation, polymorphism, and abstraction.\n\n**Technical Definition:**\nInheritance allows a class (subclass) to acquire properties and methods from another class (superclass), establishing a hierarchical relationship.\n\n**Real-World Example:**\nConsider a university system:\n- Person (superclass): name, age, getId()\n- Student extends Person: studentId, major, enroll()\n- Professor extends Person: employeeId, department, teach()\n\n**Historical Context:**\nInheritance originated in Simula-67 (1967) and became central to OOP through Smalltalk and later Java.\n\n**Related Concepts:**\n- Single vs. Multiple Inheritance\n- Abstract Classes vs. Interfaces\n- Method Overriding vs. Overloading\n\n**Performance Note:**\nJava uses a virtual method table (vtable) for dynamic dispatch, with minimal runtime overhead.',
+                    speed: 70,
+                    depth: 98,
+                    style: 80
+                }
+            },
+            debug: {
+                copilot: {
+                    icon: '🔧',
+                    name: 'GitHub Copilot',
+                    type: 'Code-first IDE assistant',
+                    response: 'Check if array has at least 6 elements before accessing index 5:\n\n```java\nif (array != null && array.length > 5) {\n    value = array[5];\n}\n```',
+                    speed: 98,
+                    depth: 50,
+                    style: 70
+                },
+                chatgpt: {
+                    icon: '💬',
+                    name: 'ChatGPT',
+                    type: 'Conversational AI',
+                    response: 'A NullPointerException at array[5] usually means one of two things:\n\n1. **The array itself is null** - you declared it but never initialized it\n2. **The array is too small** - it has fewer than 6 elements (arrays are 0-indexed)\n\nTo fix:\n```java\n// Check for null first\nif (array != null && array.length > 5) {\n    value = array[5];\n} else {\n    System.out.println("Array is null or too small");\n}\n```\n\nCan you share more of your code so I can see exactly what\'s happening?',
+                    speed: 90,
+                    depth: 85,
+                    style: 90
+                },
+                claude: {
+                    icon: '🎯',
+                    name: 'Claude',
+                    type: 'Advanced reasoning AI',
+                    response: 'This NullPointerException has two likely causes:\n\n**Diagnosis:**\n1. Array reference is null (most common)\n2. Array exists but is shorter than 6 elements\n\n**Solution with defensive programming:**\n```java\npublic void safeAccess(int[] array) {\n    if (array == null) {\n        throw new IllegalArgumentException("Array cannot be null");\n    }\n    if (array.length <= 5) {\n        throw new IndexOutOfBoundsException(\n            "Array needs at least 6 elements, has " + array.length\n        );\n    }\n    int value = array[5]; // Now safe\n}\n```\n\n**Prevention:**\n- Initialize arrays at declaration\n- Validate input parameters\n- Use Optional<int[]> for nullable arrays\n- Consider using List<Integer> for dynamic sizing',
+                    speed: 80,
+                    depth: 92,
+                    style: 95
+                },
+                gemini: {
+                    icon: '🔮',
+                    name: 'Google Gemini',
+                    type: 'Multimodal AI',
+                    response: 'NullPointerException is one of the most common Java exceptions, accounting for ~30% of production bugs according to research.\n\n**For array[5] specifically:**\n- Occurs when dereferencing null or accessing invalid index\n- Arrays in Java are 0-indexed, so index 5 requires length ≥ 6\n- Stack trace will show exact line number\n\n**Debug steps:**\n1. Add breakpoint before array access\n2. Verify: array != null\n3. Verify: array.length > 5\n4. Check where array is initialized\n\n**Related documentation:**\n- Java Language Specification §15.10.3\n- Effective Java Item 54: Return empty arrays, not nulls\n\n**Modern alternatives:**\n- Java 14+: helpful NullPointerException messages\n- Use Objects.requireNonNull()\n- Consider Kotlin for null-safety',
+                    speed: 75,
+                    depth: 95,
+                    style: 85
+                }
+            },
+            implement: {
+                copilot: {
+                    icon: '🔧',
+                    name: 'GitHub Copilot',
+                    type: 'Code-first IDE assistant',
+                    response: 'Here\'s bubble sort for ArrayList:\n\n```java\npublic static void bubbleSort(ArrayList<Integer> list) {\n    int n = list.size();\n    for (int i = 0; i < n-1; i++) {\n        for (int j = 0; j < n-i-1; j++) {\n            if (list.get(j) > list.get(j+1)) {\n                int temp = list.get(j);\n                list.set(j, list.get(j+1));\n                list.set(j+1, temp);\n            }\n        }\n    }\n}\n```',
+                    speed: 98,
+                    depth: 65,
+                    style: 75
+                },
+                chatgpt: {
+                    icon: '💬',
+                    name: 'ChatGPT',
+                    type: 'Conversational AI',
+                    response: 'I\'ll create a bubble sort method with comments:\n\n```java\npublic static void bubbleSort(ArrayList<Integer> numbers) {\n    // Get the size once to avoid repeated calls\n    int size = numbers.size();\n    \n    // Outer loop: number of passes\n    for (int i = 0; i < size - 1; i++) {\n        // Inner loop: compare adjacent elements\n        for (int j = 0; j < size - i - 1; j++) {\n            // If current > next, swap them\n            if (numbers.get(j) > numbers.get(j + 1)) {\n                // Swap\n                int temp = numbers.get(j);\n                numbers.set(j, numbers.get(j + 1));\n                numbers.set(j + 1, temp);\n            }\n        }\n    }\n}\n```\n\n**How it works:**\nBubble sort "bubbles" larger values to the end by repeatedly comparing adjacent elements and swapping if they\'re in wrong order.',
+                    speed: 85,
+                    depth: 80,
+                    style: 85
+                },
+                claude: {
+                    icon: '🎯',
+                    name: 'Claude',
+                    type: 'Advanced reasoning AI',
+                    response: 'Here\'s an optimized bubble sort with early termination:\n\n```java\npublic static void bubbleSort(ArrayList<Integer> list) {\n    if (list == null || list.size() <= 1) {\n        return; // Already sorted or invalid\n    }\n    \n    int n = list.size();\n    boolean swapped;\n    \n    for (int i = 0; i < n - 1; i++) {\n        swapped = false;\n        \n        for (int j = 0; j < n - i - 1; j++) {\n            if (list.get(j) > list.get(j + 1)) {\n                // Swap\n                Collections.swap(list, j, j + 1);\n                swapped = true;\n            }\n        }\n        \n        // If no swaps, list is sorted\n        if (!swapped) break;\n    }\n}\n```\n\n**Improvements:**\n1. Input validation\n2. Early termination if sorted\n3. Uses Collections.swap() (cleaner)\n\n**Complexity:**\n- Best: O(n) when already sorted\n- Average/Worst: O(n²)\n- Space: O(1)',
+                    speed: 75,
+                    depth: 95,
+                    style: 95
+                },
+                gemini: {
+                    icon: '🔮',
+                    name: 'Google Gemini',
+                    type: 'Multimodal AI',
+                    response: 'Bubble sort implementation with analysis:\n\n```java\npublic static void bubbleSort(ArrayList<Integer> list) {\n    int n = list.size();\n    for (int i = 0; i < n - 1; i++) {\n        for (int j = 0; j < n - i - 1; j++) {\n            if (list.get(j).compareTo(list.get(j + 1)) > 0) {\n                Collections.swap(list, j, j + 1);\n            }\n        }\n    }\n}\n```\n\n**Algorithm Analysis:**\n- Time Complexity: O(n²) - quadratic\n- Space Complexity: O(1) - in-place\n- Stability: Stable (preserves order of equal elements)\n- Adaptive: Can be optimized to O(n) for nearly sorted\n\n**When to use:**\n- Educational purposes\n- Small datasets (< 50 elements)\n- Nearly sorted data\n\n**Better alternatives:**\n- Collections.sort() (uses Timsort, O(n log n))\n- Arrays.sort() for primitive arrays\n- Quicksort, Mergesort for large datasets\n\n**Historical note:**\nBubble sort rarely used in practice due to poor performance, but excellent for teaching sorting concepts.',
+                    speed: 70,
+                    depth: 98,
+                    style: 85
+                }
+            },
+            refactor: {
+                copilot: {
+                    icon: '🔧',
+                    name: 'GitHub Copilot',
+                    type: 'Code-first IDE assistant',
+                    response: 'Use early returns:\n\n```java\nif (condition1) return result1;\nif (condition2) return result2;\nif (condition3) return result3;\nreturn defaultResult;\n```',
+                    speed: 98,
+                    depth: 60,
+                    style: 75
+                },
+                chatgpt: {
+                    icon: '💬',
+                    name: 'ChatGPT',
+                    type: 'Conversational AI',
+                    response: 'Nested if-else chains are hard to read. Here are better approaches:\n\n**Option 1: Early returns**\n```java\nif (condition1) return value1;\nif (condition2) return value2;\nif (condition3) return value3;\nreturn defaultValue;\n```\n\n**Option 2: Switch statement (Java 12+)**\n```java\nreturn switch (value) {\n    case 1 -> result1;\n    case 2 -> result2;\n    case 3 -> result3;\n    default -> defaultResult;\n};\n```\n\nBoth are much cleaner than nested if-else!',
+                    speed: 85,
+                    depth: 85,
+                    style: 90
+                },
+                claude: {
+                    icon: '🎯',
+                    name: 'Claude',
+                    type: 'Advanced reasoning AI',
+                    response: 'Nested if-else violates readability principles. Several refactoring strategies:\n\n**1. Guard Clauses (Recommended)**\n```java\nif (invalidCondition) return error;\nif (edgeCase) return edgeCaseValue;\n// Main logic here\nreturn normalResult;\n```\n\n**2. Strategy Pattern (for complex logic)**\n```java\nMap<Condition, Strategy> strategies = new HashMap<>();\nstrategy.get(condition).execute();\n```\n\n**3. Polymorphism**\n```java\ninterface Handler {\n    boolean canHandle(Request req);\n    Response handle(Request req);\n}\n```\n\n**Choosing the right approach:**\n- Simple conditions → Early returns\n- Multiple similar conditions → Map/Switch\n- Complex behavior → Strategy/Polymorphism\n\n**Metrics improvement:**\n- Cyclomatic complexity: 10+ → 3\n- Readability: Significant improvement',
+                    speed: 75,
+                    depth: 98,
+                    style: 95
+                },
+                gemini: {
+                    icon: '🔮',
+                    name: 'Google Gemini',
+                    type: 'Multimodal AI',
+                    response: 'Nested if-else represents the "Arrow Anti-Pattern" in software engineering.\n\n**Refactoring techniques:**\n\n**1. Flattening with guard clauses**\n```java\nif (!valid) throw new IllegalArgumentException();\nif (special) return specialValue;\nreturn normalProcess();\n```\n\n**2. Modern switch expressions (Java 14+)**\n**3. Table-driven approach**\n**4. Chain of Responsibility pattern**\n\n**Code smell indicators:**\n- Nesting depth > 3\n- Cyclomatic complexity > 10\n- Difficult to unit test\n\n**Research:**\nStudies show code with nesting > 3 levels has 3x higher bug rates (Source: "Code Complete" by McConnell)\n\n**Tool recommendations:**\n- SonarQube: Detects complexity\n- IntelliJ: "Simplify conditional" refactoring\n- Checkstyle: Enforce complexity limits\n\n**Further reading:**\n- Martin Fowler\'s "Refactoring"\n- Clean Code by Robert Martin (Chapter 17)',
+                    speed: 70,
+                    depth: 98,
+                    style: 85
+                }
+            }
+        };
+
+        // Rating storage
+        let ratings = JSON.parse(localStorage.getItem('toolRatings')) || {};
+
+        // Load sample
+        function loadSample(type) {
+            document.getElementById('promptInput').value = samples[type];
+        }
+
+        // Simulate all tools
+        function simulateAll() {
+            const prompt = document.getElementById('promptInput').value.trim();
+
+            if (!prompt) {
+                alert('Please enter a prompt first!');
+                return;
+            }
+
+            // Determine prompt type
+            const promptType = determinePromptType(prompt);
+            const responses = responseTemplates[promptType];
+
+            // Render responses
+            renderResponses(responses);
+
+            // Show summary
+            document.getElementById('summarySection').style.display = 'block';
+            updateSummary();
+        }
+
+        // Determine prompt type
+        function determinePromptType(prompt) {
+            const lower = prompt.toLowerCase();
+            if (lower.includes('explain') || lower.includes('what is') || lower.includes('how does')) return 'explain';
+            if (lower.includes('debug') || lower.includes('error') || lower.includes('exception') || lower.includes('why')) return 'debug';
+            if (lower.includes('write') || lower.includes('implement') || lower.includes('create')) return 'implement';
+            if (lower.includes('refactor') || lower.includes('improve') || lower.includes('clean')) return 'refactor';
+            return 'explain'; // default
+        }
+
+        // Render responses
+        function renderResponses(responses) {
+            const section = document.getElementById('responsesSection');
+
+            section.innerHTML = `
+                <div class="responses-grid">
+                    ${Object.entries(responses).map(([key, tool]) => `
+                        <div class="response-column">
+                            <div class="tool-header">
+                                <div class="tool-icon">${tool.icon}</div>
+                                <div class="tool-name">
+                                    <h3>${tool.name}</h3>
+                                    <div class="tool-type">${tool.type}</div>
+                                </div>
+                            </div>
+                            <div class="response-content">${tool.response.replace(/\n/g, '<br>')}</div>
+                            <div class="response-characteristics">
+                                <h4>Characteristics</h4>
+                                <div class="characteristics-list">
+                                    <div class="characteristic-item">
+                                        <span class="char-label">Speed:</span>
+                                        <div class="char-bar">
+                                            <div class="char-fill" style="width: ${tool.speed}%"></div>
+                                        </div>
+                                    </div>
+                                    <div class="characteristic-item">
+                                        <span class="char-label">Depth:</span>
+                                        <div class="char-bar">
+                                            <div class="char-fill" style="width: ${tool.depth}%"></div>
+                                        </div>
+                                    </div>
+                                    <div class="characteristic-item">
+                                        <span class="char-label">Style:</span>
+                                        <div class="char-bar">
+                                            <div class="char-fill" style="width: ${tool.style}%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rating-section">
+                                <h4>Rate this response:</h4>
+                                <div class="stars" data-tool="${key}">
+                                    ${[1,2,3,4,5].map(n => `<span class="star empty" onclick="rate('${key}', ${n})">★</span>`).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+
+            // Load existing ratings
+            Object.keys(responses).forEach(tool => {
+                if (ratings[tool]) {
+                    updateStars(tool, ratings[tool]);
+                }
+            });
+        }
+
+        // Rate tool
+        function rate(tool, rating) {
+            ratings[tool] = rating;
+            localStorage.setItem('toolRatings', JSON.stringify(ratings));
+            updateStars(tool, rating);
+            updateSummary();
+        }
+
+        // Update stars
+        function updateStars(tool, rating) {
+            const stars = document.querySelectorAll(`.stars[data-tool="${tool}"] .star`);
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.classList.remove('empty');
+                    star.classList.add('filled');
+                } else {
+                    star.classList.remove('filled');
+                    star.classList.add('empty');
+                }
+            });
+        }
+
+        // Update summary
+        function updateSummary() {
+            const tools = {
+                copilot: { name: 'GitHub Copilot', speed: 98, depth: 60, bestFor: 'Quick code generation' },
+                chatgpt: { name: 'ChatGPT', speed: 85, depth: 85, bestFor: 'Learning & explanations' },
+                claude: { name: 'Claude', speed: 75, depth: 95, bestFor: 'Best practices & architecture' },
+                gemini: { name: 'Google Gemini', speed: 70, depth: 98, bestFor: 'Research & documentation' }
+            };
+
+            // Calculate average ratings
+            const avgRatings = {};
+            const ratingCounts = {};
+            Object.entries(ratings).forEach(([tool, rating]) => {
+                avgRatings[tool] = (avgRatings[tool] || 0) + rating;
+                ratingCounts[tool] = (ratingCounts[tool] || 0) + 1;
+            });
+
+            Object.keys(avgRatings).forEach(tool => {
+                avgRatings[tool] = (avgRatings[tool] / ratingCounts[tool]).toFixed(1);
+            });
+
+            // Find winner
+            const winner = Object.entries(ratings).sort((a, b) => b[1] - a[1])[0]?.[0];
+
+            const tbody = document.getElementById('summaryTableBody');
+            tbody.innerHTML = Object.entries(tools).map(([key, tool]) => `
+                <tr>
+                    <td><strong>${tool.name}</strong> ${key === winner ? '<span class="winner-badge">🏆 Your Top Pick</span>' : ''}</td>
+                    <td>${ratings[key] ? '★'.repeat(ratings[key]) + '☆'.repeat(5 - ratings[key]) : 'Not rated'}</td>
+                    <td>${avgRatings[key] || '-'}</td>
+                    <td>${tool.speed}%</td>
+                    <td>${tool.depth}%</td>
+                    <td>${tool.bestFor}</td>
+                </tr>
+            `).join('');
+        }
+
+        // Dark mode
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            localStorage.setItem('darkMode', isDark);
+            updateToggleButton();
+        }
+
+        function updateToggleButton() {
+            const btn = document.querySelector('.dark-mode-toggle');
+            const isDark = document.body.classList.contains('dark-mode');
+            btn.textContent = isDark ? '☀️ Light Mode' : '🌓 Dark Mode';
+        }
+
+        function loadDarkMode() {
+            const savedMode = localStorage.getItem('darkMode');
+            if (savedMode === 'true') {
+                document.body.classList.add('dark-mode');
+            }
+            updateToggleButton();
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', loadDarkMode);
+    </script>
+</body>
+</html>

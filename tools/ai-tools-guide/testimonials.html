@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Testimonials | CIT AI Tools Guide</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #667eea;
+            --primary-dark: #764ba2;
+            --navy: #1a1a2e;
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --danger: #d63031;
+            --gray-light: #f5f7fa;
+            --text-dark: #2c3e50;
+            --border: #e1e8ed;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+
+        body.dark-mode {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        }
+
+        body.dark-mode .container { background: #2c3e50; color: #ecf0f1; }
+        body.dark-mode .header { background: linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 100%); }
+        body.dark-mode .filters { background: #1e2a38; }
+        body.dark-mode .testimonial-card { background: #34495e; color: #ecf0f1; }
+        body.dark-mode .form-section { background: #34495e; color: #ecf0f1; }
+        body.dark-mode input, body.dark-mode select, body.dark-mode textarea {
+            background: #2c3e50;
+            color: #ecf0f1;
+            border-color: #4a5f7f;
+        }
+        body.dark-mode .student-submissions { background: #1e2a38; }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--navy) 0%, #16213e 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .header p { font-size: 1.1em; opacity: 0.95; }
+
+        .dark-mode-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .dark-mode-toggle:hover { background: rgba(255,255,255,0.3); }
+
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover { background: rgba(255,255,255,0.3); }
+
+        .content {
+            padding: 40px;
+        }
+
+        .filters {
+            background: var(--gray-light);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .filter-group label {
+            font-weight: 600;
+        }
+
+        select {
+            padding: 8px 12px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .testimonial-card {
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 25px;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
+        }
+
+        .student-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        body.dark-mode .student-header { border-color: #4a5f7f; }
+
+        .student-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8em;
+            flex-shrink: 0;
+        }
+
+        .student-info h3 {
+            color: var(--primary);
+            font-size: 1.2em;
+            margin-bottom: 3px;
+        }
+
+        .student-meta {
+            font-size: 0.85em;
+            color: #7f8c8d;
+        }
+
+        body.dark-mode .student-meta { color: #bdc3c7; }
+
+        .quote {
+            font-style: italic;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .quote::before {
+            content: '"';
+            position: absolute;
+            left: 0;
+            top: -10px;
+            font-size: 3em;
+            color: var(--primary);
+            opacity: 0.3;
+        }
+
+        .tool-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .form-section {
+            background: var(--gray-light);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .form-section h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            padding: 10px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .student-submissions {
+            background: #fff3cd;
+            border-left: 4px solid var(--warning);
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+
+        .student-submissions h3 {
+            color: var(--warning);
+            margin-bottom: 15px;
+        }
+
+        .submission-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        body.dark-mode .submission-item { background: #2c3e50; }
+
+        .submission-meta {
+            font-size: 0.85em;
+            color: #7f8c8d;
+            margin-bottom: 5px;
+        }
+
+        body.dark-mode .submission-meta { color: #bdc3c7; }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #7f8c8d;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.8em; }
+            .content { padding: 20px; }
+            .testimonials-grid { grid-template-columns: 1fr; }
+            .form-row { grid-template-columns: 1fr; }
+            .dark-mode-toggle, .back-btn {
+                position: static;
+                display: block;
+                margin: 10px auto;
+            }
+        }
+
+        @media print {
+            body { background: white; }
+            .container { box-shadow: none; }
+            .dark-mode-toggle, .back-btn, .btn, .filters, .form-section { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <a href="index.html" class="back-btn">← Back to Guide</a>
+            <button class="dark-mode-toggle" onclick="toggleDarkMode()" aria-label="Toggle dark mode">🌓 Dark Mode</button>
+            <h1>💬 Student Testimonials</h1>
+            <p>Real experiences from FTCC CIT students using AI tools</p>
+        </header>
+
+        <div class="content">
+            <!-- Filters -->
+            <div class="filters">
+                <div class="filter-group">
+                    <label for="filterTool">Filter by Tool:</label>
+                    <select id="filterTool" onchange="filterTestimonials()">
+                        <option value="">All Tools</option>
+                        <option value="Copilot">GitHub Copilot</option>
+                        <option value="ChatGPT">ChatGPT</option>
+                        <option value="Claude">Claude</option>
+                        <option value="Gemini">Google Gemini</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="filterCourse">Filter by Course:</label>
+                    <select id="filterCourse" onchange="filterTestimonials()">
+                        <option value="">All Courses</option>
+                        <option value="CSC-113">CSC-113</option>
+                        <option value="CSC-114">CSC-114</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Testimonials Grid -->
+            <div class="testimonials-grid" id="testimonialsGrid"></div>
+
+            <!-- Submit Your Story Form -->
+            <div class="form-section">
+                <h2>📝 Submit Your Story</h2>
+                <p style="margin-bottom: 20px; line-height: 1.7;">
+                    Have you used AI tools in your coursework? Share your experience to help other students!
+                    Your submission will be saved locally for this demo.
+                </p>
+                <form id="testimonialForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="studentName">Your Name</label>
+                            <input type="text" id="studentName" required placeholder="John Smith">
+                        </div>
+                        <div class="form-group">
+                            <label for="course">Course</label>
+                            <select id="course" required>
+                                <option value="">Select course...</option>
+                                <option value="CSC-113">CSC-113 - Intro to Programming</option>
+                                <option value="CSC-114">CSC-114 - Object-Oriented Programming</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="tool">AI Tool Used</label>
+                            <select id="tool" required>
+                                <option value="">Select tool...</option>
+                                <option value="Copilot">GitHub Copilot</option>
+                                <option value="ChatGPT">ChatGPT</option>
+                                <option value="Claude">Claude</option>
+                                <option value="Gemini">Google Gemini</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="testimonial">Your Experience</label>
+                        <textarea id="testimonial" required placeholder="Tell us how the AI tool helped you in your coursework..."></textarea>
+                    </div>
+                    <button type="submit" class="btn">Submit Testimonial</button>
+                </form>
+            </div>
+
+            <!-- Student Submissions -->
+            <div class="student-submissions" id="submissionsSection" style="display: none;">
+                <h3>📋 Your Submitted Stories</h3>
+                <div id="submissionsList"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Template testimonials
+        const templateTestimonials = [
+            {
+                name: "Sarah Martinez",
+                avatar: "👩",
+                course: "CSC-113",
+                tool: "Copilot",
+                quote: "GitHub Copilot was a game-changer for my CSC-113 assignments. When I was stuck on implementing loops and arrays, Copilot's suggestions helped me understand the syntax patterns. It felt like having a tutor right in my IDE. I went from struggling with basic Java to actually enjoying coding!",
+                id: "template-1"
+            },
+            {
+                name: "Marcus Johnson",
+                avatar: "👨",
+                course: "CSC-114",
+                tool: "Claude",
+                quote: "I used Claude to help me understand design patterns in CSC-114. When our professor assigned the Strategy Pattern project, Claude explained it in a way that finally made sense. It showed me multiple implementations and explained the trade-offs. I ended up getting an A on that project and now I actually understand OOP principles!",
+                id: "template-2"
+            },
+            {
+                name: "Emily Chen",
+                avatar: "👩",
+                course: "CSC-113",
+                tool: "ChatGPT",
+                quote: "ChatGPT helped me pass CSC-113. I was really struggling with debugging my code - I'd get errors and have no idea what they meant. ChatGPT would explain the error messages in plain English and show me exactly where my mistake was. It taught me to read stack traces and understand what the compiler was telling me.",
+                id: "template-3"
+            },
+            {
+                name: "David Kim",
+                avatar: "👨",
+                course: "CSC-114",
+                tool: "Copilot",
+                quote: "As someone who works full-time and takes classes at night, GitHub Copilot saved me so much time on CSC-114 assignments. I could write comments about what I needed and Copilot would generate the boilerplate code. This let me focus on understanding the logic instead of memorizing syntax. My productivity probably doubled.",
+                id: "template-4"
+            },
+            {
+                name: "Jessica Thompson",
+                avatar: "👩",
+                course: "CSC-114",
+                tool: "Gemini",
+                quote: "For my final project in CSC-114, I needed to research different data structures and their performance characteristics. Google Gemini was incredible for this - it connected concepts from class to real-world applications and showed me research papers and documentation. It helped me write a comprehensive analysis that impressed my professor.",
+                id: "template-5"
+            },
+            {
+                name: "Alex Rivera",
+                avatar: "👨",
+                course: "CSC-113",
+                tool: "Claude",
+                quote: "I was about to drop CSC-113 because I couldn't understand inheritance and polymorphism. Claude broke it down step-by-step with analogies that made sense to me. It showed me code examples and explained each line. Now I'm confident enough to help other students who are struggling with the same concepts!",
+                id: "template-6"
+            },
+            {
+                name: "Hannah Lee",
+                avatar: "👩",
+                course: "CSC-114",
+                tool: "ChatGPT",
+                quote: "ChatGPT became my study buddy for CSC-114 exam prep. I would paste code snippets and ask it to explain what they did, or ask it to quiz me on concepts. It explained recursion in three different ways until one finally clicked. I went from a C student to a B+ after I started using it to study.",
+                id: "template-7"
+            },
+            {
+                name: "Ryan Patel",
+                avatar: "👨",
+                course: "CSC-113",
+                tool: "Gemini",
+                quote: "I used Google Gemini to understand algorithm complexity in CSC-113. When we covered Big O notation, I was completely lost. Gemini explained it with diagrams, examples, and even showed me how it applies to real software. Now I can analyze my code's performance and make informed decisions about which algorithms to use.",
+                id: "template-8"
+            }
+        ];
+
+        // Storage for user submissions
+        let userSubmissions = JSON.parse(localStorage.getItem('testimonialSubmissions')) || [];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadDarkMode();
+            renderTestimonials();
+            if (userSubmissions.length > 0) {
+                renderSubmissions();
+            }
+        });
+
+        // Render testimonials
+        function renderTestimonials() {
+            const grid = document.getElementById('testimonialsGrid');
+            const allTestimonials = [...templateTestimonials, ...userSubmissions.map(s => ({
+                ...s,
+                id: `user-${s.timestamp}`
+            }))];
+
+            grid.innerHTML = allTestimonials.map(t => `
+                <div class="testimonial-card" data-tool="${t.tool}" data-course="${t.course}">
+                    <div class="student-header">
+                        <div class="student-avatar">${t.avatar}</div>
+                        <div class="student-info">
+                            <h3>${t.name}</h3>
+                            <div class="student-meta">${t.course} Student</div>
+                        </div>
+                    </div>
+                    <div class="quote">${t.quote}</div>
+                    <span class="tool-badge">${t.tool}</span>
+                </div>
+            `).join('');
+        }
+
+        // Filter testimonials
+        function filterTestimonials() {
+            const toolFilter = document.getElementById('filterTool').value;
+            const courseFilter = document.getElementById('filterCourse').value;
+            const cards = document.querySelectorAll('.testimonial-card');
+
+            cards.forEach(card => {
+                const tool = card.dataset.tool;
+                const course = card.dataset.course;
+                const showTool = !toolFilter || tool === toolFilter;
+                const showCourse = !courseFilter || course === courseFilter;
+                card.style.display = showTool && showCourse ? '' : 'none';
+            });
+        }
+
+        // Handle form submission
+        document.getElementById('testimonialForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const submission = {
+                name: document.getElementById('studentName').value,
+                avatar: getRandomAvatar(),
+                course: document.getElementById('course').value,
+                tool: document.getElementById('tool').value,
+                quote: document.getElementById('testimonial').value,
+                timestamp: Date.now()
+            };
+
+            userSubmissions.push(submission);
+            localStorage.setItem('testimonialSubmissions', JSON.stringify(userSubmissions));
+
+            // Reset form
+            document.getElementById('testimonialForm').reset();
+
+            // Show success message
+            alert('✅ Thank you for sharing your story! Your testimonial has been added.');
+
+            // Re-render
+            renderTestimonials();
+            renderSubmissions();
+        });
+
+        // Get random avatar
+        function getRandomAvatar() {
+            const avatars = ['👨', '👩', '🧑', '👨‍💻', '👩‍💻', '🧑‍💻'];
+            return avatars[Math.floor(Math.random() * avatars.length)];
+        }
+
+        // Render user submissions
+        function renderSubmissions() {
+            const section = document.getElementById('submissionsSection');
+            const list = document.getElementById('submissionsList');
+
+            section.style.display = 'block';
+            list.innerHTML = userSubmissions.map((s, index) => `
+                <div class="submission-item">
+                    <div class="submission-meta">
+                        ${new Date(s.timestamp).toLocaleDateString()} - ${s.course} - ${s.tool}
+                    </div>
+                    <strong>${s.name}:</strong> ${s.quote}
+                    <button class="btn" style="padding: 5px 10px; font-size: 12px; margin-top: 10px;" onclick="deleteSubmission(${index})">Delete</button>
+                </div>
+            `).join('');
+        }
+
+        // Delete submission
+        function deleteSubmission(index) {
+            if (confirm('Are you sure you want to delete this submission?')) {
+                userSubmissions.splice(index, 1);
+                localStorage.setItem('testimonialSubmissions', JSON.stringify(userSubmissions));
+                renderTestimonials();
+                if (userSubmissions.length === 0) {
+                    document.getElementById('submissionsSection').style.display = 'none';
+                } else {
+                    renderSubmissions();
+                }
+            }
+        }
+
+        // Dark mode
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            localStorage.setItem('darkMode', isDark);
+            updateToggleButton();
+        }
+
+        function updateToggleButton() {
+            const btn = document.querySelector('.dark-mode-toggle');
+            const isDark = document.body.classList.contains('dark-mode');
+            btn.textContent = isDark ? '☀️ Light Mode' : '🌓 Dark Mode';
+        }
+
+        function loadDarkMode() {
+            const savedMode = localStorage.getItem('darkMode');
+            if (savedMode === 'true') {
+                document.body.classList.add('dark-mode');
+            }
+            updateToggleButton();
+        }
+    </script>
+</body>
+</html>
